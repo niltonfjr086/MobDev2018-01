@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Aprovado App</string>
+    <string name="label_nome">Nome do Aluno</string>
+    <string name="hint_nome">Digite o nome do aluno</string>
+    <string name="label_nota1">Nota 1</string>
+    <string name="hint_nota1">Digite a nota 1</string>
+    <string name="label_nota2">Nota 2</string>
+    <string name="hint_nota2">Digite a nota 2</string>
+    <string name="calcular">Calcular</string>
+    <string name="limpar">Limpar</string>
+    <string name="situacao">Situação:</string>
+    <string name="aprovado">Aprovado</string>
+    <string name="reprovado">Reprovado</string>
+    <string name="media">Média:</string>
+    <string name="aluno">Aluno:</string>
+</resources>
