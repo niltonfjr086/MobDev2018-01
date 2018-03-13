@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AutonomiaTotalApp</string>
+
+    <string name="lblNomeCarro">Nome do Carro</string>
+    <string name="hintNomeCarro">Digite o nome do carro</string>
+
+    <string name="lblKmPercorrido">Km Percorrida</string>
+    <string name="hintKmPercorrido">Quantos km você percorreu?</string>
+
+    <string name="lblQtdCombustivel">Quantidade de Combustível</string>
+    <string name="hintQtdCombustivel">Quanto combustível foi gasto?</string>
+
+    <string name="lblCalcular">Calcular</string>
+    <string name="lblLimpar">Limpar Dados</string>
+
+    <string name="lblConsumoMedio">Consumo Médio da Frota:</string>
+
+</resources>
