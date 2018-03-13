@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/masterLayout"
+    android:padding="10dp"
     tools:context="devmob2018.com.precojustoapp.MainActivity">
 
     <LinearLayout
@@ -94,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@android:drawable/ic_menu_save"
+            android:drawableLeft="@android:drawable/ic_input_get"
             android:onClick="calcular"
             android:text="@string/calcular" />
 
@@ -123,7 +124,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:padding="5dp"
                 android:text="@string/apres_produto" />
 
@@ -131,7 +131,6 @@
                 android:id="@+id/tvNome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="" />
         </LinearLayout>
 

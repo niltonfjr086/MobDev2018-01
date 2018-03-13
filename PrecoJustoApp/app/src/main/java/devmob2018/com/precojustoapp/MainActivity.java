@@ -1,6 +1,5 @@
 package devmob2018.com.precojustoapp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +7,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvNome, tvValorInicial, tvValorParcelas, tvValorTotal, tvTotalJuros;
     private LinearLayout layoutResultado;
 
+    private DecimalFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,31 +42,55 @@ public class MainActivity extends AppCompatActivity {
 
         this.layoutResultado = findViewById(R.id.layoutResultado);
 
+        this.df = new DecimalFormat("R$ " + "#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+
     }
 
 
     public void calcular(View v) {
 
-        double valorInicial = Double.valueOf(this.editValor.getText().toString());
-        int qtdParcelas = Integer.valueOf(this.editQtdParcelas.getText().toString());
-        double juros = Double.valueOf(this.editJuros.getText().toString());
+        try {
 
-        double valorTotal = valorInicial * (1 + (juros / 100));
-        double totalJuros = valorTotal - valorInicial;
-        double valorParcelas = valorTotal / qtdParcelas;
+            double valorInicial = Double.valueOf(this.editValor.getText().toString());
+            int qtdParcelas = Integer.valueOf(this.editQtdParcelas.getText().toString());
+            float juros = Float.valueOf(this.editJuros.getText().toString());
 
-        this.tvNome.setText(this.editNome.getText());
-        this.tvValorInicial.setText(this.editValor.getText());
-        this.tvValorParcelas.setText(String.valueOf(valorParcelas));
-        this.tvValorTotal.setText(String.valueOf(valorTotal));
-        this.tvTotalJuros.setText(String.valueOf(totalJuros));
+            double valorTotal = valorInicial * (1 + (juros / 100));
+            double totalJuros = valorTotal - valorInicial;
+            double valorParcelas = valorTotal / qtdParcelas;
+
+            this.tvNome.setText(this.editNome.getText());
+            this.tvValorInicial.setText(df.format(valorInicial));
+            this.tvValorParcelas.setText(df.format(valorParcelas));
+            this.tvValorTotal.setText(df.format(valorTotal));
+            this.tvTotalJuros.setText(df.format(totalJuros));
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
     public void limpar(View v) {
-        Toast.makeText(this,"Limpando", Toast.LENGTH_LONG).show();
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+        Toast.makeText(this, "Limpando", Toast.LENGTH_LONG).show();
+
+        this.editNome.setText("");
+        this.editValor.setText("");
+        this.editQtdParcelas.setText("");
+        this.editJuros.setText("");
+        this.tvNome.setText("");
+        this.tvValorInicial.setText("");
+        this.tvValorParcelas.setText(String.valueOf(""));
+        this.tvValorTotal.setText(String.valueOf(""));
+        this.tvTotalJuros.setText(String.valueOf(""));
+
+//        recreate();
+
+//        Intent intent = getIntent();
+//        setIntent(intent);
+//        finish();
+//        startActivity(intent);
 
     }
 }
