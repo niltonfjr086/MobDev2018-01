@@ -56,15 +56,10 @@ public class MainActivity extends AppCompatActivity {
     public void calcular(View v) {
 
         try {
-            Toast.makeText(this, String.valueOf(this.comEntrada.isChecked()), Toast.LENGTH_LONG).show();
 
             double valorInicial = Double.valueOf(this.editValor.getText().toString());
             int qtdParcelas = Integer.valueOf(this.editQtdParcelas.getText().toString());
             float juros = Float.valueOf(this.editJuros.getText().toString());
-
-            if (this.comEntrada.isChecked()) {
-                juros = (juros * 0.95f);
-            }
 
             double valorTotal = valorInicial * (1 + (juros / 100));
             double totalJuros = valorTotal - valorInicial;
@@ -103,5 +98,26 @@ public class MainActivity extends AppCompatActivity {
 //        finish();
 //        startActivity(intent);
 
+    }
+
+    public void atualizaJuros(View v) {
+        try {
+            float juros = Float.valueOf(this.editJuros.getText().toString());
+
+            if (this.comEntrada.isChecked()) {
+                juros = juros - 5f;
+                if (juros < 0) {
+                    juros = 0f;
+                }
+            } else {
+                if (juros > 0f) {
+                    juros = juros + 5f;
+                }
+            }
+
+            this.editJuros.setText(String.valueOf(juros));
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }
