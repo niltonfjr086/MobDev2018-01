@@ -3,6 +3,7 @@ package devmob2018.com.calculadoraapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +13,9 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvNmb1, tvNmb2;
 
+    LinearLayout layoutResultado;
+    TextView toView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         this.tvNmb1 = findViewById(R.id.nmb1);
         this.tvNmb2 = findViewById(R.id.nmb2);
+
+        this.layoutResultado = findViewById(R.id.layoutResultado);
 
 //        this.tvNmb1 = findViewById(R.id.nmb1);
 //        this.tvNmb1 = findViewById(R.id.nmb1);
@@ -34,15 +40,37 @@ public class MainActivity extends AppCompatActivity {
             Double n1 = Double.valueOf(this.tvNmb1.getText().toString());
             Double n2 = Double.valueOf(this.tvNmb2.getText().toString());
 
-            HashMap<String, Object> functions = new HashMap<>();
-            functions.put("+", this.plus(n1, n2));
-            functions.put("-", this.minus(n1, n2));
-            functions.put("*", this.multi(n1, n2));
-            functions.put("/", this.division(n1, n2));
-
+//            HashMap<String, Object> functions = new HashMap<>();
+//            functions.put("+", this.plus(n1, n2));
+//            functions.put("-", this.minus(n1, n2));
+//            functions.put("*", this.multi(n1, n2));
+//            functions.put("/", this.division(n1, n2));
 //            String.valueOf(functions.get(signal));
+            Double resultado = 0.0;
+            if (signal == '+') {
+                resultado = this.plus(n1, n2);
+            } else {
+                if (signal == '-') {
+                    resultado = this.minus(n1, n2);
+                } else {
+                    if (signal == '*') {
+                        resultado = this.multi(n1, n2);
+                    } else {
+                        if (signal == '/') {
+                            resultado = this.division(n1, n2);
+                        }
+                    }
+                }
+            }
+            this.toView = new TextView(this);
+            this.toView.setGravity(1);
+            this.toView.setText(n1 + " " + signal + " " + n2 + " = " + resultado);
+            this.layoutResultado.addView(this.toView);
 
-            Toast.makeText(this, String.valueOf(functions.get(signal)), Toast.LENGTH_SHORT).show();
+            this.tvNmb1.setText("");
+            this.tvNmb2.setText("");
+
+            Toast.makeText(this, String.valueOf(resultado), Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
@@ -68,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void limpar(View v) {
-        Toast.makeText(this, this.tvNmb1.getText().toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Limpando", Toast.LENGTH_SHORT).show();
+
+        this.tvNmb1.setText("");
+        this.tvNmb2.setText("");
+        this.layoutResultado.removeAllViews();
     }
 }

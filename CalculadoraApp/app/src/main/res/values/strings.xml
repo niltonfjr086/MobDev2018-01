@@ -1,20 +1,4 @@
 <resources>
     <string name="app_name">CalculadoraApp</string>
-
-
     <string name="lblLimpar">Limpar Tudo</string>
-
-
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-    <!--<string name="app_name">CalculadoraApp</string>-->
-
 </resources>
