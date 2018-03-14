@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PrecoMuitoJustoApp</string>
+    <string name="label_nome">Nome do Produto</string>
+    <string name="hint_nome">Digite o nome do Produto</string>
+    <string name="label_valor">Valor</string>
+    <string name="hint_valor">Digite o valor</string>
+    <string name="label_qtdParcelas">Qtd. Parc.</string>
+    <string name="hint_qtdParcelas">Qtd. Parc.</string>
+    <string name="label_juros">Juros (%)</string>
+    <string name="hint_juros">0</string>
+
+    <string name="label_entrada">Com Entrada</string>
+
+    <string name="calcular">Calcular</string>
+    <string name="limpar">Limpar</string>
+
+    <string name="apres_produto">Produto: </string>
+    <string name="apres_valorInicial">Valor Inicial: </string>
+    <string name="apres_valorParcelas">Valor Parcelas: </string>
+    <string name="apres_valorTotal">Valor Total: </string>
+    <string name="apres_totalJuros">Total de Juros:</string>
+
+</resources>
