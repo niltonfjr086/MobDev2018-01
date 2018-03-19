@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">International App</string>
+    <string name="oncreate">Passed by onCreate</string>
+    <string name="onstart">Passed by onStart</string>
+    <string name="onresume">Passed by onResume</string>
+    <string name="onpause">Passed by onPause</string>
+    <string name="onstop">Passed by onStop</string>
+    <string name="ondestroy">Passed by onDestroy</string>
+    <string name="onrestart">Passed by onRestart</string>
+
+    <string name="btn_1">Click</string>
+    </resources>

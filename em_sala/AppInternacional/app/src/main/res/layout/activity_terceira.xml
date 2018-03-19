@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="devmob2018.com.appinternacional.TerceiraActivity">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_2"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="266dp"
+        android:onClick="fecharTela"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="devmob2018.com.layoutapp.Tela1Activity"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/texto1"
+        android:background="#8c2c2c"
+        android:textColor="#9c5c5c"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/texto2"
+        android:background="#a44747"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/texto3"
+        android:background="#707bc6"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:gravity="center"
+        />
+
+</LinearLayout>

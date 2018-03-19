@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">App Internacional</string>
+    <string name="oncreate">Passou pelo onCreate</string>
+    <string name="onstart">Passou pelo onStart</string>
+    <string name="onresume">Passou pelo onResume</string>
+    <string name="onpause">Passou pelo onPause</string>
+    <string name="onstop">Passou pelo onStop</string>
+    <string name="ondestroy">Passou pelo onDestroy</string>
+    <string name="onrestart">Passou pelo onRestart</string>
+
+    <string name="btn_1">Clique</string>
+    <string name="btn_2">Voltar(fechar esta)</string>
+</resources>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">DisciplinasApp</string>
+
+    <string name="label_discplina1">Primeira Disciplina</string>
+    <string name="hint_discplina1">Digite o nome da primeira disciplina</string>
+
+    <string name="label_discplina2">Segunda Disciplina</string>
+    <string name="hint_discplina2">Digite o nome da segunda disciplina</string>
+
+
+    <string name="label_nota1">Nota 1</string>
+    <string name="label_nota2">Nota 2</string>
+    <string name="label_nota3">Nota 3</string>
+
+    <string name="label_btn_proximo">Próximo</string>
+
+</resources>
