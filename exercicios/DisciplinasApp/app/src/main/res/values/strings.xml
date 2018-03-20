@@ -14,4 +14,11 @@
 
     <string name="label_btn_proximo">Próximo</string>
 
+    <string name="confirm_alert_title">Alerta de Confirmação</string>
+    <string name="confirm_alert">Tem certeza que todas as notas foram zero?</string>
+    <string name="positive">Sim</string>
+    <string name="negative">Não</string>
+
+    <string name="label_resultado">Resultado Final</string>
+
 </resources>

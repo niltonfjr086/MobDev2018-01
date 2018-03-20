@@ -6,12 +6,10 @@ public class Disciplina implements Serializable {
 
     private String nome;
 
-    private Double nota1 = 0.0;
-    private Double nota2 = 0.0;
-    private Double nota3 = 0.0;
+    private Double nota1 = 0.00;
+    private Double nota2 = 0.00;
+    private Double nota3 = 0.00;
 
-    public Disciplina() {
-    }
 
     public String getNome() {
         return nome;
@@ -41,8 +39,21 @@ public class Disciplina implements Serializable {
         this.nota3 = nota3;
     }
 
+
+    public Double getSoma() {
+
+        return (this.nota1 + this.nota2 + this.nota3);
+    }
+
     public Double getMedia() {
-        return (this.nota1 + this.nota2 + this.nota3) / 3;
+
+        if (this.getSoma() <= 0) {
+
+            return 0.00;
+        } else {
+
+            return this.getSoma() / 3;
+        }
     }
 
     public String getSituacao() {
