@@ -2,13 +2,16 @@ package devmob2018.com.disciplinasapp.entities;
 
 import java.io.Serializable;
 
-public class Disciplina implements Serializable{
+public class Disciplina implements Serializable {
 
     private String nome;
-    private Double nota1;
-    private Double nota2;
-    private Double nota3;
 
+    private Double nota1 = 0.0;
+    private Double nota2 = 0.0;
+    private Double nota3 = 0.0;
+
+    public Disciplina() {
+    }
 
     public String getNome() {
         return nome;
@@ -22,17 +25,13 @@ public class Disciplina implements Serializable{
         return nota1;
     }
 
-    public void setNota1(Double nota1) {
-        this.nota1 = nota1;
-    }
+    public void setNota1(Double nota1) { this.nota1 = nota1; }
 
     public Double getNota2() {
         return nota2;
     }
 
-    public void setNota2(Double nota2) {
-        this.nota2 = nota2;
-    }
+    public void setNota2(Double nota2) { this.nota2 = nota2; }
 
     public Double getNota3() {
         return nota3;
@@ -40,6 +39,20 @@ public class Disciplina implements Serializable{
 
     public void setNota3(Double nota3) {
         this.nota3 = nota3;
+    }
+
+    public Double getMedia() {
+        return (this.nota1 + this.nota2 + this.nota3) / 3;
+    }
+
+    public String getSituacao() {
+
+        if (this.getMedia() < 7.00) {
+            return "Reprovado";
+        } else {
+            return "Aprovado";
+        }
+
     }
 
     @Override

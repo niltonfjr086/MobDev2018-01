@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/label_btn_proximo"
+        android:onClick="toNext"
         android:layout_gravity="center"/>
 
 </LinearLayout>
