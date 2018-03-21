@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -26,34 +27,8 @@ public class Disciplina2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disciplina2);
 
-
-        if(getIntent().getStringExtra("caller") != null){
-
-            System.out.println("VEIO");
-
-            String  caller = getIntent().getStringExtra("caller");
-            if(caller.equalsIgnoreCase("Resultado")){
-                finish();
-            }
-        }
-
-//        String caller = "";
-//        Class callerClass;
-//        try {
-//            caller = getIntent().getStringExtra("caller");
-//            callerClass = Class.forName(caller);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        if (caller.equalsIgnoreCase("ResultadoActivity")) {
-//            finish();
-//        }
-
-//        String previousActivity = getCallingActivity().getShortClassName();
-//        Toast.makeText(this, previousActivity, Toast.LENGTH_LONG).show();
-//        if(previousActivity.equalsIgnoreCase("ResultadoActivity")){
-//            finish();
-//        }
+//        System.out.println("VEIO");
+//        Log.d("v","VEIO");
 
         Bundle view1 = getIntent().getExtras();
 
@@ -129,4 +104,15 @@ public class Disciplina2Activity extends Activity {
                 .show();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle p = data.getExtras();
+
+        String caller = p.getString("caller");
+        if(caller.equalsIgnoreCase("Resultado")){
+            finish();
+        }
+
+    }
 }
