@@ -93,7 +93,8 @@ public class Disciplina2Activity extends Activity {
                 it.putExtra("d1", d1);
                 it.putExtra("d2", d2);
 
-                startActivity(it);
+//                startActivity(it);
+                startActivityForResult(it, 1);
             }
 
         } catch (Exception e) {
@@ -115,7 +116,8 @@ public class Disciplina2Activity extends Activity {
                         Intent it = new Intent(Disciplina2Activity.this, ResultadoActivity.class);
                         it.putExtra("d1", d1);
                         it.putExtra("d2", d2);
-                        startActivity(it);
+//                        startActivity(it);
+                        startActivityForResult(it, 1);
                     }
                 })
                 .setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
