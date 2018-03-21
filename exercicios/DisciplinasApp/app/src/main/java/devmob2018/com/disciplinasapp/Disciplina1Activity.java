@@ -52,7 +52,7 @@ public class Disciplina1Activity extends Activity {
             d1.setNota3(Double.valueOf(String.valueOf(np3.getValue())));
 
             if (d1.getSoma() <= 0.00) {
-                this.onBackPressed();
+                this.confirmar();
 
             } else {
 
@@ -71,8 +71,8 @@ public class Disciplina1Activity extends Activity {
 
     }
 
-    @Override
-    public void onBackPressed() {
+
+    public void confirmar() {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(R.string.confirm_alert_title)

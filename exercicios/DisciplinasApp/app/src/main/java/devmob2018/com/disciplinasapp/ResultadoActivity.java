@@ -1,6 +1,7 @@
 package devmob2018.com.disciplinasapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -74,14 +75,28 @@ public class ResultadoActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View v) {
-                                       Toast.makeText(ResultadoActivity.this,"Retornando",Toast.LENGTH_LONG);
+                                       Toast.makeText(ResultadoActivity.this, "Retornando", Toast.LENGTH_LONG);
 //                                       Disciplina2Activity.finish();
-                                       finish();
-
+//                                       Intent intent = new Intent(this, Disciplina2Activity.class);
+//                                       intent.putExtra("caller", this.getClass().getSimpleName());
+//                                       startActivity(intent);
+//                                       finish();
+                                       onBackPressed();
                                    }
                                }
 
         );
         layout.addView(btn);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent it = new Intent();
+//        it.putExtra("caller", this.getClass().getSimpleName());
+        it.putExtra("caller", "Resultado");
+        setResult(1, it);
+        super.onBackPressed();
+    }
+
 }

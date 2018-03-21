@@ -26,6 +26,35 @@ public class Disciplina2Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disciplina2);
 
+
+        if(getIntent().getStringExtra("caller") != null){
+
+            System.out.println("VEIO");
+
+            String  caller = getIntent().getStringExtra("caller");
+            if(caller.equalsIgnoreCase("Resultado")){
+                finish();
+            }
+        }
+
+//        String caller = "";
+//        Class callerClass;
+//        try {
+//            caller = getIntent().getStringExtra("caller");
+//            callerClass = Class.forName(caller);
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        if (caller.equalsIgnoreCase("ResultadoActivity")) {
+//            finish();
+//        }
+
+//        String previousActivity = getCallingActivity().getShortClassName();
+//        Toast.makeText(this, previousActivity, Toast.LENGTH_LONG).show();
+//        if(previousActivity.equalsIgnoreCase("ResultadoActivity")){
+//            finish();
+//        }
+
         Bundle view1 = getIntent().getExtras();
 
         this.d1 = (Disciplina) view1.getSerializable("d1");
@@ -56,7 +85,7 @@ public class Disciplina2Activity extends Activity {
             d2.setNota3(Double.valueOf(String.valueOf(np3.getValue())));
 
             if (d2.getSoma() <= 0.00) {
-                this.onBackPressed();
+                this.confirmar();
 
             } else {
 
@@ -74,8 +103,8 @@ public class Disciplina2Activity extends Activity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
+
+    public void confirmar() {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(R.string.confirm_alert_title)
