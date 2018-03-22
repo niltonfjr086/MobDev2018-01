@@ -6,42 +6,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context="devmob2018.com.pesquisaapp.DadosPessoaisActivity">
+    tools:context="devmob2018.com.pesquisaapp.DadosEnderecoActivity">
 
     <EditText
-        android:id="@+id/editNome"
+        android:id="@+id/editCep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintNome"
-        />
-
+        android:hint="@string/hintCep"/>
     <EditText
-        android:id="@+id/editIdade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintIdade"
-        android:inputType="number"
-        />
+        android:hint="@string/hintCidade"
+        android:id="@+id/editCidade"/>
+
+    <Spinner
+        android:id="@+id/spEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </Spinner>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:orientation="horizontal">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btnSalvar"
-            android:onClick="salvar"
-            />
+            android:onClick="salvar"/>
         <Button
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/btnRetornar"
-            android:onClick="retornar"
-            />
-    </LinearLayout>
+            android:onClick="retornar"/>
 
+    </LinearLayout>
 
 </LinearLayout>

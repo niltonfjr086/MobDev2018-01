@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">PesquisaApp</string>
 
+    <string name="mainActivityName">Home</string>
+    <string name="dadosPessoaisActivityName">Dados Pessoais</string>
+    <string name="dadosContatoActivityName">Dados de Contato</string>
+    <string name="dadosEnderecoActivityName">Dados de Endereço</string>
+    <string name="visualizacaoActivityName">Visualização</string>
+
     <string name="btnSalvar">Salvar</string>
     <string name="btnRetornar">Retornar</string>
 
@@ -18,7 +24,9 @@
     <string name="hintCep">Digite o CEP</string>
     <string name="hintCidade">Digite Cidade</string>
 
-    <!--<string name="app_name">PesquisaApp</string>-->
-
+    <string name="negative">Não</string>
+    <string name="positive">Sim</string>
+    <string name="confirm_alert_title">Confirmação</string>
+    <string name="confirm_alert">Deseja salvar com dados em branco?</string>
 
 </resources>
