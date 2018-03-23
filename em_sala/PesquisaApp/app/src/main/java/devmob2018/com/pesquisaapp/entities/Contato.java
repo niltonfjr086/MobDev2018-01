@@ -1,6 +1,8 @@
 package devmob2018.com.pesquisaapp.entities;
 
-public class Contato {
+import java.io.Serializable;
+
+public class Contato implements Serializable {
 
     private String telefone;
     private String email;

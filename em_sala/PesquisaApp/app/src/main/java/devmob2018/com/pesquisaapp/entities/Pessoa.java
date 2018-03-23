@@ -1,17 +1,14 @@
 package devmob2018.com.pesquisaapp.entities;
 
-/**
- * Created by main on 22/03/18.
- */
+import java.io.Serializable;
 
-public class Pessoa {
+public class Pessoa implements Serializable{
 
     private String nome;
     private Integer idade;
 
     private Contato contato;
     private Endereco endereco;
-
 
 
     public Pessoa() {

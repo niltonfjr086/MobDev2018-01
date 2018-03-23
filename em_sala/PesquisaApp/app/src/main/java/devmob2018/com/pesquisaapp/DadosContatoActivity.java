@@ -1,9 +1,22 @@
 package devmob2018.com.pesquisaapp;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 
-public class DadosContatoActivity extends Activity {
+import devmob2018.com.pesquisaapp.entities.Contato;
+import devmob2018.com.pesquisaapp.entities.Pessoa;
+
+public class DadosContatoActivity extends BaseActivity {
+
+    private Pessoa pessoa;
+
+    private Contato contato;
+    private EditText editTelefone, editEmail;
+
+    public DadosContatoActivity() {
+        super(790);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -11,5 +24,35 @@ public class DadosContatoActivity extends Activity {
         setContentView(R.layout.activity_dados_contato);
 
         setTitle(getString(R.string.app_name) + " | " + getString(R.string.dadosContatoActivityName));
+
+        this.contato = new Contato();
+
+        this.editTelefone = findViewById(R.id.editTelefone);
+        this.editEmail = findViewById(R.id.editEmail);
+
+        Bundle b = getIntent().getExtras();
+        if ((Pessoa) b.getSerializable("pessoa") != null) {
+            this.pessoa = (Pessoa) b.getSerializable("pessoa");
+
+            this.editTelefone.setText(this.pessoa.getContato().getTelefone());
+            this.editEmail.setText(this.pessoa.getContato().getEmail());
+
+        }
+
     }
+
+    @Override
+    protected void implementarExtras(Intent it) {
+
+        this.contato.setEmail(this.editEmail.getText().toString());
+        this.contato.setTelefone(this.editTelefone.getText().toString());
+
+        it.putExtra("contato", this.contato);
+    }
+
+    @Override
+    protected boolean todosPreenchidos() {
+        return true;
+    }
+
 }

@@ -1,10 +1,8 @@
 package devmob2018.com.pesquisaapp.entities;
 
-/**
- * Created by main on 22/03/18.
- */
+import java.io.Serializable;
 
-public class Endereco {
+public class Endereco implements Serializable {
 
     private String cep;
     private String cidade;

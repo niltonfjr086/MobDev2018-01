@@ -1,13 +1,13 @@
 package devmob2018.com.pesquisaapp;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import devmob2018.com.pesquisaapp.entities.Contato;
+import devmob2018.com.pesquisaapp.entities.Endereco;
 import devmob2018.com.pesquisaapp.entities.Pessoa;
 
 public class PrincipalActivity extends Activity {
@@ -22,6 +22,8 @@ public class PrincipalActivity extends Activity {
         setTitle(getString(R.string.app_name) + " | " + getString(R.string.mainActivityName));
 
         this.pessoa = new Pessoa();
+        this.pessoa.setContato(new Contato());
+        this.pessoa.setEndereco(new Endereco());
     }
 
     public void chamar(View v) {
@@ -33,7 +35,8 @@ public class PrincipalActivity extends Activity {
             Class c = Class.forName(referencia);
 
             Intent it = new Intent(this, c);
-            startActivityForResult(it, 500);
+            it.putExtra("pessoa", this.pessoa);
+            startActivityForResult(it, 987);
 
         } catch (ClassNotFoundException e) {
 
@@ -47,36 +50,34 @@ public class PrincipalActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Bundle p = data.getExtras();
 
-        String caller = p.getString("caller");
-        if(caller.equalsIgnoreCase("Resultado")){
-            finish();
+//        Toast.makeText(this, "REQCODE: " + String.valueOf(requestCode) + " | " + "RESCODE: " + String.valueOf(resultCode), Toast.LENGTH_SHORT).show();
+
+        if (resultCode != 0 && data.getExtras() != null) {
+            Bundle p = data.getExtras();
+
+            if (resultCode == 789) {
+                this.pessoa.setNome(p.getString("nome"));
+                this.pessoa.setIdade(p.getInt("idade"));
+
+            } else {
+
+                if (resultCode == 790) {
+                    this.pessoa.setContato((Contato) p.getSerializable("contato"));
+
+                } else {
+
+                    if (resultCode == 791) {
+                        this.pessoa.setEndereco((Endereco) p.getSerializable("endereco"));
+                    }
+                }
+            }
+
+//            Toast.makeText(this, this.pessoa.toString(), Toast.LENGTH_LONG).show();
         }
 
+
     }
 
 
-    private static void confirmar() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle(R.string.confirm_alert_title)
-                .setMessage(R.string.confirm_alert)
-                .setPositiveButton(R.string.positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        Intent it = new Intent(Disciplina2Activity.this, ResultadoActivity.class);
-//                        it.putExtra("d1", d1);
-//                        it.putExtra("d2", d2);
-//                        startActivityForResult(it, 1);
-                    }
-                })
-                .setNegativeButton(R.string.negative, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-//                        Toast.makeText(Disciplina2Activity.this, "Preencha as notas corretamente", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .show();
-    }
 }

@@ -18,7 +18,8 @@
         <activity android:name=".DadosPessoaisActivity" />
         <activity android:name=".DadosContatoActivity" />
         <activity android:name=".DadosEnderecoActivity" />
-        <activity android:name=".VisualizacaoActivity"></activity>
+        <activity android:name=".VisualizacaoActivity" />
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

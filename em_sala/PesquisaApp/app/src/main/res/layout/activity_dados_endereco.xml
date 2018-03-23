@@ -14,10 +14,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/hintCep"/>
     <EditText
+        android:id="@+id/editCidade"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hintCidade"
-        android:id="@+id/editCidade"/>
+        android:hint="@string/hintCidade"/>
 
     <Spinner
         android:id="@+id/spEstado"
