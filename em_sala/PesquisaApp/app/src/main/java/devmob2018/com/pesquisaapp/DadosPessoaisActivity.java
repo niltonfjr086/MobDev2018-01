@@ -2,7 +2,6 @@ package devmob2018.com.pesquisaapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 
 import devmob2018.com.pesquisaapp.entities.Pessoa;
@@ -53,10 +52,24 @@ public class DadosPessoaisActivity extends BaseActivity {
         if (!this.editIdade.getText().toString().equals("")) {
             it.putExtra("idade", Integer.valueOf(this.editIdade.getText().toString()));
         }
+
+
+        this.pessoa.setNome(this.editNome.getText().toString());
+
+        if (!this.editIdade.getText().toString().equals("")) {
+            this.pessoa.setIdade(Integer.valueOf(this.editIdade.getText().toString()));
+        }
+
+        it.putExtra("pessoa", this.pessoa);
     }
 
     protected boolean todosPreenchidos() {
-        return false;
+
+        if (this.editNome.getText().length() == 0 || this.editIdade.getText().length() == 0) {
+            return false;
+        }
+
+        return true;
     }
 
 

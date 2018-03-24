@@ -44,14 +44,23 @@ public class DadosContatoActivity extends BaseActivity {
     @Override
     protected void implementarExtras(Intent it) {
 
-        this.contato.setEmail(this.editEmail.getText().toString());
-        this.contato.setTelefone(this.editTelefone.getText().toString());
+//        this.contato.setEmail(this.editEmail.getText().toString());
+//        this.contato.setTelefone(this.editTelefone.getText().toString());
+//        it.putExtra("contato", this.contato);
 
-        it.putExtra("contato", this.contato);
+        this.pessoa.getContato().setEmail(this.editEmail.getText().toString());
+        this.pessoa.getContato().setTelefone(this.editTelefone.getText().toString());
+        it.putExtra("pessoa", this.pessoa);
+
     }
 
     @Override
     protected boolean todosPreenchidos() {
+
+        if (this.editEmail.getText().length() == 0 || this.editTelefone.getText().length() == 0) {
+            return false;
+        }
+
         return true;
     }
 

@@ -29,4 +29,11 @@
     <string name="confirm_alert_title">Confirmação</string>
     <string name="confirm_alert">Deseja salvar com dados em branco?</string>
 
+
+    <string-array name="estates">
+        <item>Santa Catarina</item>
+        <item>Rio Grande do Sul</item>
+    </string-array>
+
+
 </resources>

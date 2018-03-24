@@ -2,6 +2,7 @@ package devmob2018.com.pesquisaapp.entities;
 
 import java.io.Serializable;
 
+
 public class Endereco implements Serializable {
 
     private String cep;

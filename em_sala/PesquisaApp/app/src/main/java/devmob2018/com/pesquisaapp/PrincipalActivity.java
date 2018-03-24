@@ -56,21 +56,25 @@ public class PrincipalActivity extends Activity {
         if (resultCode != 0 && data.getExtras() != null) {
             Bundle p = data.getExtras();
 
-            if (resultCode == 789) {
-                this.pessoa.setNome(p.getString("nome"));
-                this.pessoa.setIdade(p.getInt("idade"));
+//            if (resultCode == 789) {
+//                this.pessoa.setNome(p.getString("nome"));
+//                this.pessoa.setIdade(p.getInt("idade"));
+//
+//            } else {
+//
+//                if (resultCode == 790) {
+//                    this.pessoa.setContato((Contato) p.getSerializable("contato"));
+//
+//                } else {
+//
+//                    if (resultCode == 791) {
+//                        this.pessoa.setEndereco((Endereco) p.getSerializable("endereco"));
+//                    }
+//                }
+//            }
 
-            } else {
-
-                if (resultCode == 790) {
-                    this.pessoa.setContato((Contato) p.getSerializable("contato"));
-
-                } else {
-
-                    if (resultCode == 791) {
-                        this.pessoa.setEndereco((Endereco) p.getSerializable("endereco"));
-                    }
-                }
+            if (p.getSerializable("pessoa") != null) {
+                this.pessoa = (Pessoa) p.getSerializable("pessoa");
             }
 
 //            Toast.makeText(this, this.pessoa.toString(), Toast.LENGTH_LONG).show();

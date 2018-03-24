@@ -15,7 +15,7 @@ public abstract class BaseActivity extends Activity {
     protected StringBuilder caller;
     private int resultCode;
 
-    private static HashMap<String, Object> extras;
+//    private static HashMap<String, Object> extras;
 
     public BaseActivity(int resultCode) {
         this.caller = new StringBuilder();
