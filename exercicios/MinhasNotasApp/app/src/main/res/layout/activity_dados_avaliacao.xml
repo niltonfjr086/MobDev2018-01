@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="devmob2018.com.minhasnotasapp.DadosAvaliacaoActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvTitulo" />
+
+    <EditText
+        android:id="@+id/editTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_titulo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tvNota" />
+
+    <EditText
+        android:id="@+id/editNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_nota" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnSalvar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnSalvar"
+            android:onClick="salvar"/>
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnCancelar"
+            android:onClick="cancelar"/>
+
+    </LinearLayout>
+
+</LinearLayout>

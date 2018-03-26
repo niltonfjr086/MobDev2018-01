@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="devmob2018.com.minhasnotasapp.MainActivity">
+
+    <Button
+        android:id="@+id/DadosDisciplinaActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnDadosDisciplina"
+        android:onClick="apresentar"/>
+
+    <Button
+        android:id="@+id/DadosAvaliacaoActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnDadosAvaliacao1"
+        android:onClick="apresentar"/>
+
+    <Button
+        android:id="@+id/DadosAvaliacaoActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnDadosAvaliacao2"
+        android:onClick="apresentar"/>
+
+    <Button
+        android:id="@+id/DadosDisciplinaActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnEnviarDados"
+        android:onClick="apresentar"/>
+
+    <Button
+        android:id="@+id/DadosResultadoActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnFechar"
+        android:onClick="apresentar"/>
+
+
+
+
+</LinearLayout>

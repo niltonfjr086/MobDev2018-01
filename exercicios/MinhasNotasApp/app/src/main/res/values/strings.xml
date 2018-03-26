@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">MinhasNotasApp</string>
+    <string name="btnDadosDisciplina">Dados da Disciplina</string>
+    <string name="btnDadosAvaliacao1">Dados Avaliação 1</string>
+    <string name="btnDadosAvaliacao2">Dados Avaliação 2</string>
+    <string name="btnEnviarDados">EnviarDados</string>
+    <string name="btnFechar">Fechar</string>
+
+
+    <string name="app_dadosdisciplina_name">Dados Discplina</string>
+    <string name="tvNome">Nome Disciplina</string>
+    <string name="hint_nome">Digite o nome</string>
+
+    <string name="tvProfessor">Professor</string>
+    <string name="hint_professor">Digite o professor</string>
+
+    <string name="btnSalvar">Salvar</string>
+    <string name="btnCancelar">Cancelar</string>
+
+    <string name="btnVoltarEditar">Voltar e Editar</string>
+    <string name="btnVoltarLimpar">Voltar e Limpar Dados</string>
+
+    <string name="tvTitulo">Título</string>
+    <string name="hint_titulo">Digite o título da Avaliação</string>
+
+    <string name="hint_nota">Digite a nota</string>
+    <string name="tvNota">Nota</string>
+
+    <string name="tvAvaliacao">Avaliação</string>
+
+</resources>
