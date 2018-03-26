@@ -42,7 +42,7 @@ public class DadosEnderecoActivity extends BaseActivity {
 
         this.spEstado = findViewById(R.id.spEstado);
         this.spEstado.setOnItemSelectedListener(this.dispararNaSelecaoEstado());
-        this.adapter = ArrayAdapter.createFromResource(this, R.array.estates, android.R.layout.simple_spinner_item);
+        this.adapter = ArrayAdapter.createFromResource(this, R.array.estates, android.R.layout.simple_spinner_dropdown_item);
         this.adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spEstado.setAdapter(adapter);
 
