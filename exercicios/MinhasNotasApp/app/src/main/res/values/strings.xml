@@ -18,7 +18,7 @@
     <string name="btnCancelar">Cancelar</string>
 
     <string name="btnVoltarEditar">Voltar e Editar</string>
-    <string name="btnVoltarLimpar">Voltar e Limpar Dados</string>
+    <string name="btnVoltarLimpar">Voltar e Limpar</string>
 
     <string name="tvTitulo">Título</string>
     <string name="hint_titulo">Digite o título da Avaliação</string>
@@ -27,5 +27,10 @@
     <string name="tvNota">Nota</string>
 
     <string name="tvAvaliacao">Avaliação</string>
+
+    <string name="negative">Não</string>
+    <string name="positive">Sim</string>
+    <string name="confirm_alert_title">Confirmação</string>
+    <string name="confirm_alert">Deseja salvar com dados em branco?</string>
 
 </resources>

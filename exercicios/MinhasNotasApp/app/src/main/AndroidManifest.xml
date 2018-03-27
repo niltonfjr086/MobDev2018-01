@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".DadosDisciplinaActivity" />
         <activity android:name=".DadosAvaliacaoActivity" />
-        <activity android:name=".DadosResultadoActivity"></activity>
+        <activity android:name=".DadosResultadoActivity" />
+        <activity android:name=".BaseActivity"></activity>
     </application>
 
 </manifest>

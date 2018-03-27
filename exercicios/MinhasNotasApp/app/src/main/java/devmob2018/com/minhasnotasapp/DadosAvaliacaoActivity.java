@@ -1,10 +1,13 @@
 package devmob2018.com.minhasnotasapp;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-public class DadosAvaliacaoActivity extends Activity {
+public class DadosAvaliacaoActivity extends BaseActivity {
+
+    public DadosAvaliacaoActivity(int resultCode) {
+        super(resultCode);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,11 +15,15 @@ public class DadosAvaliacaoActivity extends Activity {
         setContentView(R.layout.activity_dados_avaliacao);
     }
 
-    public void salvar(View v) {
+    @Override
+    protected void implementarExtras(Intent it) {
 
     }
 
-    public void cancelar(View v) {
-
+    @Override
+    protected boolean todosPreenchidos() {
+        return false;
     }
+
+
 }
