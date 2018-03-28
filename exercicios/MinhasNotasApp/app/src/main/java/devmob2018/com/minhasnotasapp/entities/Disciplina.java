@@ -54,6 +54,29 @@ public class Disciplina implements Serializable {
         this.avaliacao2 = avaliacao2;
     }
 
+    private Float getSoma() {
+
+        Float nota1 = 0f;
+        if (this.avaliacao1 != null) {
+            if (this.avaliacao1.getNota() != null) {
+                nota1 = this.avaliacao1.getNota();
+            }
+        }
+
+        Float nota2 = 0f;
+        if (this.avaliacao2 != null) {
+            if (this.avaliacao2.getNota() != null) {
+                nota2 = this.avaliacao2.getNota();
+            }
+        }
+
+        return nota1 + nota2;
+    }
+
+    public Float getMedia() {
+        return this.getSoma() > 0.00f ? (this.getSoma() / 2) : 0.00f;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

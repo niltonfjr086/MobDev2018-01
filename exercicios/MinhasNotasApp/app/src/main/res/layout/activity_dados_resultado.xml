@@ -16,6 +16,7 @@
         android:text="@string/tvNome" />
 
     <TextView
+        android:id="@+id/professor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tvProfessor" />
@@ -43,6 +44,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tvNota"/>
+
+    <TextView
+        android:id="@+id/media"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/tvMedia"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -51,11 +60,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/btnVoltarEditar"/>
+            android:text="@string/btnVoltarEditar"
+            android:onClick="cancelar"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/btnVoltarLimpar"/>
+            android:text="@string/btnVoltarLimpar"
+            android:onClick="salvar"/>
 
     </LinearLayout>
 

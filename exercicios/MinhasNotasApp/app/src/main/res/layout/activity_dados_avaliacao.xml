@@ -17,7 +17,7 @@
         android:id="@+id/editTitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hint_titulo" />
+        android:hint="@string/hint_titulo" />
 
     <TextView
         android:layout_width="match_parent"
@@ -25,10 +25,11 @@
         android:text="@string/tvNota" />
 
     <EditText
-        android:id="@+id/editNome"
+        android:id="@+id/editNota"
+        android:inputType="numberDecimal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hint_nota" />
+        android:hint="@string/hint_nota" />
 
     <LinearLayout
         android:layout_width="match_parent"

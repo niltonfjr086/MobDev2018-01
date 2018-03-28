@@ -17,32 +17,31 @@
         android:onClick="apresentar"/>
 
     <Button
-        android:id="@+id/DadosAvaliacaoActivity"
+        android:id="@+id/DadosAvaliacaoActivity1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnDadosAvaliacao1"
         android:onClick="apresentar"/>
 
     <Button
-        android:id="@+id/DadosAvaliacaoActivity"
+        android:id="@+id/DadosAvaliacaoActivity2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnDadosAvaliacao2"
         android:onClick="apresentar"/>
 
     <Button
-        android:id="@+id/DadosDisciplinaActivity"
+        android:id="@+id/DadosResultadoActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnEnviarDados"
         android:onClick="apresentar"/>
 
     <Button
-        android:id="@+id/DadosResultadoActivity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btnFechar"
-        android:onClick="apresentar"/>
+        android:onClick="fechar"/>
 
 
 

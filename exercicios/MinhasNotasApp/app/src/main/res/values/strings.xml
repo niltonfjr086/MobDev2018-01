@@ -8,6 +8,8 @@
 
 
     <string name="app_dadosdisciplina_name">Dados Discplina</string>
+    <string name="app_dadosresultado_name">Resultado Final</string>
+
     <string name="tvNome">Nome Disciplina</string>
     <string name="hint_nome">Digite o nome</string>
 
@@ -27,6 +29,7 @@
     <string name="tvNota">Nota</string>
 
     <string name="tvAvaliacao">Avaliação</string>
+    <string name="tvMedia">MÉDIA</string>
 
     <string name="negative">Não</string>
     <string name="positive">Sim</string>

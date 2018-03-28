@@ -29,12 +29,41 @@ public class MainActivity extends Activity {
         try {
 
             String referencia = "devmob2018.com.minhasnotasapp.";
-            referencia += getResources().getResourceEntryName(v.getId());
+            String nomeClasse = getResources().getResourceEntryName(v.getId());
+
+            int requestCode = 0;
+
+            switch (nomeClasse){
+                case "DadosDisciplinaActivity":
+                    requestCode = 1000;
+                    break;
+
+                case "DadosAvaliacaoActivity1":
+                    nomeClasse = "DadosAvaliacaoActivity";
+                    requestCode = 1001;
+                    break;
+
+                case "DadosAvaliacaoActivity2":
+                    nomeClasse = "DadosAvaliacaoActivity";
+                    requestCode = 1002;
+                    break;
+                case "DadosResultadoActivity":
+                    requestCode = 1111;
+                    break;
+
+                default:
+                    Toast.makeText(this, "Escolha não reconhecida!", Toast.LENGTH_SHORT).show();
+            }
+
+
+            referencia += nomeClasse;
             Class c = Class.forName(referencia);
 
             Intent it = new Intent(this, c);
+            it.putExtra("requestCode",requestCode);
             it.putExtra("disciplina", this.disciplina);
-            startActivityForResult(it, 987);
+
+            startActivityForResult(it, requestCode);
 
         } catch (ClassNotFoundException e) {
 
@@ -42,6 +71,10 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
+    }
+
+    public void fechar(View v){
+        this.finish();
     }
 
     @Override

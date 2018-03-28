@@ -2,7 +2,6 @@ package devmob2018.com.minhasnotasapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 
 import devmob2018.com.minhasnotasapp.entities.Disciplina;
@@ -14,7 +13,7 @@ public class DadosDisciplinaActivity extends BaseActivity {
     private EditText editNome, editProfessor;
 
     public DadosDisciplinaActivity() {
-        super(678);
+        super(2000);
     }
 
     @Override
@@ -24,28 +23,38 @@ public class DadosDisciplinaActivity extends BaseActivity {
         setContentView(R.layout.activity_dados_disciplina);
         setTitle(getString(R.string.app_name) + " | " + getString(R.string.app_dadosdisciplina_name));
 
-        Bundle b = getIntent().getExtras();
-//        this.disciplina =
-
         this.editNome = findViewById(R.id.editNome);
         this.editProfessor = findViewById(R.id.editProfessor);
 
-    }
+        Bundle b = getIntent().getExtras();
+        Integer requestCode = b.getInt("requestCode");
+        if (requestCode == 1000) {
 
-    public void salvar(View v) {
+            this.disciplina = (Disciplina) b.getSerializable("disciplina");
 
-        this.editNome.getText();
+            this.editNome.setText(this.disciplina.getNomeDisciplina());
+            this.editProfessor.setText(this.disciplina.getNomeProfessor());
+        }
 
     }
 
     @Override
     protected void implementarExtras(Intent it) {
+        this.disciplina.setNomeDisciplina(this.editNome.getText().toString());
+        this.disciplina.setNomeProfessor(this.editProfessor.getText().toString());
 
+        it.putExtra("disciplina", this.disciplina);
     }
 
     @Override
     protected boolean todosPreenchidos() {
-        return false;
+
+        if (this.editNome.getText().toString().length() == 0 ||
+                this.editProfessor.getText().toString().length() == 0) {
+
+            return false;
+        }
+        return true;
     }
 
 }

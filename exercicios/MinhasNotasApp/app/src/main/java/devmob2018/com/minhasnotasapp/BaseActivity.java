@@ -11,7 +11,7 @@ import android.widget.Toast;
 public abstract class BaseActivity extends Activity {
 
     protected StringBuilder caller;
-    private int resultCode;
+    protected int resultCode;
 
     public BaseActivity(int resultCode) {
         this.caller = new StringBuilder();
