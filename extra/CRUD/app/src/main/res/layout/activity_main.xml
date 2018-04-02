@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp"
+    tools:context="devmob2018.com.crud.controller.MainActivity">
+
+    <LinearLayout
+        android:paddingTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editPosicao"
+            android:inputType="number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_posicao" />
+
+        <Button
+            android:id="@+id/garregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_carregar_pessoa"
+            android:onClick="onButtonAction"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editNome"
+        android:paddingTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_nome"/>
+
+    <LinearLayout
+        android:paddingTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editIdade"
+            android:inputType="number"
+            android:maxLength="3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="@string/hint_idade"/>
+
+        <EditText
+            android:id="@+id/editPeso"
+            android:inputType="numberDecimal"
+            android:maxLength="5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="@string/hint_peso"/>
+
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/toggleDeficiencia"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_deficiencia"
+        android:textOn=""
+        android:textOff=""
+        android:onClick="onButtonAction"/>
+
+    <LinearLayout
+        android:paddingTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/adicionarPessoa"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:text="@string/btn_adicionar_pessoa"
+            android:onClick="onButtonAction"/>
+
+        <Button
+            android:id="@+id/editarPessoa"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:text="@string/btn_editar_pessoa"
+            android:onClick="onButtonAction"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/removerPessoa"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:text="@string/btn_remover_pessoa"
+            android:onClick="onButtonAction"/>
+
+        <Button
+            android:id="@+id/removerTabela"
+            android:layout_width="190dp"
+            android:layout_height="match_parent"
+            android:text="@string/btn_remover_tabela"
+            android:onClick="onButtonAction"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/verRegistros"
+        android:layout_marginTop="10dp"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/btn_ver_registros"
+        android:onClick="onButtonAction"/>
+
+</LinearLayout>

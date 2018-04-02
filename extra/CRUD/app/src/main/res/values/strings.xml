@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">CRUD</string>
+
+    <string name="hint_posicao">Posição</string>
+    <string name="btn_carregar_pessoa">Carregar Pessoa</string>
+
+    <string name="lbl_nome">Nome</string>
+    <string name="hint_nome">Digite o Nome</string>
+
+    <string name="lbl_idade">Idade</string>
+    <string name="hint_idade">Digite a Idade</string>
+
+    <string name="lbl_peso">Peso</string>
+    <string name="hint_peso">Digite o Peso</string>
+
+    <string name="lbl_deficiencia">Possui Deficiência?</string>
+
+    <string name="btn_adicionar_pessoa">ADICIONAR PESSOA</string>
+    <string name="btn_editar_pessoa">EDITAR PESSOA</string>
+    <string name="btn_remover_pessoa">REMOVER PESSOA</string>
+    <string name="btn_remover_tabela">REMOVER TABELA</string>
+
+    <string name="btn_ver_registros">VER REGISTROS</string>
+
+</resources>
