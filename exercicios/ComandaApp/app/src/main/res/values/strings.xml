@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Minha Comanda</string>
+    <string name="app_adicao_activity">Adicionando Produto</string>
+
+
+    <string name="btnAdicionarProduto">Adicionar Produto</string>
+    <string name="btnLimparLista">Limpar Lista</string>
+    <string name="lblTotal">Total: R$</string>
+
+
+    <string name="lblProduto">Produto</string>
+    <string name="lblQuantidade">Quantidade</string>
+    <string name="btnEnviar">Enviar</string>
+
+
+    <!--<string name="app_name">Minha Comanda</string>-->
+</resources>

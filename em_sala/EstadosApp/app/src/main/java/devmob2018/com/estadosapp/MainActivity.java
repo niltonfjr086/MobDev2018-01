@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     private ArrayAdapter<Estado> adapterEstados;
 
     private ListView listViewEstados;
-    Estado estado = null;
+    private Estado estado = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         this.estados = new ArrayList<>();
 
 
-        this.adapterEstados = new ArrayAdapter<Estado>(this, android.R.layout.simple_list_item_1, estados);
+        this.adapterEstados = new ArrayAdapter<Estado>(this, android.R.layout.simple_list_item_1, this.estados);
 
         this.listViewEstados = findViewById(R.id.estados);
         this.listViewEstados.setAdapter(this.adapterEstados);
@@ -48,11 +48,11 @@ public class MainActivity extends Activity {
         this.listViewEstados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                estado = adapterEstados.getItem(position);
+                MainActivity.this.estado = MainActivity.this.adapterEstados.getItem(position);
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
                 alerta.setTitle("Removendo Estado");
-                alerta.setMessage("Deseja remover o estado " + estado.getNome());
+                alerta.setMessage("Deseja remover o estado " + MainActivity.this.estado.getNome());
                 alerta.setIcon(android.R.drawable.ic_delete);
                 alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
@@ -60,14 +60,14 @@ public class MainActivity extends Activity {
                         //DELETE NO BANCO
 
                         //DELETE NA lISTA
-                        adapterEstados.remove(estado);
-
+                        MainActivity.this.adapterEstados.remove(MainActivity.this.estado);
+                        MainActivity.this.estado = null;
                     }
                 });
                 alerta.setNeutralButton("Não", null);
                 alerta.show();
 
-                Toast.makeText(MainActivity.this, estado.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, MainActivity.this.estado.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -75,14 +75,27 @@ public class MainActivity extends Activity {
         this.listViewEstados.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                estado= adapterEstados.getItem(position);
-                editNome.setText(estado.getNome());
-                editSigla.setText(estado.getSigla());
-                Toast.makeText(MainActivity.this, "Longo"+estado.toString(), Toast.LENGTH_SHORT).show();
+                MainActivity.this.estado = MainActivity.this.adapterEstados.getItem(position);
+
+                AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
+                alerta.setTitle("Editar Estado");
+                alerta.setMessage("Deseja editar o estado " + MainActivity.this.estado.getNome());
+                alerta.setIcon(android.R.drawable.ic_menu_edit);
+                alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //CARREGA
+                        MainActivity.this.editNome.setText(MainActivity.this.estado.getNome());
+                        MainActivity.this.editSigla.setText(MainActivity.this.estado.getSigla());
+                        Toast.makeText(MainActivity.this, "Longo" + MainActivity.this.estado.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alerta.setNeutralButton("Não", null);
+                alerta.show();
+
                 return true;
             }
         });
-
 
 
     }
@@ -91,22 +104,24 @@ public class MainActivity extends Activity {
         Editable nome = this.editNome.getText();
         Editable sigla = this.editSigla.getText();
 
-        if(estado == null) {
+        if (this.estado == null) {
             //Insert BD
 
             //INSERT NA LISTA
-            estado = new Estado();
-            if (nome.length() > 0) estado.setNome(nome.toString());
-            if (sigla.length() > 0) estado.setSigla(sigla.toString());
-            this.adapterEstados.add(estado);
+            this.estado = new Estado();
+            if (nome.length() > 0) this.estado.setNome(nome.toString());
+            if (sigla.length() > 0) this.estado.setSigla(sigla.toString());
+            this.adapterEstados.add(this.estado);
 
 
-        }else{
+        } else {
             //UPDATE BD
 
             //UPDATE NA LISTA
-            if (nome.length() > 0) estado.setNome(nome.toString());
-            if (sigla.length() > 0) estado.setSigla(sigla.toString());
+            if (nome.length() > 0) this.estado.setNome(nome.toString());
+
+            if (sigla.length() > 0) this.estado.setSigla(sigla.toString());
+
             this.adapterEstados.notifyDataSetChanged();
         }
 
@@ -116,7 +131,7 @@ public class MainActivity extends Activity {
 
         this.editNome.requestFocus();
 
-        estado = null;
+        this.estado = null;
 
     }
 
