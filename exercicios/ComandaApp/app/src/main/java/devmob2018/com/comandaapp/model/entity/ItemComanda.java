@@ -11,6 +11,11 @@ public class ItemComanda implements Serializable {
     public ItemComanda() {
     }
 
+    public ItemComanda(Produto produto, Integer quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+    }
+
     public Produto getProduto() {
         return produto;
     }

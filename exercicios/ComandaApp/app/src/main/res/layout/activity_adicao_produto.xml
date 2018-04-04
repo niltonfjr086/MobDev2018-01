@@ -14,14 +14,14 @@
         android:layout_height="wrap_content"
         android:text="@string/lblProduto"/>
 
-    <ScrollView
+    <Spinner
         android:id="@+id/produtos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="selecionar">
 
-    </ScrollView>
+    </Spinner>
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:layout_gravity="center"
         android:text="@string/lblQuantidade"/>
 
-    <Spinner
+    <NumberPicker
         android:id="@+id/qtdProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
 
 
-    </Spinner>
+    </NumberPicker>
 
     <Button
         android:layout_width="wrap_content"
