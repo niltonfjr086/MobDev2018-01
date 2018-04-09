@@ -25,6 +25,14 @@ public class Comanda implements Serializable {
 
     }
 
+    public List<ItemComanda> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemComanda> itens) {
+        this.itens = itens;
+    }
+
     public void adicionarItem(ItemComanda ic) {
         this.itens.add(ic);
     }

@@ -12,14 +12,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/lblProduto"/>
 
     <Spinner
-        android:id="@+id/produtos"
-        android:layout_width="match_parent"
+        android:id="@+id/spProdutos"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="selecionar">
+        android:textAlignment="center"
+        android:layout_gravity="center">
 
     </Spinner>
 
@@ -33,8 +34,7 @@
         android:id="@+id/qtdProduto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="defineQtd">
+        android:layout_gravity="center">
 
 
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/btnEnviar"
-        android:onClick="enviar"/>
+        android:text="@string/btnSalvarItem"
+        android:onClick="salvar"/>
 
 </LinearLayout>

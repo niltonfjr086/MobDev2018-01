@@ -9,6 +9,7 @@ public class ItemComanda implements Serializable {
     private Double subtotal;
 
     public ItemComanda() {
+        this.produto = new Produto();
     }
 
     public ItemComanda(Produto produto, Integer quantidade) {
