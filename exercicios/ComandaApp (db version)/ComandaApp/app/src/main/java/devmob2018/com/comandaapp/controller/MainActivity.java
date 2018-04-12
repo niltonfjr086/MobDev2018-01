@@ -2,8 +2,12 @@ package devmob2018.com.comandaapp.controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +20,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import devmob2018.com.comandaapp.MyApp;
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.model.database.CreatePopulatedTables;
+import devmob2018.com.comandaapp.model.database.DataBaseConnectionFactory;
 import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.ItemComanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
@@ -30,26 +37,62 @@ public class MainActivity extends Activity {
     private ArrayAdapter<ItemComanda> adapterProdutos;
     private ListView viewProdutos;
 
+//    SQLiteDatabase db;
+    private SQLiteDatabase dbForRead;
+    private SQLiteDatabase dbForWrite;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        try {
 
-        this.comanda = new Comanda();
+            this.comanda = new Comanda();
 
-        this.comanda.getItens().add(new ItemComanda(Comanda.produtosDisponiveis.get(1), 5));
+            this.comanda.getItens().add(new ItemComanda(Comanda.produtosDisponiveis.get(1), 5));
 
-        this.valorTotal = findViewById(R.id.valorTotal);
-        this.valorTotal.setText(this.comanda.getTotal().toString());
+            this.valorTotal = findViewById(R.id.valorTotal);
+            this.valorTotal.setText(this.comanda.getTotal().toString());
 
-        this.adapterProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.comanda.getItens());
-        this.viewProdutos = findViewById(R.id.produtos);
-        this.viewProdutos.setAdapter(this.adapterProdutos);
+            this.adapterProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.comanda.getItens());
+            this.viewProdutos = findViewById(R.id.produtos);
+            this.viewProdutos.setAdapter(this.adapterProdutos);
 
-        this.viewProdutos.setOnItemClickListener(this.editarItem());
-        this.viewProdutos.setOnItemLongClickListener(this.removerItem());
+            this.viewProdutos.setOnItemClickListener(this.editarItem());
+            this.viewProdutos.setOnItemLongClickListener(this.removerItem());
 
+
+//        dbForWrite.beginTransaction();
+//        dbForWrite.execSQL("CREATE TABLE IF NOT EXISTS " + "tb_pessoa" + "(" +
+//                "id integer not null primary key autoincrement," +
+//                "nome varchar(45) not null," +
+//                "valor float not null)");
+//        dbForWrite.endTransaction();
+
+            //this.db = this.openOrCreateDatabase("comanda.db", 0, null);
+
+//        CreatePopulatedTables.createTableProduto(this.db);
+//        CreatePopulatedTables.createTableItemComanda(this.db);
+
+
+//            Cursor cursor = DataBaseConnectionFactory.getConnection().rawQuery("SELECT * FROM tb_item_comanda", null);
+//            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
+
+            this.dbForRead = DataBaseConnectionFactory.getInstance(this).getReadableDatabase();
+            this.dbForWrite = DataBaseConnectionFactory.getInstance(this).getWritableDatabase();
+
+
+            Cursor cursor = dbForRead.rawQuery("SELECT * FROM tb_item_comanda", null);
+
+            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
+
+
+        } catch (Exception e) {
+            this.db.endTransaction();
+
+            Toast.makeText(this, String.valueOf(e), Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -132,7 +175,7 @@ public class MainActivity extends Activity {
                         this.adapterProdutos.getItem(pos).setQuantidade(ic.getQuantidade());
                         this.adapterProdutos.notifyDataSetChanged();
 
-                        Toast.makeText(this,String.valueOf(resultCode),Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, String.valueOf(resultCode), Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -142,5 +185,6 @@ public class MainActivity extends Activity {
         }
 
     }
+
 
 }

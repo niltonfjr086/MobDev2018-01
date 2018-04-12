@@ -1,4 +1,11 @@
-//package com.senac.renato.exemplobancodedadosnativo;
+package com.senac.renato.exemplobancodedadosnativo;
+
+import android.database.Cursor;
+
+import java.util.ArrayList;
+
+import devmob2018.com.comandaapp.model.entity.Produto;
+
 //
 //import android.content.ContentValues;
 //import android.content.Context;
@@ -12,8 +19,8 @@
 ///**
 // * Created by Renato on 31/08/2016.
 // */
-//public class ProdutoDAO {
-//    private Produto produto;
+public class ProdutoDAO {
+    //    private Produto produto;
 //    private SQLiteDatabase banco;
 //
 //    //Definir o nome do banco de dados
@@ -39,11 +46,12 @@
 //
 //    //Definir SQL para selecionar todos os produtos
 //    private static final String SQL_SELECT_ALL = "" +
-//            "SELECT id, nome, valor FROM "+TABELA_NOME+" ORDER BY id ASC";
-//
-//    //Variável para armazenar respostas de select's
-//    private Cursor cursor;
-//
+//            "SELECT id, nome, valor FROM " + TABELA_NOME + " ORDER BY id ASC";
+
+    //    //Variável para armazenar respostas de select's
+    private Cursor cursor;
+
+    //
 //    /**
 //     * Classe responsável pela conexao com o banco de dados
 //     * @author Renato
@@ -131,26 +139,25 @@
 //     * Método para retornar todos os produtos
 //     * @return ArrayList<Produto>
 //     */
-//    public ArrayList<Produto> listarTodos(){
+//    public ArrayList<Produto> listarTodos() {
 //
 //        ArrayList<Produto> listProdutos = new ArrayList<Produto>();
 //
 //        //Executa o sql select_all
 //        this.cursor = this.banco.rawQuery(SQL_SELECT_ALL, null);
+//        Produto produto;
+//        while (this.cursor.moveToNext()) {
 //
-//        while(this.cursor.moveToNext()){
+//            produto = new Produto();
+//            produto.setId(this.cursor.getLong(this.cursor.getColumnIndex("id")));
+//            produto.setNome(this.cursor.getString(this.cursor.getColumnIndex("nome")));
+//            produto.setValor(this.cursor.getDouble(this.cursor.getColumnIndex("valor")));
 //
-//            this.produto = new Produto();
-//            this.produto.setId( this.cursor.getInt( this.cursor.getColumnIndex("id") ) );
-//            this.produto.setNome( this.cursor.getString( this.cursor.getColumnIndex("nome") ) );
-//            this.produto.setValor( this.cursor.getDouble( this.cursor.getColumnIndex("valor") ) );
-//
-//            listProdutos.add(this.produto);
+//            listProdutos.add(produto);
 //
 //        }
-//
 //        return listProdutos;
 //
 //    }
-//
-//}
+
+}
