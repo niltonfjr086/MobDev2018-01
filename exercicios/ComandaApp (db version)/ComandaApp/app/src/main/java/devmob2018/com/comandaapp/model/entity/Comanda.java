@@ -2,29 +2,54 @@ package devmob2018.com.comandaapp.model.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Comanda implements Serializable {
 
-//DEPRECATED
+    //PREENCHIDA PELO BANCO COM PARAMETRO
     public static List<Produto> produtosDisponiveis;
 
-    private Long id;
+    private Integer id;
     private List<ItemComanda> itens;
+    private Date dtAbertura;
+    private Date dtFechamento;
 
     public Comanda() {
+
+        this.dtAbertura = new Date();
 
         if (produtosDisponiveis == null) {
 
             produtosDisponiveis = new ArrayList<>();
 
-            produtosDisponiveis.add(new Produto("Água Mineral", 2.50));
-            produtosDisponiveis.add(new Produto("Burger Costela", 10.90));
-            produtosDisponiveis.add(new Produto("Batata Frita", 9.50));
+            produtosDisponiveis.add(new Produto("Coca-cola", 3.50));
+            produtosDisponiveis.add(new Produto("Sorvete", 10.90));
         }
 
         this.itens = new ArrayList<>();
 
+    }
+
+    public Comanda(List<Produto> produtos) {
+
+        this.dtAbertura = new Date();
+
+        if (produtos != null && produtos.size() > 0) {
+
+            produtosDisponiveis = produtos;
+        }
+
+        this.itens = new ArrayList<>();
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<ItemComanda> getItens() {
@@ -33,6 +58,22 @@ public class Comanda implements Serializable {
 
     public void setItens(List<ItemComanda> itens) {
         this.itens = itens;
+    }
+
+    public Date getDtAbertura() {
+        return dtAbertura;
+    }
+
+    public void setDtAbertura(Date dtAbertura) {
+        this.dtAbertura = dtAbertura;
+    }
+
+    public Date getDtFechamento() {
+        return dtFechamento;
+    }
+
+    public void setDtFechamento(Date dtFechamento) {
+        this.dtFechamento = dtFechamento;
     }
 
     public void adicionarItem(ItemComanda ic) {

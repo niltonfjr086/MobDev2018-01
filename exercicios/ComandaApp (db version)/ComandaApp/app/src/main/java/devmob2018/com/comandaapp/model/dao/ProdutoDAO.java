@@ -1,9 +1,11 @@
-package com.senac.renato.exemplobancodedadosnativo;
+package devmob2018.com.comandaapp.model.dao;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import devmob2018.com.comandaapp.model.database.DataBaseConnectionFactory;
 import devmob2018.com.comandaapp.model.entity.Produto;
 
 //
@@ -34,8 +36,8 @@ public class ProdutoDAO {
 //     */
 //    private static final int BANCO_ACESSO = 0;
 //
-//    //Definir o nome da tabela
-//    private static final String TABELA_NOME = "produtos";
+    //Definir o nome da tabela
+    private static final String TABELA_NOME = "tb_produto";
 //
 //    //Definir SQL para criação da tabela de produtos
 //    private static final String SQL_CRIACAO_TABELA = "" +
@@ -44,12 +46,39 @@ public class ProdutoDAO {
 //            "nome varchar(45) not null," +
 //            "valor float not null)";
 //
-//    //Definir SQL para selecionar todos os produtos
-//    private static final String SQL_SELECT_ALL = "" +
-//            "SELECT id, nome, valor FROM " + TABELA_NOME + " ORDER BY id ASC";
+    //Definir SQL para selecionar todos os produtos
+    private static final String SQL_SELECT_ALL = "" +
+            "SELECT id, nome, valor FROM " + TABELA_NOME + " ORDER BY id ASC";
 
     //    //Variável para armazenar respostas de select's
     private Cursor cursor;
+
+    /**
+     * Created by Renato on 31/08/2016.
+     * Método para retornar todos os produtos
+     *
+     * @return ArrayList<Produto>
+     */
+    public ArrayList<Produto> listarTodos(SQLiteDatabase db) {
+
+        ArrayList<Produto> listProdutos = new ArrayList<Produto>();
+
+        //Executa o sql select_all
+        this.cursor = db.rawQuery(SQL_SELECT_ALL, null);
+        Produto produto;
+        while (this.cursor.moveToNext()) {
+
+            produto = new Produto();
+            produto.setId(this.cursor.getLong(this.cursor.getColumnIndex("id")));
+            produto.setNome(this.cursor.getString(this.cursor.getColumnIndex("nome")));
+            produto.setValor(this.cursor.getDouble(this.cursor.getColumnIndex("valor")));
+
+            listProdutos.add(produto);
+
+        }
+        return listProdutos;
+
+    }
 
     //
 //    /**
@@ -133,31 +162,7 @@ public class ProdutoDAO {
 //            return true;
 //
 //    }
-//
-//
-//    /**
-//     * Método para retornar todos os produtos
-//     * @return ArrayList<Produto>
-//     */
-//    public ArrayList<Produto> listarTodos() {
-//
-//        ArrayList<Produto> listProdutos = new ArrayList<Produto>();
-//
-//        //Executa o sql select_all
-//        this.cursor = this.banco.rawQuery(SQL_SELECT_ALL, null);
-//        Produto produto;
-//        while (this.cursor.moveToNext()) {
-//
-//            produto = new Produto();
-//            produto.setId(this.cursor.getLong(this.cursor.getColumnIndex("id")));
-//            produto.setNome(this.cursor.getString(this.cursor.getColumnIndex("nome")));
-//            produto.setValor(this.cursor.getDouble(this.cursor.getColumnIndex("valor")));
-//
-//            listProdutos.add(produto);
-//
-//        }
-//        return listProdutos;
-//
-//    }
+
+
 
 }

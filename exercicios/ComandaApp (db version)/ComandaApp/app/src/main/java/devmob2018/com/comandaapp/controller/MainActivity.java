@@ -19,9 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import devmob2018.com.comandaapp.MyApp;
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.model.dao.ComandaDAO;
+import devmob2018.com.comandaapp.model.dao.ItemComandaDAO;
+import devmob2018.com.comandaapp.model.dao.ProdutoDAO;
 import devmob2018.com.comandaapp.model.database.CreatePopulatedTables;
 import devmob2018.com.comandaapp.model.database.DataBaseConnectionFactory;
 import devmob2018.com.comandaapp.model.entity.Comanda;
@@ -37,7 +42,7 @@ public class MainActivity extends Activity {
     private ArrayAdapter<ItemComanda> adapterProdutos;
     private ListView viewProdutos;
 
-//    SQLiteDatabase db;
+        SQLiteDatabase db;
     private SQLiteDatabase dbForRead;
     private SQLiteDatabase dbForWrite;
 
@@ -46,11 +51,24 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
 
+        try {
             this.comanda = new Comanda();
 
-            this.comanda.getItens().add(new ItemComanda(Comanda.produtosDisponiveis.get(1), 5));
+//            this.dbForRead = DataBaseConnectionFactory.getInstance(this).getReadableDatabase();
+            this.dbForWrite = DataBaseConnectionFactory.getInstance(this).getWritableDatabase();
+
+//            ProdutoDAO produtoDAO = new ProdutoDAO();
+//            List<Produto> produtos = produtoDAO.listarTodos(this.dbForRead);
+
+//            this.comanda = new Comanda(produtos);
+//                this.comanda.getItens().add(new ItemComanda(Comanda.produtosDisponiveis.get(1), 5));
+
+            for (Produto p : Comanda.produtosDisponiveis) {
+
+                this.comanda.getItens().add(new ItemComanda(p, 5));
+
+            }
 
             this.valorTotal = findViewById(R.id.valorTotal);
             this.valorTotal.setText(this.comanda.getTotal().toString());
@@ -63,33 +81,64 @@ public class MainActivity extends Activity {
             this.viewProdutos.setOnItemLongClickListener(this.removerItem());
 
 
-//        dbForWrite.beginTransaction();
-//        dbForWrite.execSQL("CREATE TABLE IF NOT EXISTS " + "tb_pessoa" + "(" +
-//                "id integer not null primary key autoincrement," +
-//                "nome varchar(45) not null," +
-//                "valor float not null)");
-//        dbForWrite.endTransaction();
+//            CreatePopulatedTables.createTableProduto(this.dbForWrite);
 
-            //this.db = this.openOrCreateDatabase("comanda.db", 0, null);
-
-//        CreatePopulatedTables.createTableProduto(this.db);
-//        CreatePopulatedTables.createTableItemComanda(this.db);
-
+//            CreatePopulatedTables.dropTableComanda(this.dbForWrite);
+//            CreatePopulatedTables.createTableComanda(this.dbForWrite);
+//            CreatePopulatedTables.createTableItemComanda(this.dbForWrite);
+//            CreatePopulatedTables.dropTableItemComanda(this.dbForWrite);
 
 //            Cursor cursor = DataBaseConnectionFactory.getConnection().rawQuery("SELECT * FROM tb_item_comanda", null);
 //            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
 
-            this.dbForRead = DataBaseConnectionFactory.getInstance(this).getReadableDatabase();
-            this.dbForWrite = DataBaseConnectionFactory.getInstance(this).getWritableDatabase();
+//            this.dbForWrite.beginTransaction();
+//            ContentValues values = new ContentValues();
+//            values.put("nome", "Pastel");
+//            values.put("valor", 5.5);
+//            this.dbForWrite.insert("tb_produto", null, values);
+//            this.dbForWrite.setTransactionSuccessful();
+//            this.dbForWrite.endTransaction();
+
+//            ComandaDAO cd = new ComandaDAO();
+//            Comanda c = new Comanda();
+//            cd.cadastrar(c,this.dbForWrite);
+
+//            this.dbForWrite.beginTransaction();
+//            ContentValues values = new ContentValues();
+//            values.put("dtAbertura", String.valueOf(new Date()));
+//
+//            this.dbForWrite.insert("tb_comanda", null, values);
+//            this.dbForWrite.setTransactionSuccessful();
+//            this.dbForWrite.endTransaction();
 
 
-            Cursor cursor = dbForRead.rawQuery("SELECT * FROM tb_item_comanda", null);
+//            this.db = this.openOrCreateDatabase("comanda.db", 0, null);
+//            this.db.beginTransaction();
+//            this.db.insert("tb_comanda", null, new ContentValues());
+//            this.db.setTransactionSuccessful();
+//            this.db.endTransaction();
 
-            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
+//            cd.cadastrar(c, this.db);
+
+//            this.dbForWrite.insert("tb_comanda", null, null);
+//            Cursor cursor = this.db.rawQuery("SELECT * FROM tb_comanda", null);
+//            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
+
+//            ItemComandaDAO icd = new ItemComandaDAO();
+//            ItemComanda ic = new ItemComanda();
+//            ic.setQuantidade(23);
+//            ic.setProduto(Comanda.produtosDisponiveis.get(3));
+//            ic.setComandaId(1l);
+//            this.dbForWrite.insert();
+//            icd.cadastrar(ic, this.dbForWrite);
+
+//            Cursor cursor = dbForRead.rawQuery("SELECT * FROM tb_item_comanda", null);
+//
+//            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
 
 
         } catch (Exception e) {
-            this.db.endTransaction();
+
 
             Toast.makeText(this, String.valueOf(e), Toast.LENGTH_LONG).show();
         }
@@ -108,6 +157,10 @@ public class MainActivity extends Activity {
     public void limpar(View v) {
         this.adapterProdutos.clear();
         this.valorTotal.setText(this.comanda.getTotal().toString());
+    }
+
+    public void finalizar(View v) {
+
     }
 
     private AdapterView.OnItemClickListener editarItem() {

@@ -44,8 +44,13 @@ public class CreatePopulatedTables {
                 "id integer not null primary key autoincrement," +
                 "produto_id integer not null, " +
                 "quantidade integer not null," +
+
+                "comanda_id integer not null," +
+
                 "subtotal float not null," +
-                "FOREIGN KEY (produto_id) REFERENCES tb_produto(id))");
+
+                "FOREIGN KEY (produto_id) REFERENCES tb_produto(id)," +
+                "FOREIGN KEY (comanda_id) REFERENCES tb_comanda(id))");
 
 
         Cursor cursor = db.rawQuery("SELECT * FROM tb_item_comanda", null);
@@ -56,6 +61,68 @@ public class CreatePopulatedTables {
 
         if (Character.isDigit(cursor.getCount())) return true;
         else return false;
+
+    }
+
+    public static boolean dropTableItemComanda(SQLiteDatabase db) throws Exception {
+
+        db.beginTransaction();
+
+        db.execSQL("DROP TABLE IF EXISTS " + "tb_item_comanda");
+
+
+//        Cursor cursor = db.rawQuery("SELECT * FROM tb_item_comanda", null);
+
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        return true;
+//        if (!Character.isDigit(cursor.getCount())) return true;
+//        else return false;
+
+
+    }
+
+
+    public static boolean createTableComanda(SQLiteDatabase db) {
+
+        db.beginTransaction();
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + "tb_comanda" + "(" +
+                "id integer not null primary key autoincrement," +
+                "dtAbertura datetime not null," +
+                "dtFechamento datetime)");
+//                dtFechamento datetime default datetime('now')
+
+
+        Cursor cursor = db.rawQuery("SELECT * FROM tb_comanda", null);
+
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        if (Character.isDigit(cursor.getCount())) return true;
+        else return false;
+
+    }
+
+
+    public static boolean dropTableComanda(SQLiteDatabase db) throws Exception {
+
+        db.beginTransaction();
+
+        db.execSQL("DROP TABLE IF EXISTS " + "tb_comanda");
+
+
+//        Cursor cursor = db.rawQuery("SELECT * FROM tb_comanda", null);
+
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        return true;
+//        if (!Character.isDigit(cursor.getCount())) return true;
+//        else return false;
+
 
     }
 }

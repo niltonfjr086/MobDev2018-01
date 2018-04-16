@@ -4,7 +4,10 @@
 
 
     <string name="btnAdicionarProduto">Adicionar Produto</string>
+    <string name="btnVisualizarComandas">Outras Comandas</string>
     <string name="btnLimparLista">Limpar Lista</string>
+    <string name="btnFinalizarComanda">Finalizar</string>
+
     <string name="lblTotal">Total: R$</string>
 
 

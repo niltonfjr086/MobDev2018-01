@@ -65,6 +65,9 @@ public class AdicaoProdutoActivity extends Activity {
 
 
     public void salvar(View v) {
+
+        this.itemComanda.getProduto().getId();
+
         Toast.makeText(this, this.produtos.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
 
         this.itemComanda.setProduto((Produto) this.produtos.getSelectedItem());
