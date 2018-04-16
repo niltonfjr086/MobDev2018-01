@@ -18,7 +18,7 @@ import devmob2018.com.comandaapp.model.entity.Produto;
 
 public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "comanda.db";
+    private static final String DATABASE_NAME = "comanda2.db";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -37,18 +37,6 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
         if (instance == null) {
             instance = new MyOrmLiteOpenHelper(c);
         }
-
-//        try{
-//            instance.getWritableDatabase().beginTransaction();
-//            TableUtils.createTable(, Categoria.class);
-//
-//            instance.getWritableDatabase().setTransactionSuccessful();
-//            instance.getWritableDatabase().endTransaction();
-//
-//        }catch (Exception e){
-//            instance.getWritableDatabase().endTransaction();
-//            e.printStackTrace();
-//        }
 
         return instance;
     }
@@ -73,12 +61,7 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
         try {
-            instance.getWritableDatabase().beginTransaction();
             TableUtils.createTable(connectionSource, Categoria.class);
-
-            instance.getWritableDatabase().setTransactionSuccessful();
-            instance.getWritableDatabase().endTransaction();
-
         } catch (Exception e) {
             database.endTransaction();
             e.printStackTrace();
