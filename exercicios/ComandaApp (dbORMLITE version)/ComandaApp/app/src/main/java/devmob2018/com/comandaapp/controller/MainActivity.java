@@ -2,36 +2,22 @@ package devmob2018.com.comandaapp.controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import devmob2018.com.comandaapp.MyApp;
 import devmob2018.com.comandaapp.R;
-import devmob2018.com.comandaapp.model.dao.ComandaDAO;
-import devmob2018.com.comandaapp.model.dao.ItemComandaDAO;
-import devmob2018.com.comandaapp.model.dao.ProdutoDAO;
-import devmob2018.com.comandaapp.model.database.CreatePopulatedTables;
-import devmob2018.com.comandaapp.model.database.DataBaseConnectionFactory;
-import devmob2018.com.comandaapp.model.database.DatabaseHelper;
 import devmob2018.com.comandaapp.model.database.MyOrmLiteOpenHelper;
 import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
@@ -47,7 +33,7 @@ public class MainActivity extends Activity {
     private ArrayAdapter<ItemComanda> adapterProdutos;
     private ListView viewProdutos;
 
-    private SQLiteDatabase db;
+    private MyOrmLiteOpenHelper db;
     private SQLiteDatabase dbForRead;
     private SQLiteDatabase dbForWrite;
 
@@ -58,15 +44,31 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         try {
-            this.comanda = new Comanda();
+//            this.comanda = new Comanda();
+//            MyOrmLiteOpenHelper.getInstance(this);
 
-//            this.dbForRead = DataBaseConnectionFactory.getInstance(this).getReadableDatabase();
-//            this.dbForWrite = DataBaseConnectionFactory.getInstance(this).getWritableDatabase();
+            this.db = MyOrmLiteOpenHelper.getInstance(this);
 
-            Dao<Categoria, Integer> categoriaDAO = MyOrmLiteOpenHelper.getInstance(this).getCategoriaDao();
-            Dao<Produto, Integer> produtoDAO = MyOrmLiteOpenHelper.getInstance(this).getProdutoDao();
+            this.dbForRead = this.db.getReadableDatabase();
+            this.dbForWrite = this.db.getWritableDatabase();
 
+            Dao<Categoria, Long> categoriaDAO = MyOrmLiteOpenHelper.getInstance(this).getDao(Categoria.class);
+//            categoriaDAO.create(new Categoria("Bebida"));
+//            categoriaDAO.create(new Categoria("Entrada"));
+//            categoriaDAO.create(new Categoria("Comida"));
+//            categoriaDAO.create(new Categoria("Sobremesa"));
+
+            Dao<Produto, Long> produtoDAO = MyOrmLiteOpenHelper.getInstance(this).getDao(Produto.class);
+//            produtoDAO.create(new Produto("Água com gás", categoriaDAO.queryForId(1L), 3.5));
+//            produtoDAO.create(new Produto("Cheese Salada", categoriaDAO.queryForId(3L), 12.0));
+//            produtoDAO.create(new Produto("Sorvete Chocolate", categoriaDAO.queryForId(4L), 8.8));
+//            produtoDAO.create(new Produto("Batata Frita", categoriaDAO.queryForId(2L), 4.5));
+//
             List<Produto> produtos = produtoDAO.queryForAll();
+
+            for (Produto p : produtos) {
+                if(p.getNome().equalsIgnoreCase())
+            }
 
 //            ProdutoDAO produtoDAO = new ProdutoDAO();
 //            List<Produto> produtos = produtoDAO.listarTodos(this.dbForRead);
@@ -91,58 +93,6 @@ public class MainActivity extends Activity {
             this.viewProdutos.setOnItemLongClickListener(this.removerItem());
 
 
-//            CreatePopulatedTables.createTableProduto(this.dbForWrite);
-
-//            CreatePopulatedTables.dropTableComanda(this.dbForWrite);
-//            CreatePopulatedTables.createTableComanda(this.dbForWrite);
-//            CreatePopulatedTables.createTableItemComanda(this.dbForWrite);
-//            CreatePopulatedTables.dropTableItemComanda(this.dbForWrite);
-
-//            Cursor cursor = DataBaseConnectionFactory.getConnection().rawQuery("SELECT * FROM tb_item_comanda", null);
-//            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
-
-//            this.dbForWrite.beginTransaction();
-//            ContentValues values = new ContentValues();
-//            values.put("nome", "Pastel");
-//            values.put("valor", 5.5);
-//            this.dbForWrite.insert("tb_produto", null, values);
-//            this.dbForWrite.setTransactionSuccessful();
-//            this.dbForWrite.endTransaction();
-
-//            ComandaDAO cd = new ComandaDAO();
-//            Comanda c = new Comanda();
-//            cd.cadastrar(c,this.dbForWrite);
-
-//            this.dbForWrite.beginTransaction();
-//            ContentValues values = new ContentValues();
-//            values.put("dtAbertura", String.valueOf(new Date()));
-//
-//            this.dbForWrite.insert("tb_comanda", null, values);
-//            this.dbForWrite.setTransactionSuccessful();
-//            this.dbForWrite.endTransaction();
-
-
-//            this.db = this.openOrCreateDatabase("comanda.db", 0, null);
-//            this.db.beginTransaction();
-//            this.db.insert("tb_comanda", null, new ContentValues());
-//            this.db.setTransactionSuccessful();
-//            this.db.endTransaction();
-
-//            cd.cadastrar(c, this.db);
-
-//            this.dbForWrite.insert("tb_comanda", null, null);
-//            Cursor cursor = this.db.rawQuery("SELECT * FROM tb_comanda", null);
-//            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
-
-//            ItemComandaDAO icd = new ItemComandaDAO();
-//            ItemComanda ic = new ItemComanda();
-//            ic.setQuantidade(23);
-//            ic.setProduto(Comanda.produtosDisponiveis.get(3));
-//            ic.setComandaId(1l);
-//            this.dbForWrite.insert();
-//            icd.cadastrar(ic, this.dbForWrite);
-
-//            Cursor cursor = dbForRead.rawQuery("SELECT * FROM tb_item_comanda", null);
 //
 //            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
 

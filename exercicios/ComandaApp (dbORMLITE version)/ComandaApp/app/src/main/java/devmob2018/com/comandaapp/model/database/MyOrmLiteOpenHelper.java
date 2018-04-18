@@ -10,23 +10,19 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import devmob2018.com.comandaapp.model.entity.Categoria;
+import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
-
-/**
- * Created by main on 16/04/18.
- */
 
 public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "comanda2.db";
+    private static final String DATABASE_NAME = "comandas.db";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static MyOrmLiteOpenHelper instance = null;
 
-    Dao<Categoria, Integer> categoriaDao = null;
-    Dao<Produto, Integer> produtoDao = null;
-
+    Dao<Categoria, Long> categoriaDao = null;
+    Dao<Produto, Long> produtoDao = null;
 
     private MyOrmLiteOpenHelper(Context c) {
         super(c, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,34 +30,39 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 
     public static MyOrmLiteOpenHelper getInstance(Context c) {
 
+
         if (instance == null) {
             instance = new MyOrmLiteOpenHelper(c);
         }
 
+//        c.deleteDatabase("comanda.db");
         return instance;
     }
 
-    public Dao<Categoria, Integer> getCategoriaDao() throws Exception {
-        if (categoriaDao == null) {
-            categoriaDao = getDao(Categoria.class);
-        }
-
-        return categoriaDao;
-    }
-
-    public Dao<Produto, Integer> getProdutoDao() throws Exception {
-        if (produtoDao == null) {
-            produtoDao = getDao(Produto.class);
-        }
-
-        return produtoDao;
-    }
+//    public Dao<Categoria, Long> getCategoriaDao() throws Exception {
+//        if (categoriaDao == null) {
+//            categoriaDao = getDao(Categoria.class);
+//        }
+//
+//        return categoriaDao;
+//    }
+//
+//    public Dao<Produto, Long> getProdutoDao() throws Exception {
+//        if (produtoDao == null) {
+//            produtoDao = getDao(Produto.class);
+//        }
+//
+//        return produtoDao;
+//    }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
         try {
             TableUtils.createTable(connectionSource, Categoria.class);
+            TableUtils.createTable(connectionSource, Produto.class);
+            TableUtils.createTable(connectionSource, Comanda.class);
+
         } catch (Exception e) {
             database.endTransaction();
             e.printStackTrace();
@@ -71,6 +72,14 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+
+        try {
+
+
+        } catch (Exception e) {
+            database.endTransaction();
+            e.printStackTrace();
+        }
 
     }
 }

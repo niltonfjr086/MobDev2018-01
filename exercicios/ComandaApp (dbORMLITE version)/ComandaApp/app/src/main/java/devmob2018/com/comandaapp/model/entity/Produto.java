@@ -11,8 +11,11 @@ public class Produto implements Serializable {
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
 
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, width = 20)
     private String nome;
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "categoria_id", canBeNull = false)
+    private Categoria categoria;
 
     @DatabaseField(canBeNull = false)
     private Double valor;
@@ -20,8 +23,9 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(String nome, Double valor) {
+    public Produto(String nome, Categoria categoria, Double valor) {
         this.nome = nome;
+        this.categoria = categoria;
         this.valor = valor;
     }
 
@@ -41,6 +45,14 @@ public class Produto implements Serializable {
         this.nome = nome;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     public Double getValor() {
         return valor;
     }
@@ -56,19 +68,24 @@ public class Produto implements Serializable {
 
         Produto produto = (Produto) o;
 
+        if (id != null ? !id.equals(produto.id) : produto.id != null) return false;
         if (nome != null ? !nome.equals(produto.nome) : produto.nome != null) return false;
+        if (categoria != null ? !categoria.equals(produto.categoria) : produto.categoria != null)
+            return false;
         return valor != null ? valor.equals(produto.valor) : produto.valor == null;
     }
 
     @Override
     public int hashCode() {
-        int result = nome != null ? nome.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (categoria != null ? categoria.hashCode() : 0);
         result = 31 * result + (valor != null ? valor.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return nome + " | " + valor;
+        return nome + " | " + categoria.getNome() + " | " + valor;
     }
 }

@@ -19,10 +19,10 @@ public class Comanda implements Serializable {
 
     private List<ItemComanda> itens;
 
-    @DatabaseField(columnName = "dtAbertura", canBeNull = false)
+    @DatabaseField(columnName = "dt_abertura", canBeNull = false)
     private Date dtAbertura;
 
-    @DatabaseField(columnName = "dtFechamento")
+    @DatabaseField(columnName = "dt_fechamento")
     private Date dtFechamento;
 
 
@@ -34,8 +34,8 @@ public class Comanda implements Serializable {
 
             produtosDisponiveis = new ArrayList<>();
 
-            produtosDisponiveis.add(new Produto("Coca-cola", 3.50));
-            produtosDisponiveis.add(new Produto("Sorvete", 10.90));
+//            produtosDisponiveis.add(new Produto("Coca-cola", 3.50));
+//            produtosDisponiveis.add(new Produto("Sorvete", 10.90));
         }
 
         this.itens = new ArrayList<>();

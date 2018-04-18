@@ -1,13 +1,26 @@
 package devmob2018.com.comandaapp.model.entity;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.io.Serializable;
 
+@DatabaseTable(tableName = "tb_item_comanda")
 public class ItemComanda implements Serializable {
 
+    @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
+
+    @DatabaseField(columnName = "produto_id", canBeNull = false)
     private Produto produto;
+
+    @DatabaseField(columnName = "quantidade", canBeNull = false)
     private Integer quantidade;
+
+    @DatabaseField(columnName = "comandaId", canBeNull = false)
     private Long comandaId;
+
+    @DatabaseField(columnName = "subtotal", canBeNull = false)
     private Double subtotal;
 
     public ItemComanda() {
@@ -19,8 +32,7 @@ public class ItemComanda implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public ItemComanda(Long id, Produto produto, Integer quantidade, Long comandaId, Double subtotal) {
-        this.id = id;
+    public ItemComanda(Produto produto, Integer quantidade, Long comandaId, Double subtotal) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.comandaId = comandaId;
@@ -49,6 +61,10 @@ public class ItemComanda implements Serializable {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+
+        if(this.produto != null && this.produto.getValor() != null && this.quantidade != null){
+            this.subtotal = this.getSubtotal();
+        }
     }
 
     public Long getComandaId() {
