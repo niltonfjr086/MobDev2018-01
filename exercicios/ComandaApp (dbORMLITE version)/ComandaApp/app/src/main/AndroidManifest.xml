@@ -18,9 +18,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".controller.AdicaoProdutoActivity" android:label="@string/app_adicao_activity">
+        <activity
+            android:name=".controller.AdicaoItemComandaActivity"
+            android:label="@string/app_adicao_activity" />
+        <activity
+            android:name=".controller.GerenciarProdutoActivity"
+            android:label="@string/app_gerenciar_produto_activity" />
+        <activity
+            android:name=".controller.GerenciarCategoriaActivity"
+            android:label="@string/app_gerenciar_categoria_activity" />
 
-        </activity>
     </application>
 
 </manifest>

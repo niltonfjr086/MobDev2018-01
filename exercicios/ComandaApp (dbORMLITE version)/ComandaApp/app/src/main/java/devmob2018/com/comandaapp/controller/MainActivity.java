@@ -66,9 +66,6 @@ public class MainActivity extends Activity {
 //
             List<Produto> produtos = produtoDAO.queryForAll();
 
-            for (Produto p : produtos) {
-                if(p.getNome().equalsIgnoreCase())
-            }
 
 //            ProdutoDAO produtoDAO = new ProdutoDAO();
 //            List<Produto> produtos = produtoDAO.listarTodos(this.dbForRead);
@@ -107,7 +104,7 @@ public class MainActivity extends Activity {
 
     public void adicionar(View v) {
 
-        Intent it = new Intent(this, AdicaoProdutoActivity.class);
+        Intent it = new Intent(this, AdicaoItemComandaActivity.class);
         it.putExtra("reqCode", "adicionar");
         it.putExtra("itemComanda", new ItemComanda());
         startActivityForResult(it, 1001);
@@ -129,7 +126,7 @@ public class MainActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MainActivity.this.adapterProdutos.getItem(position);
 
-                Intent it = new Intent(MainActivity.this, AdicaoProdutoActivity.class);
+                Intent it = new Intent(MainActivity.this, AdicaoItemComandaActivity.class);
                 it.putExtra("reqCode", "editar");
                 it.putExtra("itemComanda", MainActivity.this.adapterProdutos.getItem(position));
                 it.putExtra("position", position);

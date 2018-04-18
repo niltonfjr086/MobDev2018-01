@@ -14,7 +14,7 @@ import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.ItemComanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
 
-public class AdicaoProdutoActivity extends Activity {
+public class AdicaoItemComandaActivity extends Activity {
 
     private String requestCommand;
     private Integer position;
@@ -28,7 +28,7 @@ public class AdicaoProdutoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adicao_produto);
+        setContentView(R.layout.activity_adicao_item_comanda);
 
 //        Toast.makeText(this, String.valueOf(getRequestedOrientation()), Toast.LENGTH_LONG).show();
 
@@ -82,5 +82,15 @@ public class AdicaoProdutoActivity extends Activity {
 
         setResult(RESULT_OK, it);
         finish();
+    }
+
+    public void addProduto(View v) {
+        Toast.makeText(this, "IMPLEMENTAR", Toast.LENGTH_LONG).show();
+
+        Intent it = new Intent(this, GerenciarProdutoActivity.class);
+        it.putExtra("reqCode", "gerenciarProduto");
+//        it.putExtra("listaProduto", new ItemComanda());
+        startActivityForResult(it, 2001);
+
     }
 }
