@@ -45,7 +45,7 @@ public class ItemComandaDAO {
 
         values.put("produto_id", itemComanda.getProduto().getId());
         values.put("quantidade", itemComanda.getQuantidade());
-        values.put("comanda_id", itemComanda.getComandaId());
+//        values.put("comanda_id", itemComanda.getComanda().getId());
         values.put("subtotal", itemComanda.getSubtotal());
 
         //Realiza o cadastro no banco

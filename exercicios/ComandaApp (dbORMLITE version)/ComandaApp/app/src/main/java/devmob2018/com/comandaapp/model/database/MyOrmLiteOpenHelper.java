@@ -11,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
+import devmob2018.com.comandaapp.model.entity.ItemComanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
 
 public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
@@ -30,12 +31,11 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 
     public static MyOrmLiteOpenHelper getInstance(Context c) {
 
-
         if (instance == null) {
             instance = new MyOrmLiteOpenHelper(c);
         }
+//        c.deleteDatabase("comandas.db");
 
-//        c.deleteDatabase("comanda.db");
         return instance;
     }
 
@@ -46,7 +46,7 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 //
 //        return categoriaDao;
 //    }
-//
+
 //    public Dao<Produto, Long> getProdutoDao() throws Exception {
 //        if (produtoDao == null) {
 //            produtoDao = getDao(Produto.class);
@@ -59,12 +59,13 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
 
         try {
+
             TableUtils.createTable(connectionSource, Categoria.class);
             TableUtils.createTable(connectionSource, Produto.class);
             TableUtils.createTable(connectionSource, Comanda.class);
+            TableUtils.createTable(connectionSource, ItemComanda.class);
 
         } catch (Exception e) {
-            database.endTransaction();
             e.printStackTrace();
         }
 
@@ -74,10 +75,8 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
         try {
-
-
+//            this.onCreate(database, connectionSource);
         } catch (Exception e) {
-            database.endTransaction();
             e.printStackTrace();
         }
 

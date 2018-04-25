@@ -2,7 +2,9 @@ package devmob2018.com.comandaapp.model.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
@@ -38,47 +40,73 @@ public class CreatePopulatedTables {
 
     public static boolean createTableItemComanda(SQLiteDatabase db) {
 
-        db.beginTransaction();
+        Cursor cursor;
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + "tb_item_comanda" + "(" +
-                "id integer not null primary key autoincrement," +
-                "produto_id integer not null, " +
-                "quantidade integer not null," +
+        try {
+            db.beginTransaction();
 
-                "comanda_id integer not null," +
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + "tb_item_comanda" + "(" +
+                    "id integer not null primary key autoincrement," +
+                    "produto_id integer not null, " +
+                    "quantidade integer not null," +
 
-                "subtotal float not null," +
+                    "comanda_id integer not null," +
 
-                "FOREIGN KEY (produto_id) REFERENCES tb_produto(id)," +
-                "FOREIGN KEY (comanda_id) REFERENCES tb_comanda(id))");
+                    "subtotal float not null," +
+
+                    "FOREIGN KEY (produto_id) REFERENCES tb_produto(id)," +
+                    "FOREIGN KEY (comanda_id) REFERENCES tb_comanda(id))");
 
 
-        Cursor cursor = db.rawQuery("SELECT * FROM tb_item_comanda", null);
+            cursor = db.rawQuery("SELECT * FROM tb_item_comanda", null);
 
 
-        db.setTransactionSuccessful();
-        db.endTransaction();
+            if (Character.isDigit(cursor.getCount())) {
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                return true;
+            } else {
+                db.endTransaction();
+                return false;
+            }
 
-        if (Character.isDigit(cursor.getCount())) return true;
-        else return false;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            db.endTransaction();
+            return false;
+
+        } finally {
+//            return false;
+        }
+
 
     }
 
     public static boolean dropTableItemComanda(SQLiteDatabase db) throws Exception {
 
-        db.beginTransaction();
+        try {
+            db.beginTransaction();
 
-        db.execSQL("DROP TABLE IF EXISTS " + "tb_item_comanda");
-
+            db.execSQL("DROP TABLE IF EXISTS " + "tb_item_comanda");
 
 //        Cursor cursor = db.rawQuery("SELECT * FROM tb_item_comanda", null);
 
-
-        db.setTransactionSuccessful();
-        db.endTransaction();
-        return true;
+            db.setTransactionSuccessful();
+            db.endTransaction();
+            return true;
 //        if (!Character.isDigit(cursor.getCount())) return true;
 //        else return false;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            db.endTransaction();
+            return false;
+
+        } finally {
+
+        }
 
 
     }

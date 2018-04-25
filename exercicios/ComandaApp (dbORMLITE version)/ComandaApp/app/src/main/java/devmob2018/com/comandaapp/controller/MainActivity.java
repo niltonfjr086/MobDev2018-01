@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import devmob2018.com.comandaapp.R;
 import devmob2018.com.comandaapp.model.database.MyOrmLiteOpenHelper;
@@ -30,7 +30,8 @@ public class MainActivity extends Activity {
 
     private TextView valorTotal;
 
-    private ArrayAdapter<ItemComanda> adapterProdutos;
+    private ArrayList<ItemComanda> listProdutos;
+    private ArrayAdapter adapterProdutos;
     private ListView viewProdutos;
 
     private MyOrmLiteOpenHelper db;
@@ -45,58 +46,65 @@ public class MainActivity extends Activity {
 
         try {
 //            this.comanda = new Comanda();
-//            MyOrmLiteOpenHelper.getInstance(this);
-
             this.db = MyOrmLiteOpenHelper.getInstance(this);
 
-            this.dbForRead = this.db.getReadableDatabase();
-            this.dbForWrite = this.db.getWritableDatabase();
 
-            Dao<Categoria, Long> categoriaDAO = MyOrmLiteOpenHelper.getInstance(this).getDao(Categoria.class);
-//            categoriaDAO.create(new Categoria("Bebida"));
-//            categoriaDAO.create(new Categoria("Entrada"));
-//            categoriaDAO.create(new Categoria("Comida"));
-//            categoriaDAO.create(new Categoria("Sobremesa"));
+//            this.dbForRead = this.db.getReadableDatabase();
+//            this.dbForWrite = this.db.getWritableDatabase();
 
-            Dao<Produto, Long> produtoDAO = MyOrmLiteOpenHelper.getInstance(this).getDao(Produto.class);
-//            produtoDAO.create(new Produto("Água com gás", categoriaDAO.queryForId(1L), 3.5));
-//            produtoDAO.create(new Produto("Cheese Salada", categoriaDAO.queryForId(3L), 12.0));
-//            produtoDAO.create(new Produto("Sorvete Chocolate", categoriaDAO.queryForId(4L), 8.8));
-//            produtoDAO.create(new Produto("Batata Frita", categoriaDAO.queryForId(2L), 4.5));
-//
-            List<Produto> produtos = produtoDAO.queryForAll();
+//            this.dbForWrite.beginTransaction();
 
+            Dao<Categoria, Long> categoriaDAO = this.db.getDao(Categoria.class);
+            categoriaDAO.createOrUpdate(new Categoria("Bebida"));
+            categoriaDAO.createOrUpdate(new Categoria("Entrada"));
+            categoriaDAO.createOrUpdate(new Categoria("Comida"));
+            categoriaDAO.createOrUpdate(new Categoria("Sobremesa"));
 
-//            ProdutoDAO produtoDAO = new ProdutoDAO();
-//            List<Produto> produtos = produtoDAO.listarTodos(this.dbForRead);
+//            this.dbForWrite.setTransactionSuccessful();
+//            this.dbForWrite.endTransaction();
 
+            Dao<Produto, Long> produtoDAO = this.db.getDao(Produto.class);
+            produtoDAO.createOrUpdate(new Produto("Água com gás", categoriaDAO.queryForId(1L), 3.5));
+            produtoDAO.createOrUpdate(new Produto("Cheese Salada", categoriaDAO.queryForId(3L), 12.0));
+            produtoDAO.createOrUpdate(new Produto("Sorvete Chocolate", categoriaDAO.queryForId(4L), 8.8));
+            produtoDAO.createOrUpdate(new Produto("Batata Frita", categoriaDAO.queryForId(2L), 4.5));
+
+            Dao<Comanda, Long> comandaDAO = this.db.getDao(Comanda.class);
+            comandaDAO.createOrUpdate(this.comanda);
+
+            ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
             this.comanda = new Comanda(produtos);
-//            this.comanda.getItens().add(new ItemComanda(Comanda.produtosDisponiveis.get(1), 5));
-//
+
             for (Produto p : Comanda.produtosDisponiveis) {
 
-                this.comanda.getItens().add(new ItemComanda(p, 5));
+                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
 
             }
+
+            Dao<ItemComanda, Long> itemComandaDAO = this.db.getDao(ItemComanda.class);
+            for (ItemComanda ic : this.comanda.getItens()) {
+
+                itemComandaDAO.createOrUpdate(ic);
+
+            }
+
 
             this.valorTotal = findViewById(R.id.valorTotal);
             this.valorTotal.setText(this.comanda.getTotal().toString());
 
-            this.adapterProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.comanda.getItens());
+            this.listProdutos = (ArrayList<ItemComanda>) this.comanda.getItens();
+
+            this.adapterProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.listProdutos);
             this.viewProdutos = findViewById(R.id.produtos);
             this.viewProdutos.setAdapter(this.adapterProdutos);
 
             this.viewProdutos.setOnItemClickListener(this.editarItem());
             this.viewProdutos.setOnItemLongClickListener(this.removerItem());
 
-
-//
 //            Toast.makeText(this, String.valueOf(cursor.getCount()), Toast.LENGTH_LONG).show();
 
-
         } catch (Exception e) {
-
-
+            e.printStackTrace();
             Toast.makeText(this, String.valueOf(e), Toast.LENGTH_LONG).show();
         }
 
@@ -128,7 +136,7 @@ public class MainActivity extends Activity {
 
                 Intent it = new Intent(MainActivity.this, AdicaoItemComandaActivity.class);
                 it.putExtra("reqCode", "editar");
-                it.putExtra("itemComanda", MainActivity.this.adapterProdutos.getItem(position));
+                it.putExtra("itemComanda", (ItemComanda) MainActivity.this.adapterProdutos.getItem(position));
                 it.putExtra("position", position);
                 startActivityForResult(it, 1002);
             }
@@ -143,7 +151,12 @@ public class MainActivity extends Activity {
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
                 alerta.setTitle("Editar Estado");
-                alerta.setMessage("Deseja excluir o item: " + MainActivity.this.adapterProdutos.getItem(position).getProduto().getNome());
+//                MainActivity.this.adapterProdutos.getItem(position).getProduto().getNome();
+
+                Object o = MainActivity.this.adapterProdutos.getItem(position);
+                ItemComanda ic = (ItemComanda) o;
+
+                alerta.setMessage("Deseja excluir o item: " + ic.getProduto().getNome());
                 alerta.setIcon(android.R.drawable.ic_menu_edit);
                 alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
@@ -181,8 +194,11 @@ public class MainActivity extends Activity {
                         Integer pos = b.getInt("position");
                         ItemComanda ic = (ItemComanda) b.getSerializable("itemComanda");
 
-                        this.adapterProdutos.getItem(pos).setProduto(ic.getProduto());
-                        this.adapterProdutos.getItem(pos).setQuantidade(ic.getQuantidade());
+                        Object o = MainActivity.this.adapterProdutos.getItem(pos);
+                        ItemComanda icc = (ItemComanda) o;
+
+                        icc.setProduto(ic.getProduto());
+                        icc.setQuantidade(ic.getQuantidade());
                         this.adapterProdutos.notifyDataSetChanged();
 
                         Toast.makeText(this, String.valueOf(resultCode), Toast.LENGTH_LONG).show();

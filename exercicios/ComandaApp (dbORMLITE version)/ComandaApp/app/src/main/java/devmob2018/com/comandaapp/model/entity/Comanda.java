@@ -1,10 +1,12 @@
 package devmob2018.com.comandaapp.model.entity;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +17,10 @@ public class Comanda implements Serializable {
     public static List<Produto> produtosDisponiveis;
 
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
-    private Integer id;
+    private Long id;
 
-    private List<ItemComanda> itens;
+    @ForeignCollectionField(eager = true)
+    private Collection<ItemComanda> itens = new ArrayList<>();
 
     @DatabaseField(columnName = "dt_abertura", canBeNull = false)
     private Date dtAbertura;
@@ -55,19 +58,19 @@ public class Comanda implements Serializable {
 
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public List<ItemComanda> getItens() {
+    public Collection<ItemComanda> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemComanda> itens) {
+    public void setItens(Collection<ItemComanda> itens) {
         this.itens = itens;
     }
 

@@ -11,14 +11,15 @@ public class ItemComanda implements Serializable {
     @DatabaseField(allowGeneratedIdInsert = true, generatedId = true)
     private Long id;
 
-    @DatabaseField(columnName = "produto_id", canBeNull = false)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "produto_id", canBeNull = false)
     private Produto produto;
 
     @DatabaseField(columnName = "quantidade", canBeNull = false)
     private Integer quantidade;
 
-    @DatabaseField(columnName = "comandaId", canBeNull = false)
-    private Long comandaId;
+    @DatabaseField(foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "comanda_id", canBeNull = false)
+    private Comanda comanda;
+
 
     @DatabaseField(columnName = "subtotal", canBeNull = false)
     private Double subtotal;
@@ -32,11 +33,11 @@ public class ItemComanda implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public ItemComanda(Produto produto, Integer quantidade, Long comandaId, Double subtotal) {
+    public ItemComanda(Produto produto, Integer quantidade, Comanda comanda) {
         this.produto = produto;
         this.quantidade = quantidade;
-        this.comandaId = comandaId;
-        this.subtotal = subtotal;
+        this.comanda = comanda;
+        this.subtotal = this.getSubtotal();
     }
 
     public Long getId() {
@@ -62,17 +63,17 @@ public class ItemComanda implements Serializable {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
 
-        if(this.produto != null && this.produto.getValor() != null && this.quantidade != null){
+        if (this.produto != null && this.produto.getValor() != null && this.quantidade != null) {
             this.subtotal = this.getSubtotal();
         }
     }
 
-    public Long getComandaId() {
-        return comandaId;
+    public Comanda getComanda() {
+        return comanda;
     }
 
-    public void setComandaId(Long comandaId) {
-        this.comandaId = comandaId;
+    public void setComanda(Comanda comanda) {
+        this.comanda = comanda;
     }
 
     public void setSubtotal(Double subtotal) {
@@ -87,7 +88,7 @@ public class ItemComanda implements Serializable {
 
         } else {
 
-            if(this.subtotal == null){
+            if (this.subtotal == null) {
 //                this.subtotal = 0.00;
                 return 0.00;
             }
@@ -108,7 +109,7 @@ public class ItemComanda implements Serializable {
         if (produto != null ? !produto.equals(that.produto) : that.produto != null) return false;
         if (quantidade != null ? !quantidade.equals(that.quantidade) : that.quantidade != null)
             return false;
-        if (comandaId != null ? !comandaId.equals(that.comandaId) : that.comandaId != null)
+        if (comanda != null ? !comanda.equals(that.comanda) : that.comanda != null)
             return false;
         return subtotal != null ? subtotal.equals(that.subtotal) : that.subtotal == null;
     }
@@ -118,7 +119,7 @@ public class ItemComanda implements Serializable {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (produto != null ? produto.hashCode() : 0);
         result = 31 * result + (quantidade != null ? quantidade.hashCode() : 0);
-        result = 31 * result + (comandaId != null ? comandaId.hashCode() : 0);
+        result = 31 * result + (comanda.getId() != null ? comanda.getId().hashCode() : 0);
         result = 31 * result + (subtotal != null ? subtotal.hashCode() : 0);
         return result;
     }
@@ -129,7 +130,7 @@ public class ItemComanda implements Serializable {
                 "id=" + id +
                 ", produto=" + produto +
                 ", quantidade=" + quantidade +
-                ", comandaId=" + comandaId +
+                ", comanda=" + comanda +
                 ", subtotal=" + subtotal +
                 '}';
     }
