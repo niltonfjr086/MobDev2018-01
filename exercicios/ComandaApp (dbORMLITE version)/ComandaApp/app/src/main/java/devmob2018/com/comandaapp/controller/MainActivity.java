@@ -45,7 +45,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         try {
-//            this.comanda = new Comanda();
+            this.comanda = new Comanda();
+
+//            this.deleteDatabase("comandas.db");
+
             this.db = MyOrmLiteOpenHelper.getInstance(this);
 
 
@@ -55,22 +58,28 @@ public class MainActivity extends Activity {
 //            this.dbForWrite.beginTransaction();
 
             Dao<Categoria, Long> categoriaDAO = this.db.getDao(Categoria.class);
-            categoriaDAO.createOrUpdate(new Categoria("Bebida"));
-            categoriaDAO.createOrUpdate(new Categoria("Entrada"));
-            categoriaDAO.createOrUpdate(new Categoria("Comida"));
-            categoriaDAO.createOrUpdate(new Categoria("Sobremesa"));
+            if (categoriaDAO.queryForAll().size() <= 0) {
+                categoriaDAO.createOrUpdate(new Categoria("Bebida"));
+                categoriaDAO.createOrUpdate(new Categoria("Entrada"));
+                categoriaDAO.createOrUpdate(new Categoria("Comida"));
+                categoriaDAO.createOrUpdate(new Categoria("Sobremesa"));
+            }
+
 
 //            this.dbForWrite.setTransactionSuccessful();
 //            this.dbForWrite.endTransaction();
 
             Dao<Produto, Long> produtoDAO = this.db.getDao(Produto.class);
-            produtoDAO.createOrUpdate(new Produto("Água com gás", categoriaDAO.queryForId(1L), 3.5));
-            produtoDAO.createOrUpdate(new Produto("Cheese Salada", categoriaDAO.queryForId(3L), 12.0));
-            produtoDAO.createOrUpdate(new Produto("Sorvete Chocolate", categoriaDAO.queryForId(4L), 8.8));
-            produtoDAO.createOrUpdate(new Produto("Batata Frita", categoriaDAO.queryForId(2L), 4.5));
+            if (produtoDAO.queryForAll().size() <= 0) {
+                produtoDAO.createOrUpdate(new Produto("Água com gás", categoriaDAO.queryForId(1L), 3.5));
+                produtoDAO.createOrUpdate(new Produto("Cheese Salada", categoriaDAO.queryForId(3L), 12.0));
+                produtoDAO.createOrUpdate(new Produto("Sorvete Chocolate", categoriaDAO.queryForId(4L), 8.8));
+                produtoDAO.createOrUpdate(new Produto("Batata Frita", categoriaDAO.queryForId(2L), 4.5));
+            }
 
-            Dao<Comanda, Long> comandaDAO = this.db.getDao(Comanda.class);
-            comandaDAO.createOrUpdate(this.comanda);
+
+//            Dao<Comanda, Long> comandaDAO = this.db.getDao(Comanda.class);
+//            comandaDAO.createOrUpdate(this.comanda);
 
             ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
             this.comanda = new Comanda(produtos);
@@ -81,12 +90,12 @@ public class MainActivity extends Activity {
 
             }
 
-            Dao<ItemComanda, Long> itemComandaDAO = this.db.getDao(ItemComanda.class);
-            for (ItemComanda ic : this.comanda.getItens()) {
-
-                itemComandaDAO.createOrUpdate(ic);
-
-            }
+//            Dao<ItemComanda, Long> itemComandaDAO = this.db.getDao(ItemComanda.class);
+//            for (ItemComanda ic : this.comanda.getItens()) {
+//
+//                itemComandaDAO.createOrUpdate(ic);
+//
+//            }
 
 
             this.valorTotal = findViewById(R.id.valorTotal);

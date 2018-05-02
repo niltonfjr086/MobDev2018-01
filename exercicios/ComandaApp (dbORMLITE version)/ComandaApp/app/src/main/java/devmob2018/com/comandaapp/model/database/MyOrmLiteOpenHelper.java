@@ -34,7 +34,6 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
         if (instance == null) {
             instance = new MyOrmLiteOpenHelper(c);
         }
-//        c.deleteDatabase("comandas.db");
 
         return instance;
     }
