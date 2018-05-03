@@ -44,7 +44,17 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Produto> getProdutos() {
+    public Collection<Produto> getProdutos() {
+
+        return this.produtos;
+    }
+
+    public void setProdutos(Collection<Produto> produtos) {
+
+        this.produtos = produtos;
+    }
+
+    public List<Produto> getListProdutos() {
 
         List<Produto> r = new ArrayList<>();
 
@@ -55,15 +65,10 @@ public class Categoria implements Serializable {
         return r;
     }
 
-    public void setProdutos(Collection<Produto> produtos) {
-        this.produtos = produtos;
-//        Collection<Produto> r = new ArrayList<>();
-//
-//        for (Produto p : produtos) {
-//            r.add(p);
-//        }
-//
-//        this.produtos = r;
+    public void addProduto(Produto p) {
+
+        this.produtos.add(p);
+
     }
 
     @Override

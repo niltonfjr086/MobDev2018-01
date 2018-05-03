@@ -1,6 +1,7 @@
 package devmob2018.com.comandaapp.controller;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -57,7 +58,7 @@ public class GerenciarProdutoActivity extends Activity {
         try {
             this.categoriaDAO = this.db.getDao(Categoria.class);
 
-            this.categoriaList = categoriaDAO.queryForAll();
+            this.categoriaList = (ArrayList<Categoria>)categoriaDAO.queryForAll();
 
             this.produtoDAO = this.db.getDao(Produto.class);
 
@@ -87,16 +88,42 @@ public class GerenciarProdutoActivity extends Activity {
 
         if (nomeProduto.length() > 0 && valorProduto.length() > 0) {
             if (this.spCategorias.getSelectedItem() != null) {
-                Produto p = new Produto(nomeProduto.toString(), (Categoria) this.spCategorias.getSelectedItem(), Double.valueOf(valorProduto.toString()));
+
+                Categoria c = (Categoria) this.spCategorias.getSelectedItem();
+                Integer pos = this.spCategorias.getSelectedItemPosition();
+
+                Produto p = new Produto(nomeProduto.toString(), c, Double.valueOf(valorProduto.toString()));
 
                 try {
-                    produtoDAO.create(p);
-                    this.produtoAdapter.add(p);
+
+                    long res = produtoDAO.create(p);
+                    if (res != -1) {
+//                        this.categoriaAdapter.getItem(pos).getProdutos().add((Produto) p);
+//                    List<Produto> produtos = this.categoriaAdapter.getItem(pos).getProdutos();
+//                    produtos.add(p);
+                        this.produtoAdapter.add(p);
+                    } else {
+                        res = produtoDAO.update(p);
+                        if (res != -1) {
+                            Toast.makeText(this, "Atualizado", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    this.categoriaAdapter.notifyDataSetChanged();
+                    this.produtoAdapter.notifyDataSetChanged();
+
+                    this.editNome.setText("");
+                    this.editValor.setText("");
+                    this.editNome.requestFocus();
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
             }
+        } else {
+
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -120,12 +147,14 @@ public class GerenciarProdutoActivity extends Activity {
         Categoria c = (Categoria) this.spCategorias.getSelectedItem();
 
         this.produtoAdapter.clear();
-        this.produtoAdapter.addAll(c.getProdutos());
+        this.produtoAdapter.addAll(c.getListProdutos());
         this.produtoAdapter.notifyDataSetChanged();
 
     }
 
     public void gerenciarCategoria(View v) {
         Toast.makeText(this, "IMPLEMENTAR", Toast.LENGTH_LONG).show();
+//        Intent it = new Intent(this, GerenciarCategoriaActivity.class);
+//        startActivity(it);
     }
 }

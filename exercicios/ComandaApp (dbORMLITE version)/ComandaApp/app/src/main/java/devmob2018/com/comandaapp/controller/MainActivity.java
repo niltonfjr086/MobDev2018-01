@@ -84,11 +84,11 @@ public class MainActivity extends Activity {
             ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
             this.comanda = new Comanda(produtos);
 
-            for (Produto p : Comanda.produtosDisponiveis) {
-
-                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
-
-            }
+//            for (Produto p : Comanda.produtosDisponiveis) {
+//
+//                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
+//
+//            }
 
 //            Dao<ItemComanda, Long> itemComandaDAO = this.db.getDao(ItemComanda.class);
 //            for (ItemComanda ic : this.comanda.getItens()) {
@@ -172,13 +172,11 @@ public class MainActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         int qtd = ic.getQuantidade() + 1;
                         ic.setQuantidade(qtd);
-                        MainActivity.this.valorTotal.setText(Double.valueOf(MainActivity.this.comanda.getTotal()).toString());
-
                         MainActivity.this.adapterProdutos.notifyDataSetChanged();
 
                     }
                 });
-
+                MainActivity.this.valorTotal.setText(Double.valueOf(MainActivity.this.comanda.getTotal()).toString());
                 alerta.show();
 
 
