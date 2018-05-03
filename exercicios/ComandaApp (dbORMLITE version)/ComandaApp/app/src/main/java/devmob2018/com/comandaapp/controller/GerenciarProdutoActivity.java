@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -55,6 +56,7 @@ public class GerenciarProdutoActivity extends Activity {
 
         try {
             this.categoriaDAO = this.db.getDao(Categoria.class);
+
             this.categoriaList = categoriaDAO.queryForAll();
 
             this.produtoDAO = this.db.getDao(Produto.class);
@@ -66,6 +68,8 @@ public class GerenciarProdutoActivity extends Activity {
         this.spCategorias = findViewById(R.id.spCategorias);
         this.spCategorias.setAdapter(this.categoriaAdapter);
 
+//        this.spCategorias.setOnItemSelectedListener(this.onCategoriaSelect());
+
         this.editNome = findViewById(R.id.editNome);
         this.editValor = findViewById(R.id.editValor);
 
@@ -76,7 +80,7 @@ public class GerenciarProdutoActivity extends Activity {
     }
 
     public void salvar(View v) {
-        Toast.makeText(this, "IMPLEMENTAR", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "IMPLEMENTADO", Toast.LENGTH_LONG).show();
 
         Editable nomeProduto = this.editNome.getText();
         Editable valorProduto = this.editValor.getText();
@@ -94,6 +98,31 @@ public class GerenciarProdutoActivity extends Activity {
 
             }
         }
+    }
+
+    private AdapterView.OnItemSelectedListener onCategoriaSelect() {
+        return new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                GerenciarProdutoActivity.this.filtrar(view);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                GerenciarProdutoActivity.this.produtoAdapter.clear();
+            }
+        };
+    }
+
+    public void filtrar(View v) {
+
+        Categoria c = (Categoria) this.spCategorias.getSelectedItem();
+
+        this.produtoAdapter.clear();
+        this.produtoAdapter.addAll(c.getProdutos());
+        this.produtoAdapter.notifyDataSetChanged();
+
     }
 
     public void gerenciarCategoria(View v) {

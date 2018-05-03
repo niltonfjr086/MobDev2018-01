@@ -1,9 +1,13 @@
 package devmob2018.com.comandaapp.model.entity;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @DatabaseTable(tableName = "tb_categoria")
 public class Categoria implements Serializable {
@@ -13,6 +17,9 @@ public class Categoria implements Serializable {
 
     @DatabaseField(columnName = "nome", canBeNull = false)
     private String nome;
+
+    @ForeignCollectionField(eager = true)
+    private Collection<Produto> produtos;
 
     public Categoria() {
     }
@@ -35,6 +42,28 @@ public class Categoria implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Produto> getProdutos() {
+
+        List<Produto> r = new ArrayList<>();
+
+        for (Produto p : this.produtos) {
+            r.add(p);
+        }
+
+        return r;
+    }
+
+    public void setProdutos(Collection<Produto> produtos) {
+        this.produtos = produtos;
+//        Collection<Produto> r = new ArrayList<>();
+//
+//        for (Produto p : produtos) {
+//            r.add(p);
+//        }
+//
+//        this.produtos = r;
     }
 
     @Override

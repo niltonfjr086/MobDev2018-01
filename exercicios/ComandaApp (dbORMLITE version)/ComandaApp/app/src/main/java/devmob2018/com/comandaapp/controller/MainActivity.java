@@ -140,14 +140,48 @@ public class MainActivity extends Activity {
     private AdapterView.OnItemClickListener editarItem() {
         return new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainActivity.this.adapterProdutos.getItem(position);
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                Intent it = new Intent(MainActivity.this, AdicaoItemComandaActivity.class);
-                it.putExtra("reqCode", "editar");
-                it.putExtra("itemComanda", (ItemComanda) MainActivity.this.adapterProdutos.getItem(position));
-                it.putExtra("position", position);
-                startActivityForResult(it, 1002);
+                AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
+                alerta.setTitle("Editar Item");
+
+                Object o = MainActivity.this.adapterProdutos.getItem(position);
+                final ItemComanda ic = (ItemComanda) o;
+
+                alerta.setMessage("Deseja editar o item: " + ic.getProduto().getNome());
+                alerta.setIcon(android.R.drawable.ic_menu_edit);
+
+                alerta.setNeutralButton("Sim", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Editar
+                        Intent it = new Intent(MainActivity.this, AdicaoItemComandaActivity.class);
+                        it.putExtra("reqCode", "editar");
+                        it.putExtra("itemComanda", ic);
+                        it.putExtra("position", position);
+                        startActivityForResult(it, 1002);
+                    }
+                });
+
+                alerta.setNegativeButton("Não", null);
+
+                alerta.setPositiveButton("+", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int qtd = ic.getQuantidade() + 1;
+                        ic.setQuantidade(qtd);
+                        MainActivity.this.valorTotal.setText(Double.valueOf(MainActivity.this.comanda.getTotal()).toString());
+
+                        MainActivity.this.adapterProdutos.notifyDataSetChanged();
+
+                    }
+                });
+
+                alerta.show();
+
+
             }
         };
 
@@ -159,7 +193,7 @@ public class MainActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 AlertDialog.Builder alerta = new AlertDialog.Builder(MainActivity.this);
-                alerta.setTitle("Editar Estado");
+                alerta.setTitle("Remover Item");
 //                MainActivity.this.adapterProdutos.getItem(position).getProduto().getNome();
 
                 Object o = MainActivity.this.adapterProdutos.getItem(position);
@@ -208,9 +242,10 @@ public class MainActivity extends Activity {
 
                         icc.setProduto(ic.getProduto());
                         icc.setQuantidade(ic.getQuantidade());
+                        this.valorTotal.setText(this.comanda.getTotal().toString());
                         this.adapterProdutos.notifyDataSetChanged();
 
-                        Toast.makeText(this, String.valueOf(resultCode), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(this, String.valueOf(resultCode), Toast.LENGTH_LONG).show();
 
                     }
                 }
