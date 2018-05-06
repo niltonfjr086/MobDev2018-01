@@ -51,12 +51,6 @@ public class MainActivity extends Activity {
 
             this.db = MyOrmLiteOpenHelper.getInstance(this);
 
-
-//            this.dbForRead = this.db.getReadableDatabase();
-//            this.dbForWrite = this.db.getWritableDatabase();
-
-//            this.dbForWrite.beginTransaction();
-
             Dao<Categoria, Long> categoriaDAO = this.db.getDao(Categoria.class);
             if (categoriaDAO.queryForAll().size() <= 0) {
                 categoriaDAO.createOrUpdate(new Categoria("Bebida"));
@@ -64,10 +58,6 @@ public class MainActivity extends Activity {
                 categoriaDAO.createOrUpdate(new Categoria("Comida"));
                 categoriaDAO.createOrUpdate(new Categoria("Sobremesa"));
             }
-
-
-//            this.dbForWrite.setTransactionSuccessful();
-//            this.dbForWrite.endTransaction();
 
             Dao<Produto, Long> produtoDAO = this.db.getDao(Produto.class);
             if (produtoDAO.queryForAll().size() <= 0) {
@@ -84,11 +74,11 @@ public class MainActivity extends Activity {
             ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
             this.comanda = new Comanda(produtos);
 
-//            for (Produto p : Comanda.produtosDisponiveis) {
-//
-//                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
-//
-//            }
+            for (Produto p : Comanda.produtosDisponiveis) {
+
+                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
+
+            }
 
 //            Dao<ItemComanda, Long> itemComandaDAO = this.db.getDao(ItemComanda.class);
 //            for (ItemComanda ic : this.comanda.getItens()) {

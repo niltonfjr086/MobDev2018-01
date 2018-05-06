@@ -1,15 +1,22 @@
 package devmob2018.com.comandaapp.controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.ItemComanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
@@ -29,8 +36,6 @@ public class AdicaoItemComandaActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicao_item_comanda);
-
-//        Toast.makeText(this, String.valueOf(getRequestedOrientation()), Toast.LENGTH_LONG).show();
 
         this.adapterProduto = new ArrayAdapter<Produto>(this, android.R.layout.simple_spinner_item, Comanda.produtosDisponiveis);
         this.produtos = findViewById(R.id.spProdutos);
@@ -59,8 +64,6 @@ public class AdicaoItemComandaActivity extends Activity {
 
             this.qtdProduto.setValue(this.itemComanda.getQuantidade());
         }
-
-
     }
 
 
@@ -84,13 +87,22 @@ public class AdicaoItemComandaActivity extends Activity {
         finish();
     }
 
+
     public void addProduto(View v) {
-        Toast.makeText(this, "IMPLEMENTAR", Toast.LENGTH_LONG).show();
 
         Intent it = new Intent(this, GerenciarProdutoActivity.class);
         it.putExtra("reqCode", "gerenciarProduto");
 //        it.putExtra("listaProduto", new ItemComanda());
         startActivityForResult(it, 2001);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        this.produtos = findViewById(R.id.spProdutos);
+        this.produtos.setAdapter(this.adapterProduto);
 
     }
 }

@@ -19,7 +19,7 @@ public class Categoria implements Serializable {
     private String nome;
 
     @ForeignCollectionField(eager = true)
-    private Collection<Produto> produtos;
+    private Collection<Produto> produtos = new ArrayList<>();
 
     public Categoria() {
     }
@@ -65,12 +65,6 @@ public class Categoria implements Serializable {
         return r;
     }
 
-    public void addProduto(Produto p) {
-
-        this.produtos.add(p);
-
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,6 +85,6 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return nome;
+        return nome + "(" + getListProdutos().size() + ")";
     }
 }
