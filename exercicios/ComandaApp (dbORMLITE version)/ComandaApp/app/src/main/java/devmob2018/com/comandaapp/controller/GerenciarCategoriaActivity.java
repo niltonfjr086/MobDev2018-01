@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
@@ -21,10 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.component.CategoriaAdapter;
 import devmob2018.com.comandaapp.model.database.MyOrmLiteOpenHelper;
 import devmob2018.com.comandaapp.model.entity.Categoria;
-import devmob2018.com.comandaapp.model.entity.Comanda;
-import devmob2018.com.comandaapp.model.entity.Produto;
 
 public class GerenciarCategoriaActivity extends Activity {
 
@@ -63,8 +61,9 @@ public class GerenciarCategoriaActivity extends Activity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.categoriaAdapter = new ArrayAdapter<Categoria>(this, android.R.layout.simple_spinner_item, this.categoriaList);
+//        this.categoriaAdapter = new ArrayAdapter<Categoria>(this, R.layout.categoria_list_view_item, this.categoriaList);
 
+        this.categoriaAdapter = new CategoriaAdapter(this, R.layout.categoria_list_view_item, this.categoriaList);
 
         this.editNomeCategoria = findViewById(R.id.editNomeCategoria);
 

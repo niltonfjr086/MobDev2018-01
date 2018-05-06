@@ -9,7 +9,6 @@
     android:padding="16dp"
     tools:context="devmob2018.com.comandaapp.controller.MainActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,13 +20,13 @@
             android:layout_weight="1"
             android:text="@string/btnAdicionarProduto"
             android:onClick="adicionar"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
 
-            android:text="@string/btnVisualizarComandas"
-            android:onClick="visualizar"/>
+            <!--android:text="@string/btnVisualizarComandas"-->
+            <!--android:onClick="visualizar"/>-->
 
     </LinearLayout>
 
@@ -43,17 +42,14 @@
             android:text="@string/btnLimparLista"
             android:onClick="limpar"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnFinalizarComanda"
-            android:onClick="finalizar"/>
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/btnFinalizarComanda"-->
+            <!--android:onClick="finalizar"/>-->
 
     </LinearLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,9 +77,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
     </ListView>
-
 
 </LinearLayout>

@@ -18,7 +18,7 @@ public class MyOrmLiteOpenHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "comandas.db";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private static MyOrmLiteOpenHelper instance = null;
 

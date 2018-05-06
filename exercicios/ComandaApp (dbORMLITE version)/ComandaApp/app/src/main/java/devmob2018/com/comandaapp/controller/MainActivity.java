@@ -18,6 +18,7 @@ import com.j256.ormlite.dao.Dao;
 import java.util.ArrayList;
 
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.component.ItemComandaAdapter;
 import devmob2018.com.comandaapp.model.database.MyOrmLiteOpenHelper;
 import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
@@ -74,11 +75,11 @@ public class MainActivity extends Activity {
             ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
             this.comanda = new Comanda(produtos);
 
-            for (Produto p : Comanda.produtosDisponiveis) {
-
-                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
-
-            }
+//            for (Produto p : Comanda.produtosDisponiveis) {
+//
+//                this.comanda.getItens().add(new ItemComanda(p, 5, this.comanda));
+//
+//            }
 
 //            Dao<ItemComanda, Long> itemComandaDAO = this.db.getDao(ItemComanda.class);
 //            for (ItemComanda ic : this.comanda.getItens()) {
@@ -93,7 +94,9 @@ public class MainActivity extends Activity {
 
             this.listProdutos = (ArrayList<ItemComanda>) this.comanda.getItens();
 
-            this.adapterProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.listProdutos);
+//            this.adapterProdutos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.listProdutos);
+            this.adapterProdutos = new ItemComandaAdapter(this, R.layout.item_comanda_list_view_item, this.listProdutos);
+
             this.viewProdutos = findViewById(R.id.produtos);
             this.viewProdutos.setAdapter(this.adapterProdutos);
 
@@ -163,10 +166,9 @@ public class MainActivity extends Activity {
                         int qtd = ic.getQuantidade() + 1;
                         ic.setQuantidade(qtd);
                         MainActivity.this.adapterProdutos.notifyDataSetChanged();
-
+                        MainActivity.this.valorTotal.setText(Double.valueOf(MainActivity.this.comanda.getTotal()).toString());
                     }
                 });
-                MainActivity.this.valorTotal.setText(Double.valueOf(MainActivity.this.comanda.getTotal()).toString());
                 alerta.show();
 
 

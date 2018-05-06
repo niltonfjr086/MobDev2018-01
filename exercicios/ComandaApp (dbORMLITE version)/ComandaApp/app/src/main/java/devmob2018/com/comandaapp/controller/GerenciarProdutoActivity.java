@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.component.ProdutoAdapter;
 import devmob2018.com.comandaapp.model.database.MyOrmLiteOpenHelper;
 import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
@@ -78,7 +79,9 @@ public class GerenciarProdutoActivity extends Activity {
         this.editNome = findViewById(R.id.editNome);
         this.editValor = findViewById(R.id.editValor);
 
-        this.produtoAdapter = new ArrayAdapter<Produto>(this, android.R.layout.simple_spinner_item, Comanda.produtosDisponiveis);
+//        this.produtoAdapter = new ArrayAdapter<Produto>(this, android.R.layout.simple_list_item_1, Comanda.produtosDisponiveis);
+        this.produtoAdapter = new ProdutoAdapter(this, R.layout.produto_list_view_item, Comanda.produtosDisponiveis);
+
         this.lvProdutos = findViewById(R.id.lvProdutos);
         this.lvProdutos.setOnItemClickListener(this.editarItem());
         this.lvProdutos.setOnItemLongClickListener(this.removerItem());
@@ -100,11 +103,16 @@ public class GerenciarProdutoActivity extends Activity {
                 try {
 
                     Categoria c = (Categoria) this.spCategorias.getSelectedItem();
+
                     if (p == null) {
                         p = new Produto(nomeProduto.toString(), c, Double.valueOf(valorProduto.toString()));
 
                         res = produtoDAO.create(p);
                         if (res != -1) {
+//                            this.categoriaAdapter.getItem(this.spCategorias.getSelectedItemPosition()).;
+                            c = this.categoriaDAO.queryForId(c.getId());
+
+                            this.categoriaAdapter.getItem(this.spCategorias.getSelectedItemPosition()).setProdutos(c.getProdutos());
                             this.produtoAdapter.add(p);
 
                             Toast.makeText(this, "Adicionado", Toast.LENGTH_LONG).show();

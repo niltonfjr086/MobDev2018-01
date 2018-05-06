@@ -82,7 +82,7 @@ public class ItemComanda implements Serializable {
 
     public Double getSubtotal() {
 
-        if (this.subtotal == null && this.produto != null && this.produto.getValor() != null && this.quantidade != null) {
+        if (this.produto != null && this.produto.getValor() != null && this.quantidade != null) {
 
             this.subtotal = this.produto.getValor() * this.quantidade;
 
