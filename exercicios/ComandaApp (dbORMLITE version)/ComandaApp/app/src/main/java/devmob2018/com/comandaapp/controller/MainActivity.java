@@ -2,9 +2,11 @@ package devmob2018.com.comandaapp.controller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import devmob2018.com.comandaapp.R;
@@ -39,6 +42,11 @@ public class MainActivity extends Activity {
     private SQLiteDatabase dbForRead;
     private SQLiteDatabase dbForWrite;
 
+    Dao<Categoria, Long> categoriaDAO;
+    Dao<Produto, Long> produtoDAO;
+
+    final int REQUEST_QR_CODE = 10;
+    final int REQUEST_BAR_CODE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +60,7 @@ public class MainActivity extends Activity {
 
             this.db = MyOrmLiteOpenHelper.getInstance(this);
 
-            Dao<Categoria, Long> categoriaDAO = this.db.getDao(Categoria.class);
+            this.categoriaDAO = this.db.getDao(Categoria.class);
             if (categoriaDAO.queryForAll().size() <= 0) {
                 categoriaDAO.createOrUpdate(new Categoria("Bebida"));
                 categoriaDAO.createOrUpdate(new Categoria("Entrada"));
@@ -60,7 +68,7 @@ public class MainActivity extends Activity {
                 categoriaDAO.createOrUpdate(new Categoria("Sobremesa"));
             }
 
-            Dao<Produto, Long> produtoDAO = this.db.getDao(Produto.class);
+            this.produtoDAO = this.db.getDao(Produto.class);
             if (produtoDAO.queryForAll().size() <= 0) {
                 produtoDAO.createOrUpdate(new Produto("Água com gás", categoriaDAO.queryForId(1L), 3.5));
                 produtoDAO.createOrUpdate(new Produto("Cheese Salada", categoriaDAO.queryForId(3L), 12.0));
@@ -241,9 +249,68 @@ public class MainActivity extends Activity {
                 }
 
                 this.valorTotal.setText(this.comanda.getTotal().toString());
+            } else {
+
+                if (resultCode == RESULT_OK) {
+//                    Toast.makeText(this, "DEU OK: " + resultCode, Toast.LENGTH_LONG).show();
+
+                    String resultado;
+                    switch (requestCode) {
+
+                        case REQUEST_QR_CODE:
+//                            Toast.makeText(this, "QRCode: \n" + data.getStringExtra("SCAN_RESULT"), Toast.LENGTH_LONG).show();
+                            try {
+                                this.comanda.adicionarItem(new ItemComanda(produtoDAO.queryForId(Long.parseLong(data.getStringExtra("SCAN_RESULT"))), 1));
+//                                produtoDAO.queryForId(Long.parseLong(data.getStringExtra("SCAN_RESULT")));
+                                this.valorTotal.setText(this.comanda.getTotal().toString());
+                                this.adapterProdutos.notifyDataSetChanged();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            break;
+
+                        case REQUEST_BAR_CODE:
+                            Toast.makeText(this, "BarCode: \n" + data.getStringExtra("SCAN_RESULT"), Toast.LENGTH_LONG).show();
+                            break;
+
+                    }
+
+                }
+
             }
+
+        } else {
+
+            Toast.makeText(this, "Cancelou/voltou: " + resultCode, Toast.LENGTH_LONG).show();
+
         }
 
+    }
+
+    public void scanQRCode(View v) {
+        try {
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, REQUEST_QR_CODE);
+        } catch (ActivityNotFoundException anfe) {
+            Toast.makeText(this, "Baixe o qr code", Toast.LENGTH_LONG).show();
+            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+    }
+
+    public void scanBarCode(View v) {
+        try {
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, REQUEST_BAR_CODE);
+        } catch (ActivityNotFoundException anfe) {
+            Toast.makeText(this, "Baixe o qr code", Toast.LENGTH_LONG).show();
+            Uri uri = Uri.parse("market://search?q=pname:" + "com.google.zxing.client.android");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
     }
 
 
