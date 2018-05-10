@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import devmob2018.com.comandaapp.R;
 import devmob2018.com.comandaapp.component.ItemComandaAdapter;
@@ -42,6 +44,8 @@ public class MainActivity extends Activity {
     private SQLiteDatabase dbForRead;
     private SQLiteDatabase dbForWrite;
 
+    Dao<Comanda, Long> comandaDAO;
+    Dao<ItemComanda, Long> itemComandaDAO;
     Dao<Categoria, Long> categoriaDAO;
     Dao<Produto, Long> produtoDAO;
 
@@ -54,11 +58,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         try {
-            this.comanda = new Comanda();
+//            this.comanda = new Comanda();
 
 //            this.deleteDatabase("comandas.db");
 
             this.db = MyOrmLiteOpenHelper.getInstance(this);
+
+            this.comandaDAO = this.db.getDao(Comanda.class);
+            this.itemComandaDAO = this.db.getDao(ItemComanda.class);
 
             this.categoriaDAO = this.db.getDao(Categoria.class);
             if (categoriaDAO.queryForAll().size() <= 0) {
@@ -80,8 +87,12 @@ public class MainActivity extends Activity {
 //            Dao<Comanda, Long> comandaDAO = this.db.getDao(Comanda.class);
 //            comandaDAO.createOrUpdate(this.comanda);
 
-            ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
-            this.comanda = new Comanda(produtos);
+            try {
+                this.comanda = (Comanda) savedInstanceState.getSerializable("comandaTransient");
+            } catch (Exception e) {
+                ArrayList<Produto> produtos = (ArrayList<Produto>) produtoDAO.queryForAll();
+                this.comanda = new Comanda(produtos);
+            }
 
 //            for (Produto p : Comanda.produtosDisponiveis) {
 //
@@ -121,6 +132,14 @@ public class MainActivity extends Activity {
     }
 
     public void adicionar(View v) {
+
+        if (this.comanda.getItens().size() == 0) {
+            try {
+                comandaDAO.createOrUpdate(this.comanda);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
         Intent it = new Intent(this, AdicaoItemComandaActivity.class);
         it.putExtra("reqCode", "adicionar");
@@ -173,6 +192,11 @@ public class MainActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         int qtd = ic.getQuantidade() + 1;
                         ic.setQuantidade(qtd);
+                        try {
+                            itemComandaDAO.createOrUpdate(ic);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         MainActivity.this.adapterProdutos.notifyDataSetChanged();
                         MainActivity.this.valorTotal.setText(Double.valueOf(MainActivity.this.comanda.getTotal()).toString());
                     }
@@ -195,7 +219,7 @@ public class MainActivity extends Activity {
 //                MainActivity.this.adapterProdutos.getItem(position).getProduto().getNome();
 
                 Object o = MainActivity.this.adapterProdutos.getItem(position);
-                ItemComanda ic = (ItemComanda) o;
+                final ItemComanda ic = (ItemComanda) o;
 
                 alerta.setMessage("Deseja excluir o item: " + ic.getProduto().getNome());
                 alerta.setIcon(android.R.drawable.ic_menu_edit);
@@ -203,6 +227,11 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Excluir
+                        try {
+                            produtoDAO.deleteById(ic.getId());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         MainActivity.this.adapterProdutos.remove(MainActivity.this.adapterProdutos.getItem(position));
                         MainActivity.this.valorTotal.setText(MainActivity.this.comanda.getTotal().toString());
                         Toast.makeText(MainActivity.this, "Excluído", Toast.LENGTH_SHORT).show();
@@ -226,15 +255,24 @@ public class MainActivity extends Activity {
             if (b.getSerializable("itemComanda") != null) {
 
                 if (requestCode == 1001) {
-
-                    this.adapterProdutos.add((ItemComanda) b.getSerializable("itemComanda"));
+                    ItemComanda ic = (ItemComanda) b.getSerializable("itemComanda");
+                    try {
+                        itemComandaDAO.createOrUpdate(ic);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    this.adapterProdutos.add(ic);
 
                 } else {
 
                     if (requestCode == 1002) {
                         Integer pos = b.getInt("position");
                         ItemComanda ic = (ItemComanda) b.getSerializable("itemComanda");
-
+                        try {
+                            itemComandaDAO.createOrUpdate(ic);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                         Object o = MainActivity.this.adapterProdutos.getItem(pos);
                         ItemComanda icc = (ItemComanda) o;
 
@@ -287,6 +325,7 @@ public class MainActivity extends Activity {
 
     }
 
+    // Autor: Professor Renato
     public void scanQRCode(View v) {
         try {
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
@@ -300,6 +339,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    // Autor: Professor Renato
     public void scanBarCode(View v) {
         try {
             Intent intent = new Intent("com.google.zxing.client.android.SCAN");
@@ -313,5 +353,34 @@ public class MainActivity extends Activity {
         }
     }
 
+//    @Override
+//    public void onDestroy() {
+//        if(this.comanda != null && this.comanda.getId() != null){
+//            this.comanda.setDtFechamento(new Date());
+//            try {
+//                this.comandaDAO.createOrUpdate(this.comanda);
+//            } catch (SQLException e) {
+//                this.comanda.setDtFechamento(null);
+//                e.printStackTrace();
+//            }
+//        }
+//        super.onDestroy();
+//    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putSerializable("comandaTransient", this.comanda);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+//    @Override
+//    public void onRestoreInstanceState(Bundle savedInstanceState) {
+//
+//        super.onRestoreInstanceState(savedInstanceState);
+//
+//        Toast.makeText(this, "Restaurou", Toast.LENGTH_LONG).show();
+//    }
 
 }

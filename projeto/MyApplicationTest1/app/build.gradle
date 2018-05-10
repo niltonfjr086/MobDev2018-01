@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "devmob2018.com.pousadaapp"
-        minSdkVersion 21
+        applicationId "devmob2018.com.myapplicationtest1"
+        minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -20,16 +20,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    // https://mvnrepository.com/artifact/com.android.support/appcompat-v7
-    compile 'com.android.support:appcompat-v7:27.1.1'
-
-    // https://mvnrepository.com/artifact/com.android.support/design
-    compile 'com.android.support:design:27.1.1'
-
-
 }

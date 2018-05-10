@@ -1,4 +1,4 @@
-package devmob2018.com.pousadaapp.application.controller;
+package devmob2018.com.pousadaapp.controller;
 
 import android.app.Activity;
 import android.os.Bundle;

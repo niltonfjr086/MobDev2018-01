@@ -71,7 +71,7 @@ public class AdicaoItemComandaActivity extends Activity {
 
         this.itemComanda.getProduto().getId();
 
-        Toast.makeText(this, this.produtos.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, this.produtos.getSelectedItem().toString(), Toast.LENGTH_LONG).show();
 
         this.itemComanda.setProduto((Produto) this.produtos.getSelectedItem());
         this.itemComanda.setQuantidade(this.qtdProduto.getValue());
