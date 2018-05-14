@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorPrimary">#9fb47f</color>-->
+    <!--<color name="colorPrimaryDark">#819f30</color>-->
+    <!--<color name="colorAccent">#ff4063</color>-->
+
+    <color name="textForAllApp">#a68989</color>
+
+    <color name="shadow">#000000</color>
+
+    <color name="firstColor">#4753a7</color>
+    <color name="finalColor">#b8bdf4</color>
+    <color name="strokeColor">#333333</color>
+
 </resources>
