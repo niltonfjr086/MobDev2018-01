@@ -298,10 +298,31 @@ public class MainActivity extends Activity {
                         case REQUEST_QR_CODE:
 //                            Toast.makeText(this, "QRCode: \n" + data.getStringExtra("SCAN_RESULT"), Toast.LENGTH_LONG).show();
                             try {
-                                this.comanda.adicionarItem(new ItemComanda(produtoDAO.queryForId(Long.parseLong(data.getStringExtra("SCAN_RESULT"))), 1));
+
+                                String retorno = data.getStringExtra("SCAN_RESULT");
+                                char[] cs = retorno.toCharArray();
+                                retorno = "";
+                                for (char c : cs) {
+                                    if (Character.isDigit(c)) {
+                                        retorno += c;
+                                    }
+                                }
+
+                                Produto p = null;
+                                if(retorno.length() > 0){
+                                    Long id = Long.parseLong(retorno);
+                                    p = produtoDAO.queryForId(id);
+                                }
+
+                                if (p != null && p.getId() != null) {
+                                    this.comanda.adicionarItem(new ItemComanda(p, 1));
 //                                produtoDAO.queryForId(Long.parseLong(data.getStringExtra("SCAN_RESULT")));
-                                this.valorTotal.setText(this.comanda.getTotal().toString());
-                                this.adapterProdutos.notifyDataSetChanged();
+                                    this.valorTotal.setText(this.comanda.getTotal().toString());
+                                    this.adapterProdutos.notifyDataSetChanged();
+
+                                } else {
+                                    Toast.makeText(this, "Produto inexistente", Toast.LENGTH_LONG).show();
+                                }
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
