@@ -3,43 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
 
+        <item name="android:windowBackground">@drawable/gradient</item>
 
-        <!--<item name="android:textColor">@color/textForAllApp</item>-->
+        <item name="android:textColor">@color/textForAllApp</item>
 
-        <!-- Customize your theme here. -->
+        <item name="android:buttonStyle">@style/custom_button</item>
+        <item name="android:imageButtonStyle">@style/custom_button</item>
 
-        <!--<item name="android:background">@drawable/gradient</item>-->
+        <item name="android:spinnerStyle">@style/custom_spinner</item>
 
-        <!--<item name="android:button">-->
-           <!--@drawable/gradient-->
-        <!--</item>-->
+        <item name="android:listViewStyle">@style/custom_list_view</item>
 
-        <!--<item name="android:colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="android:colorAccent">@color/colorAccent</item>-->
     </style>
-    <!--<style name="customButton" parent="android:MediaButton">-->
 
-        <!--<item name="android:background">@drawable/gradient</item>-->
-    <!--</style>-->
+    <style name="custom_button" parent="android:Widget.Holo.Button" />
 
+    <style name="custom_text_view" parent="android:Widget.Holo.TextView" />
 
-    <!--<style name="base">-->
-        <!--<item name="android:layout_width">match_parent</item>-->
-        <!--<item name="android:layout_height">wrap_content</item>-->
-    <!--</style>-->
+    <style name="custom_spinner" parent="android:Widget.Holo.Spinner" />
 
-
-    <!--<style name="editZera">-->
-        <!--<item name="android:layout_margin">15dp</item>-->
-        <!--<item name="android:color">@color/strokeColor</item>-->
-        <!--<item name="android:shadowColor">@color/shadow</item>-->
-        <!--<item name="android:elevation">7dp</item>-->
-        <!--<item name="android:background">@drawable/gradient</item>-->
-    <!--</style>-->
-
-
-    <!--<style name="textView" parent="base">-->
-    <!--</style>-->
+    <style name="custom_list_view" parent="android:Widget.Holo.ListView" />
 
 </resources>

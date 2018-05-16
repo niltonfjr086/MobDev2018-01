@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -43,7 +45,7 @@ public class GerenciarProdutoActivity extends Activity {
 
     private EditText editNome, editValor;
 
-    private ArrayAdapter<Produto> produtoAdapter;
+    private ProdutoAdapter produtoAdapter;
     private ListView lvProdutos;
 
     private Produto p;
@@ -214,7 +216,7 @@ public class GerenciarProdutoActivity extends Activity {
                         try {
                             produtoDAO.delete(pp);
 
-                            GerenciarProdutoActivity.this.produtoAdapter.remove(GerenciarProdutoActivity.this.produtoAdapter.getItem(position));
+                            GerenciarProdutoActivity.this.produtoAdapter.remove((Produto)GerenciarProdutoActivity.this.produtoAdapter.getItem(position));
                             Toast.makeText(GerenciarProdutoActivity.this, "Excluído", Toast.LENGTH_SHORT).show();
                         } catch (SQLException e) {
                             e.printStackTrace();

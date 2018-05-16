@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import devmob2018.com.comandaapp.R;
+import devmob2018.com.comandaapp.component.ProdutoAdapter;
 import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.ItemComanda;
@@ -27,7 +28,7 @@ public class AdicaoItemComandaActivity extends Activity {
     private Integer position;
     private ItemComanda itemComanda;
 
-    private ArrayAdapter<Produto> adapterProduto;
+    private ProdutoAdapter adapterProduto;
     private Spinner produtos;
 
     private NumberPicker qtdProduto;
@@ -37,7 +38,8 @@ public class AdicaoItemComandaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicao_item_comanda);
 
-        this.adapterProduto = new ArrayAdapter<Produto>(this, android.R.layout.simple_spinner_item, Comanda.produtosDisponiveis);
+//        this.adapterProduto = new ArrayAdapter<Produto>(this, android.R.layout.simple_spinner_item, Comanda.produtosDisponiveis);
+        this.adapterProduto = new ProdutoAdapter(this, R.layout.produto_list_view_item, Comanda.produtosDisponiveis);
         this.produtos = findViewById(R.id.spProdutos);
         this.produtos.setAdapter(this.adapterProduto);
 
