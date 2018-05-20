@@ -1,27 +1,31 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo">
 
         <item name="android:windowBackground">@drawable/gradient</item>
 
-        <item name="android:textColor">@color/textForAllApp</item>
+       <item name="android:textColor">@color/textForAllApp</item>
 
-        <item name="android:buttonStyle">@style/custom_button</item>
-        <item name="android:imageButtonStyle">@style/custom_button</item>
+        <!--  <item name="android:buttonStyle">@style/custom_button</item>
+         <item name="android:imageButtonStyle">@style/custom_button</item>
 
-        <item name="android:spinnerStyle">@style/custom_spinner</item>
+         <item name="android:spinnerStyle">@style/custom_spinner</item>
 
-        <item name="android:listViewStyle">@style/custom_list_view</item>
+         <item name="android:listViewStyle">@style/custom_list_view</item>
+
+         <item name="android:alertDialogTheme">@style/custom_alert_dialog</item>-->
 
     </style>
 
-    <style name="custom_button" parent="android:Widget.Holo.Button" />
+<!--    <style name="custom_button" parent="android:Widget.Holo.Button" />
 
     <style name="custom_text_view" parent="android:Widget.Holo.TextView" />
 
     <style name="custom_spinner" parent="android:Widget.Holo.Spinner" />
 
     <style name="custom_list_view" parent="android:Widget.Holo.ListView" />
+
+    <style name="custom_alert_dialog" parent="android:Theme.Holo.Dialog" />-->
 
 </resources>

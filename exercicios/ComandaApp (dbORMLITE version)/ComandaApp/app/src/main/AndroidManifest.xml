@@ -10,7 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".controller.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".controller.AdicaoItemComandaActivity"
@@ -23,11 +27,13 @@
             android:label="@string/app_gerenciar_categoria_activity" />
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2">  <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:label="@string/title_activity_main2">
+<!--            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
     </application>
 
 </manifest>
