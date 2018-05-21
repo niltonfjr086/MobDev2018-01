@@ -2,11 +2,13 @@ package ws_pousada.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -105,35 +107,101 @@ public class IntroService {
 	@GET
 	@Path("/enderecos")
 	@Produces(MediaType.TEXT_PLAIN + ";charset=utf-8")
-	public String listAddresses(@Context HttpServletRequest request) {
+	public String listAddresses(@Context HttpServletRequest request
+	// , @QueryParam("pais") String pais
+	// , @QueryParam("cidade") String cidade
+	) {
+
+		Map<String, String[]> params = request.getParameterMap();
 
 		List<Endereco> list = new ArrayList<>();
+
+		if (params != null && params.size() > 0) {
+
+			for (Map.Entry<String, String[]> param : params.entrySet()) {
+
+				if (param != null && param.getKey().equals("pais") && param.getValue() != null) {
+					try {
+						list = enderecoDAO.findAll();
+
+						List<Endereco> filteredList = new ArrayList<>();
+
+						for (Endereco e : list) {
+//							String[] test = param.getValue();
+							
+							if (e.getPais().equals(param.getValue()[0])) {
+								filteredList.add(e);
+							}
+						}
+						return this.gson.toJson(filteredList);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						return new ArrayList<>().toString();
+					}
+
+				} else {
+					return this.gson.toJson(list);
+				}
+
+			}
+		} else {
+			list = enderecoDAO.findAll();
+			
+			return this.gson.toJson(list);
+		}
+
+		// for (Map.Entry<String, String> entry : mappedEntity.entrySet()) {
+		//
+		// if (!frst) {
+		// jpql.append(" AND ");
+		// } else {
+		// frst = false;
+		// }
+		//
+		// jpql.append("'" + entry.getKey() + "'" + " = " + "'" + entry.getValue() +
+		// "'");
+		// }
+
+		// }
 
 		// response.setCharacterEncoding("UTF8"); // this line solves the problem
 		// response.setContentType("application/json");
 
-		try {
+		// try {
+		//
+		// list = enderecoDAO.findAll();
+		// return this.gson.toJson(list);
+		// if(pais != null && pais.length() > 0) {
+		// List<Endereco> filteredList = new ArrayList<>();
+		//
+		// for(Endereco e : list) {
+		// if(e.getPais().equals(pais)) {
+		// filteredList.add(e);
+		// }
+		// }
+		// return this.gson.toJson(filteredList);
+		//
+		// } else {
+		// return this.gson.toJson(list);
+		// }
 
-			list = enderecoDAO.findAll();
+		// Endereco e = list.get(1);
+		// String s = this.gson.toJson(e);
+		// return s;
 
-			return this.gson.toJson(list);
+		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Maria")));
+		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Pedro")));
+		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Marcos")));
+		//
+		// return list.toString();
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// return new ArrayList<>().toString();
+		// }
 
-			// Endereco e = list.get(1);
-			// String s = this.gson.toJson(e);
-			// return s;
-
-			// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Maria")));
-			// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Pedro")));
-			// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Marcos")));
-			//
-			// return list.toString();
-			//
-		} catch (Exception e) {
-			e.printStackTrace();
-			// return new ArrayList<>().toString();
-		}
-
-		return "ARRAY";
+		 return "ARRAY";
 	}
 
 }
