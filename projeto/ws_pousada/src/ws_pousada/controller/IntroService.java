@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.entity.Endereco;
 import ws_pousada.model.entity.Produto;
@@ -127,9 +129,9 @@ public class IntroService {
 						List<Endereco> filteredList = new ArrayList<>();
 
 						for (Endereco e : list) {
-//							String[] test = param.getValue();
-							
-							if (e.getPais().equals(param.getValue()[0])) {
+							// String[] test = param.getValue();
+
+							if (e.getPais().toLowerCase().equals(param.getValue()[0].toLowerCase())) {
 								filteredList.add(e);
 							}
 						}
@@ -147,61 +149,62 @@ public class IntroService {
 			}
 		} else {
 			list = enderecoDAO.findAll();
-			
+
 			return this.gson.toJson(list);
 		}
 
-		// for (Map.Entry<String, String> entry : mappedEntity.entrySet()) {
-		//
-		// if (!frst) {
-		// jpql.append(" AND ");
-		// } else {
-		// frst = false;
-		// }
-		//
-		// jpql.append("'" + entry.getKey() + "'" + " = " + "'" + entry.getValue() +
-		// "'");
-		// }
+		return "ARRAY";
+	}
 
-		// }
+	@POST
+	@Path("/saveAddress")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response save(@Context HttpServletRequest request) {
 
-		// response.setCharacterEncoding("UTF8"); // this line solves the problem
-		// response.setContentType("application/json");
+		Endereco e = null;
 
-		// try {
-		//
-		// list = enderecoDAO.findAll();
-		// return this.gson.toJson(list);
-		// if(pais != null && pais.length() > 0) {
-		// List<Endereco> filteredList = new ArrayList<>();
-		//
-		// for(Endereco e : list) {
-		// if(e.getPais().equals(pais)) {
-		// filteredList.add(e);
-		// }
-		// }
-		// return this.gson.toJson(filteredList);
-		//
-		// } else {
-		// return this.gson.toJson(list);
-		// }
+		Object o = request.getAttribute("endereco");
 
-		// Endereco e = list.get(1);
-		// String s = this.gson.toJson(e);
-		// return s;
+		e = gson.fromJson(o.toString(), Endereco.class);
 
-		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Maria")));
-		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Pedro")));
-		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Marcos")));
-		//
-		// return list.toString();
-		//
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// return new ArrayList<>().toString();
-		// }
+		try {
+			EnderecoDAO enderecoDAO = new EnderecoDAO();
+			enderecoDAO.save(e);
 
-		 return "ARRAY";
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
+
+	@POST
+	@Path("/postAddress")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response postAddress(@Context HttpServletRequest request) {
+
+		System.out.println("POST-ADDRESS");
+		 Endereco e = null;
+		 Object o = request.getAttribute("jsonObject");
+		 e = gson.fromJson(o.toString(), Endereco.class);
+
+		System.out.println(e);
+		
+		EnderecoDAO enderecoDAO = new EnderecoDAO();
+
+//		try {
+
+			enderecoDAO.save(e);
+
+			return Response.status(200).entity(e).build();
+
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
+//
+//		return Response.status(404).build();
 	}
 
 }
