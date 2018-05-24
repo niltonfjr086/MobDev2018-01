@@ -186,25 +186,24 @@ public class IntroService {
 	public Response postAddress(@Context HttpServletRequest request) {
 
 		System.out.println("POST-ADDRESS");
-		 Endereco e = null;
-		 Object o = request.getAttribute("jsonObject");
-		 e = gson.fromJson(o.toString(), Endereco.class);
+		Endereco e = null;
+		Object o = request.getAttribute("jsonObject");
+		e = gson.fromJson(o.toString(), Endereco.class);
 
 		System.out.println(e);
-		
+
 		EnderecoDAO enderecoDAO = new EnderecoDAO();
 
-//		try {
+		// try {
 
-			enderecoDAO.save(e);
+		enderecoDAO.save(e);
 
-			return Response.status(200).entity(e).build();
+		return Response.status(200).entity(e).build();
 
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//
-//		return Response.status(404).build();
+		// } catch (Exception ex) {
+		// ex.printStackTrace();
+		// }
+		// return Response.status(404).build();
 	}
 
 }
