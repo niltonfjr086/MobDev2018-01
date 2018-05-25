@@ -157,29 +157,6 @@ public class IntroService {
 	}
 
 	@POST
-	@Path("/saveAddress")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response save(@Context HttpServletRequest request) {
-
-		Endereco e = null;
-
-		Object o = request.getAttribute("endereco");
-
-		e = gson.fromJson(o.toString(), Endereco.class);
-
-		try {
-			EnderecoDAO enderecoDAO = new EnderecoDAO();
-			enderecoDAO.save(e);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return null;
-	}
-
-	@POST
 	@Path("/postAddress")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -204,6 +181,38 @@ public class IntroService {
 		// ex.printStackTrace();
 		// }
 		// return Response.status(404).build();
+	}
+
+	@POST
+	@Path("/saveAddress")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response save(Endereco e) {
+		
+		//@Context HttpServletRequest request, @QueryParam("jsonObject") String json
+		
+//		Endereco e = new Endereco();
+//		e.setBairro("Cacupé");
+//		e.setCep("7777777");
+//		e.setCidade("Florianópolis");
+//		e.setComplemento("Casa");
+//		e.setNumero(9090);
+//		e.setPais("Brasil");
+//		e.setRua("Testes Street");
+//		e.setUf("SC");
+		
+//		Endereco e = this.gson.fromJson(json, Endereco.class);
+		System.out.println(e.getBairro());
+		try {
+			EnderecoDAO enderecoDAO = new EnderecoDAO();
+			enderecoDAO.save(e);
+
+			return Response.status(200).entity(e).build();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return Response.status(404).build();
+		}
+
 	}
 
 }

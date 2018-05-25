@@ -30,9 +30,9 @@ public class ConsoleTest {
 		System.out.println("TESTE");
 
 		FactoryDAO.sessionInstance();
-		
+
 		this.postTest();
-		
+
 		FactoryDAO.closeInstance();
 
 		assertEquals(0, 0);
@@ -40,13 +40,13 @@ public class ConsoleTest {
 
 	public void postTest() {
 
-//		Client c = null;
-//		c.target(getBaseURI());
-//		WebTarget target = c.target(getBaseURI());
+		// Client c = null;
+		// c.target(getBaseURI());
+		// WebTarget target = c.target(getBaseURI());
 
 		this.endereco = new Endereco();
-		this.endereco.setBairro("Juererê");
-		this.endereco.setCep("888888");
+		this.endereco.setBairro("Rio Vermelho");
+		this.endereco.setCep("01010101");
 		this.endereco.setCidade("Florianópolis");
 		this.endereco.setComplemento("Casa");
 		this.endereco.setNumero(9090);
@@ -54,24 +54,22 @@ public class ConsoleTest {
 		this.endereco.setRua("Testes Street");
 		this.endereco.setUf("SC");
 
-//		target.queryParam("novo_endereco", this.endereco);
-		
-//		Invocation.Builder builder = target.request();		
-//		Response res = builder.post(Entity.json(gson.toJson(this.endereco)));
+		// target.queryParam("novo_endereco", this.endereco);
+
+		// Invocation.Builder builder = target.request();
+		// Response res = builder.post(Entity.json(gson.toJson(this.endereco)));
 		// Client client = Client.create();
 		// HttpPost postRequest = new HttpPost(url);
 
-		
 		String es = this.gson.toJson(this.endereco);
 		System.out.println(es);
-		String entityResponse = HttpConnector.postResolve("http://localhost:8080/ws_pousada/intro/postAddress", es);
-		
+		String entityResponse = HttpConnector.postResolve("http://localhost:8080/ws_pousada/intro/saveAddress", es);
+
 		System.out.println(entityResponse);
-//		this.endereco = this.gson.fromJson(entityResponse, Endereco.class);
-		
-//		System.out.println(this.endereco);
-		
-		
+		// this.endereco = this.gson.fromJson(entityResponse, Endereco.class);
+
+		// System.out.println(this.endereco);
+
 	}
 
 	private static URI getBaseURI() {

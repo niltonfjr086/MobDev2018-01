@@ -8,9 +8,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 public class HttpConnector {
+	
+	@QueryParam("jsonObject")
+	static String js = null;
 
 	public static String postResolve(String urlS, String json) {
 
@@ -23,10 +27,9 @@ public class HttpConnector {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-type", "application/json");
-			//			connection.addRequestProperty("jsonObject", json);
-			connection.setRequestProperty("jsonObject", json);
 			connection.setDoOutput(true);
 
+			connection.connect(); // ENVIA AO SERVIDOR
 
 			OutputStream os = connection.getOutputStream();
 			os.write(json.getBytes());
@@ -38,38 +41,62 @@ public class HttpConnector {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader((connection.getInputStream())));
 
-			String retorno;
-			while ((retorno = br.readLine()) != null) {
-				System.out.println(retorno);
-			}
-
 			connection.disconnect();
-
-			//			PrintStream printStream = new PrintStream(connection.getOutputStream());
-
-			//			printStream.println(json);
-
-			connection.connect(); // ENVIA AO SERVIDOR
-
 
 			System.out.println("AQUI");
 
-			//			Scanner scan = new Scanner(connection.getInputStream());
-
 			String jsonDeResposta = "ESTE";
-
-			//			while(scan.hasNext()) {
-			//				
-			//				jsonDeResposta += scan.next() + " ";
-			//			}
 			return jsonDeResposta;
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("ERROR");
 		}
 
 		return "OUTRO";
+	}
+
+	/**
+	 * @author Matheus
+	 * @param urlS
+	 * @param json
+	 * @return
+	 */
+
+	public static String connect(String urlS, String json) {
+
+		URL url = null;
+
+		try {
+			
+			js = json;
+			
+			url = new URL(urlS);
+			
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-type", "application/json");
+			connection.setDoOutput(true);
+
+			PrintStream printStream = new PrintStream(connection.getOutputStream());
+			printStream.println(json);
+
+			connection.connect(); // ENVIA AO SERVIDOR
+
+			Scanner scan = new Scanner(connection.getInputStream());
+			String jsonDeResposta = "";
+			while (scan.hasNext()) {
+				jsonDeResposta += scan.next() + " ";
+			}
+			scan.close();
+
+			return jsonDeResposta;
+
+		} catch (Exception e) {
+
+		}
+
+		return null;
 	}
 
 }
