@@ -25,9 +25,9 @@ public class Categoria extends BaseEntity implements Serializable {
 	@Column(nullable = true, length = 30)
 	private String nome;
 
-//	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
-//			CascadeType.DETACH }, mappedBy = "categoria", fetch = FetchType.EAGER)
-//	private List<Produto> produtos;
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.DETACH }, mappedBy = "categoria", fetch = FetchType.EAGER)
+	private List<Produto> produtos;
 
 	public Categoria() {
 	}

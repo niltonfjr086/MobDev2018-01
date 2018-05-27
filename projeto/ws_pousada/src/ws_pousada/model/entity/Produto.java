@@ -29,12 +29,13 @@ public class Produto extends BaseEntity {
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
 
-	// cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
+	// cascade=
+	// { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
 	// CascadeType.DETACH }
-	/*
-	 * @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = {
-	 * CascadeType.ALL }) private List<ItemProduto> itens = new ArrayList<>();
-	 */
+	//
+	// @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = {
+	// CascadeType.ALL })
+	// private List<ItemProduto> itens = new ArrayList<>();
 
 	public Produto() {
 		super();
@@ -59,6 +60,14 @@ public class Produto extends BaseEntity {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	/*

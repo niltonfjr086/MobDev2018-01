@@ -12,6 +12,7 @@ import ws_pousada.model.HttpConnector;
 import ws_pousada.model.dao.CategoriaDAO;
 import ws_pousada.model.entity.Categoria;
 import ws_pousada.model.entity.Endereco;
+import ws_pousada.model.entity.Produto;
 
 public class ConsoleTest {
 
@@ -26,9 +27,10 @@ public class ConsoleTest {
 
 		// this.postEnderecoTest();
 		// this.postSaveCategoria();
-		// this.postUpdateCategoria();
+		 this.postUpdateCategoria();
+		// this.listAllCategorias();
 
-		this.listAllCategorias();
+//		this.postSaveProduto();
 
 		FactoryDAO.closeInstance();
 
@@ -80,7 +82,7 @@ public class ConsoleTest {
 		// c = categoriaDAO.findById(6L);
 		// c.setNome("Pratos Quentes");
 		c = categoriaDAO.findById(5L);
-		c.setNome("Lanches e Porções");
+		c.setNome("Porções e Lanches");
 
 		String es = this.gson.toJson(c);
 		System.out.println(es);
@@ -91,14 +93,33 @@ public class ConsoleTest {
 
 	public void listAllCategorias() {
 
-//		Categoria c = new Categoria();
-//		CategoriaDAO categoriaDAO = new CategoriaDAO();
-//		String es = this.gson.toJson(c);
-//		System.out.println(es);
-		
-//		String entityResponse = HttpConnector.getConnect("http://localhost:8080/ws_pousada/categoria/listAll");
-//		System.out.println(entityResponse);
+		// Categoria c = new Categoria();
+		// CategoriaDAO categoriaDAO = new CategoriaDAO();
+		// String es = this.gson.toJson(c);
+		// System.out.println(es);
+
+		// String entityResponse =
+		// HttpConnector.getConnect("http://localhost:8080/ws_pousada/categoria/listAll");
+		// System.out.println(entityResponse);
 		HttpConnector.getConnect("http://localhost:8080/ws_pousada/categoria/listAll");
+	}
+
+	public void postSaveProduto() {
+
+		Categoria c = new Categoria();
+		CategoriaDAO categoriaDAO = new CategoriaDAO();
+		c = categoriaDAO.findById(5L);
+
+		Produto p = new Produto();
+
+		p.setCategoria(c);
+		p.setNome("Cheese Salada");
+
+		String es = this.gson.toJson(p);
+		System.out.println(es);
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save", es);
+
+		System.out.println(entityResponse);
 	}
 
 }
