@@ -21,7 +21,7 @@
 
 		<!-- create | update | validate | create-drop -->
 		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
-		
+		<mapping class="ws_pousada.model.entity.Categoria" />
 		<mapping class="ws_pousada.model.entity.Endereco" />
 
 <!-- 		

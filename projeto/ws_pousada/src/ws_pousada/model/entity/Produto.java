@@ -1,14 +1,18 @@
 package ws_pousada.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "Pousada", name = "Produto")
+@Table(schema = "Pousada", name = "tb_produto")
 public class Produto extends BaseEntity {
 
 	private static final long serialVersionUID = -3867629168993196940L;
@@ -19,6 +23,11 @@ public class Produto extends BaseEntity {
 
 	@Column(nullable = false, length = 50)
 	private String nome;
+
+	@ManyToOne(targetEntity = Produto.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.DETACH }, fetch = FetchType.EAGER)
+	@JoinColumn(name = "categoria_id", nullable = false)
+	private Categoria categoria;
 
 	// cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
 	// CascadeType.DETACH }

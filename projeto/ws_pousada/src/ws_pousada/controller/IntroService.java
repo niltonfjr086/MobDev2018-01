@@ -17,6 +17,8 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import ws_pousada.model.FactoryDAO;
 import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.entity.Endereco;
 import ws_pousada.model.entity.Produto;
@@ -24,7 +26,7 @@ import ws_pousada.model.entity.Produto;
 @Path("/intro")
 public class IntroService {
 
-	private Gson gson = new GsonBuilder().create();
+	public static Gson gson = new GsonBuilder().create();
 
 	private EnderecoDAO enderecoDAO = new EnderecoDAO();
 
@@ -157,55 +159,23 @@ public class IntroService {
 	}
 
 	@POST
-	@Path("/postAddress")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response postAddress(@Context HttpServletRequest request) {
-
-		System.out.println("POST-ADDRESS");
-		Endereco e = null;
-		Object o = request.getAttribute("jsonObject");
-		e = gson.fromJson(o.toString(), Endereco.class);
-
-		System.out.println(e);
-
-		EnderecoDAO enderecoDAO = new EnderecoDAO();
-
-		// try {
-
-		enderecoDAO.save(e);
-
-		return Response.status(200).entity(e).build();
-
-		// } catch (Exception ex) {
-		// ex.printStackTrace();
-		// }
-		// return Response.status(404).build();
-	}
-
-	@POST
 	@Path("/saveAddress")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(Endereco e) {
 		
-		//@Context HttpServletRequest request, @QueryParam("jsonObject") String json
+//		System.out.println("CHEGOU NO WS: " + e.toString());
+//		System.out.println(((Endereco)e).getBairro());
 		
-//		Endereco e = new Endereco();
-//		e.setBairro("Cacupé");
-//		e.setCep("7777777");
-//		e.setCidade("Florianópolis");
-//		e.setComplemento("Casa");
-//		e.setNumero(9090);
-//		e.setPais("Brasil");
-//		e.setRua("Testes Street");
-//		e.setUf("SC");
-		
-//		Endereco e = this.gson.fromJson(json, Endereco.class);
-		System.out.println(e.getBairro());
 		try {
 			EnderecoDAO enderecoDAO = new EnderecoDAO();
 			enderecoDAO.save(e);
+			
+//			FactoryDAO.sessionInstance().save((Endereco)e);
+
+			System.out.println("MÁ OE");
+
+			// String ee = gson.toJson(e);
 
 			return Response.status(200).entity(e).build();
 		} catch (Exception ex) {
@@ -214,5 +184,7 @@ public class IntroService {
 		}
 
 	}
+	
+
 
 }

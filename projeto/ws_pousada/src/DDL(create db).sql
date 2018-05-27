@@ -332,3 +332,47 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+
+
+
+
+
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- ESSA PARTE FOI PARA TESTES INICIAIS ANDROID
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table `Pousada`.`tb_categoria`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Pousada`.`tb_categoria` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(30) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+SELECT * FROM Pousada.tb_categoria;
+
+
+-- -----------------------------------------------------
+-- Table `Pousada`.`tb_produto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Pousada`.`tb_produto` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(30) NULL,
+    `categoria_id` BIGINT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fkApartamento_idx` (`categoria_id` ASC),
+  CONSTRAINT `fk_categoria`
+    FOREIGN KEY (`categoria_id`)
+    REFERENCES `Pousada`.`tb_categoria` (`id`)
+    ON DELETE NO ACTION)
+ENGINE = InnoDB;
+
+SELECT * FROM Pousada.tb_produto;
+
