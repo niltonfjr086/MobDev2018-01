@@ -73,8 +73,6 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 
 			List<T> list = dao.findAll();
 
-			System.out.println(list);
-
 			String ls = IntroService.gson.toJson(list);
 
 			return Response.status(200).entity(ls).build();

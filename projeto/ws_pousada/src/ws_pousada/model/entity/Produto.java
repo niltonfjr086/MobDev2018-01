@@ -1,5 +1,7 @@
 package ws_pousada.model.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(schema = "Pousada", name = "tb_produto")
-public class Produto extends BaseEntity {
+public class Produto extends BaseEntity implements Serializable{
 
-	private static final long serialVersionUID = -3867629168993196940L;
+	private static final long serialVersionUID = 4615510397426763665L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +28,14 @@ public class Produto extends BaseEntity {
 	@Column(nullable = false, length = 50)
 	private String nome;
 
-	@ManyToOne(targetEntity = Produto.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
-			CascadeType.DETACH }, fetch = FetchType.EAGER)
+	@JsonBackReference
+	@ManyToOne(targetEntity = Categoria.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
+			CascadeType.DETACH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
+
+	// @Column(nullable = false)
+	// private Long categoria_id;
 
 	// cascade=
 	// { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
@@ -69,6 +77,14 @@ public class Produto extends BaseEntity {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	// public Long getCategoria_id() {
+	// return categoria_id;
+	// }
+	//
+	// public void setCategoria_id(Long categoria_id) {
+	// this.categoria_id = categoria_id;
+	// }
 
 	/*
 	 * public List<ItemProduto> getItens() { return itens; }

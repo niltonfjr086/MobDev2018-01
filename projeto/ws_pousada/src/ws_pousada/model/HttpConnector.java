@@ -28,9 +28,11 @@ public class HttpConnector {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-type", "application/json");
+			
 			connection.setDoOutput(true);
 
 			PrintStream printStream = new PrintStream(connection.getOutputStream());
+			
 			printStream.println(json);
 
 			connection.connect(); // ENVIA AO SERVIDOR

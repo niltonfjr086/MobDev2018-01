@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import ws_pousada.model.FactoryDAO;
 import ws_pousada.model.HttpConnector;
 import ws_pousada.model.dao.CategoriaDAO;
+import ws_pousada.model.dao.ProdutoDAO;
 import ws_pousada.model.entity.Categoria;
 import ws_pousada.model.entity.Endereco;
 import ws_pousada.model.entity.Produto;
@@ -27,10 +28,11 @@ public class ConsoleTest {
 
 		// this.postEnderecoTest();
 		// this.postSaveCategoria();
-		 this.postUpdateCategoria();
+//		 this.postUpdateCategoria();
 		// this.listAllCategorias();
 
-//		this.postSaveProduto();
+		 this.postSaveProduto();
+//		 this.saveProduto();
 
 		FactoryDAO.closeInstance();
 
@@ -65,7 +67,7 @@ public class ConsoleTest {
 	public void postSaveCategoria() {
 
 		Categoria c = new Categoria();
-		c.setNome("Pratos");
+		c.setNome("Pizzas");
 
 		String es = this.gson.toJson(c);
 		System.out.println(es);
@@ -81,8 +83,8 @@ public class ConsoleTest {
 
 		// c = categoriaDAO.findById(6L);
 		// c.setNome("Pratos Quentes");
-		c = categoriaDAO.findById(5L);
-		c.setNome("Porções e Lanches");
+		c = categoriaDAO.findById(2L);
+		c.setNome("Sobremesas Frias");
 
 		String es = this.gson.toJson(c);
 		System.out.println(es);
@@ -92,15 +94,6 @@ public class ConsoleTest {
 	}
 
 	public void listAllCategorias() {
-
-		// Categoria c = new Categoria();
-		// CategoriaDAO categoriaDAO = new CategoriaDAO();
-		// String es = this.gson.toJson(c);
-		// System.out.println(es);
-
-		// String entityResponse =
-		// HttpConnector.getConnect("http://localhost:8080/ws_pousada/categoria/listAll");
-		// System.out.println(entityResponse);
 		HttpConnector.getConnect("http://localhost:8080/ws_pousada/categoria/listAll");
 	}
 
@@ -112,14 +105,32 @@ public class ConsoleTest {
 
 		Produto p = new Produto();
 
-		p.setCategoria(c);
+		 p.setCategoria(c);
+//		p.setCategoria_id(5L);
 		p.setNome("Cheese Salada");
+//		System.out.println(p);
 
 		String es = this.gson.toJson(p);
 		System.out.println(es);
+		
 		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save", es);
-
 		System.out.println(entityResponse);
+	}
+
+	public void saveProduto() {
+
+		 Categoria c = new Categoria();
+		 CategoriaDAO categoriaDAO = new CategoriaDAO();
+		 c = categoriaDAO.findById(2L);
+
+		Produto p = new Produto();
+
+		 p.setCategoria(c);
+//		p.setCategoria_id(5L);
+		p.setNome("Sorvete Chocolate");
+
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		produtoDAO.save(p);
 	}
 
 }

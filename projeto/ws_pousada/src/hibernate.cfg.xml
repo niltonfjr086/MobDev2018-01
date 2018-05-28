@@ -20,7 +20,8 @@
 		<!-- <property name="current_session_context_class">thread</property> -->
 
 		<!-- create | update | validate | create-drop -->
-		<!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
 		<mapping class="ws_pousada.model.entity.Produto" />
 		<mapping class="ws_pousada.model.entity.Categoria" />
 		<mapping class="ws_pousada.model.entity.Endereco" />

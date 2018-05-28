@@ -52,23 +52,6 @@ public class IntroService {
 	}
 
 	@GET
-	@Path("/toJson")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String giveMeJson(@Context HttpServletRequest request) {
-
-		Produto p = new Produto("Água Mineral Com Gás");
-		String s = gson.toJson(p);
-		System.out.println(s);
-
-		// JSONObject json = new JSONObject();
-		// Pessoa p = new Pessoa("João");
-		// json.put("nome", p.getNome());
-		// return json.toString();
-
-		return s;
-	}
-
-	@GET
 	@Path("/fromJson")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String giveMeGSON(@Context HttpServletRequest request) {
@@ -164,16 +147,11 @@ public class IntroService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(Endereco e) {
 		
-//		System.out.println("CHEGOU NO WS: " + e.toString());
-//		System.out.println(((Endereco)e).getBairro());
-		
 		try {
 			EnderecoDAO enderecoDAO = new EnderecoDAO();
 			enderecoDAO.save(e);
 			
 //			FactoryDAO.sessionInstance().save((Endereco)e);
-
-			System.out.println("MÁ OE");
 
 			// String ee = gson.toJson(e);
 
