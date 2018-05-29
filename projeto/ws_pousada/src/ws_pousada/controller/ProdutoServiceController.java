@@ -13,7 +13,7 @@ public class ProdutoServiceController extends GenericServiceController<Produto, 
 	// }
 
 	public ProdutoServiceController() {
-		super(new ProdutoDAO());
+		super(new Produto(), new ProdutoDAO());
 	}
 
 }

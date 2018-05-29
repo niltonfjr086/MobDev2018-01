@@ -9,7 +9,7 @@ import ws_pousada.model.entity.Cliente;
 public class ClienteServiceController extends GenericServiceController<Cliente, ClienteDAO> {
 
 	public ClienteServiceController() {
-		super(new ClienteDAO());
+		super(new Cliente(), new ClienteDAO());
 
 	}
 

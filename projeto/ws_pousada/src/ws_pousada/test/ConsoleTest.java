@@ -18,6 +18,7 @@ import ws_pousada.model.entity.Produto;
 public class ConsoleTest {
 
 	private Gson gson = new GsonBuilder().create();
+	
 	private Endereco endereco = new Endereco();
 
 	@Test

@@ -14,10 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(schema = "Pousada", name = "tb_produto")
-public class Produto extends BaseEntity implements Serializable{
+public class Produto extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 4615510397426763665L;
 
@@ -28,7 +29,8 @@ public class Produto extends BaseEntity implements Serializable{
 	@Column(nullable = false, length = 50)
 	private String nome;
 
-	@JsonBackReference
+//	@JsonBackReference(value = "categoria")
+	@JsonManagedReference(value = "categoria")
 	@ManyToOne(targetEntity = Categoria.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
 			CascadeType.DETACH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoria_id", nullable = false)

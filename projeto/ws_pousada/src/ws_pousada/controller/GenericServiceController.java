@@ -10,14 +10,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import ws_pousada.model.dao.GenericDAO;
 
 public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>> {
 
+	protected Gson gson = new GsonBuilder().create();
+	protected T manipulated;
 	protected D dao;
 
-	public GenericServiceController(D dao) {
+	public GenericServiceController(T manipulated, D dao) {
 		super();
+		this.manipulated = manipulated;
 		this.dao = dao;
 	}
 
@@ -73,7 +79,10 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 
 			List<T> list = dao.findAll();
 
-			String ls = IntroService.gson.toJson(list);
+			String ls = this.gson.toJson(list);
+			
+			List<T> list2 = this.gson.fromJson(ls, List.class);
+			System.out.println(list2);
 
 			return Response.status(200).entity(ls).build();
 		} catch (Exception ex) {

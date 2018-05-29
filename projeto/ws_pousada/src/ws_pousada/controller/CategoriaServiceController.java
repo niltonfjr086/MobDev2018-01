@@ -9,7 +9,7 @@ import ws_pousada.model.entity.Categoria;
 public class CategoriaServiceController extends GenericServiceController<Categoria, CategoriaDAO> {
 
 	public CategoriaServiceController() {
-		super(new CategoriaDAO());
+		super(new Categoria(), new CategoriaDAO());
 	}
 
 }
