@@ -13,11 +13,12 @@ import javax.ws.rs.core.Response;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import ws_pousada.model.HibernateProxyTypeAdapter;
 import ws_pousada.model.dao.GenericDAO;
 
 public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>> {
 
-	protected Gson gson = new GsonBuilder().create();
+	protected Gson gson = new GsonBuilder().registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY).create();
 	protected T manipulated;
 	protected D dao;
 
