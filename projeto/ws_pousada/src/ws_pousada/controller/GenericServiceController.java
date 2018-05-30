@@ -10,15 +10,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ws_pousada.model.HibernateProxyTypeAdapter;
 import ws_pousada.model.dao.GenericDAO;
 
 public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>> {
 
-	protected Gson gson = new GsonBuilder().registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY).create();
+	protected ObjectMapper mapper = new ObjectMapper();
 	protected T manipulated;
 	protected D dao;
 
@@ -79,13 +78,18 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 		try {
 
 			List<T> list = dao.findAll();
+						
+			String jsonInString = "";
+			try {
+				jsonInString = this.mapper.writeValueAsString(list);
+				System.out.println(jsonInString);
 
-			String ls = this.gson.toJson(list);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 			
-			List<T> list2 = this.gson.fromJson(ls, List.class);
-			System.out.println(list2);
 
-			return Response.status(200).entity(ls).build();
+			return Response.status(200).entity(jsonInString).build();
 		} catch (Exception ex) {
 
 			ex.printStackTrace();

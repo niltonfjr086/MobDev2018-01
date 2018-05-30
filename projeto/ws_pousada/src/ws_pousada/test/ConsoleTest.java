@@ -2,13 +2,17 @@ package ws_pousada.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.junit.Test;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ws_pousada.model.FactoryDAO;
-import ws_pousada.model.HibernateProxyTypeAdapter;
 import ws_pousada.model.HttpConnector;
 import ws_pousada.model.dao.CategoriaDAO;
 import ws_pousada.model.dao.ProdutoDAO;
@@ -17,8 +21,6 @@ import ws_pousada.model.entity.Endereco;
 import ws_pousada.model.entity.Produto;
 
 public class ConsoleTest {
-
-	private Gson gson = new GsonBuilder().registerTypeAdapterFactory(HibernateProxyTypeAdapter.FACTORY).create();
 
 	private Endereco endereco = new Endereco();
 
@@ -33,8 +35,11 @@ public class ConsoleTest {
 		// this.postUpdateCategoria();
 		// this.listAllCategorias();
 
-		this.postSaveProduto();
+		// this.postSaveProduto();
 		// this.saveProduto();
+		// this.postUpdateProduto();
+
+		this.getListAllProdutos();
 
 		FactoryDAO.closeInstance();
 
@@ -53,27 +58,40 @@ public class ConsoleTest {
 		this.endereco.setRua("Testes Street");
 		this.endereco.setUf("SC");
 
-		String es = this.gson.toJson(this.endereco);
-		System.out.println(es);
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/intro/saveAddress", es);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(this.endereco);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/intro/saveAddress",
+				jsonInString);
 
 		System.out.println(entityResponse);
 
 	}
-
-	// private static URI getBaseURI() {
-	// return
-	// UriBuilder.fromUri("http://localhost:8080/ws_pousada/intro/saveAddress").build();
-	// }
 
 	public void postSaveCategoria() {
 
 		Categoria c = new Categoria();
 		c.setNome("Pizzas");
 
-		String es = this.gson.toJson(c);
-		System.out.println(es);
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/categoria/save", es);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(c);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/categoria/save",
+				jsonInString);
 
 		System.out.println(entityResponse);
 	}
@@ -86,11 +104,20 @@ public class ConsoleTest {
 		// c = categoriaDAO.findById(6L);
 		// c.setNome("Pratos Quentes");
 		c = categoriaDAO.findById(2L);
-		c.setNome("Sobremesas Frias");
+		c.setNome("Sobremesas");
 
-		String es = this.gson.toJson(c);
-		System.out.println(es);
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/categoria/update", es);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(c);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/categoria/update",
+				jsonInString);
 
 		System.out.println(entityResponse);
 	}
@@ -108,15 +135,24 @@ public class ConsoleTest {
 		Produto p = new Produto();
 
 		p.setCategoria(c);
-		// p.setCategoria_id(5L);
 		p.setNome("Cheese Salada");
-		// System.out.println(p);
 
-		String es = this.gson.toJson(p);
-		System.out.println(es);
+		ObjectMapper mapper = new ObjectMapper();
 
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save", es);
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(p);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save",
+				jsonInString);
 		System.out.println(entityResponse);
+
 	}
 
 	public void saveProduto() {
@@ -128,11 +164,75 @@ public class ConsoleTest {
 		Produto p = new Produto();
 
 		p.setCategoria(c);
-		// p.setCategoria_id(5L);
 		p.setNome("Sorvete Chocolate");
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
 		produtoDAO.save(p);
+	}
+
+	public void postUpdateProduto() {
+
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		Produto p = produtoDAO.findById(1L);
+
+		p.setNome("Sorvete Morango");
+
+		Categoria c = new Categoria();
+		CategoriaDAO categoriaDAO = new CategoriaDAO();
+		c = categoriaDAO.findById(2L);
+
+		p.setCategoria(c);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(p);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/update",
+				jsonInString);
+		System.out.println(entityResponse);
+
+	}
+
+	private void getListAllProdutos() {
+		String retorno = HttpConnector.getConnect("http://localhost:8080/ws_pousada/produto/listAll");
+
+//		System.out.println(retorno);
+		
+		ObjectMapper mapper = new ObjectMapper();
+//		List<Produto> produtos = mapper.convertValue(retorno, new TypeReference<List<Produto>>() {});
+//		List<Produto> produtos = mapper.convertValue(retorno, List.class);
+		
+		List<Produto> produtos = null;
+		try {
+			produtos = mapper.readValue(retorno, List.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(produtos.get(0).getNome());
+		System.out.println("LALA");
+//		System.out.println(produtos.get(0).getNome());
+//		try {
+//			JsonNode node = mapper.readTree(retorno);
+//			List<Produto> produtos = mapper.convertValue(node.findValues("produto"),
+//					new TypeReference<List<Produto>>() {});
+//
+//			System.out.println(produtos);
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+
+		// ProdutoDAO produtoDAO = new ProdutoDAO();
+		// List<Produto> produtos = produtoDAO.findAll();
+		// System.out.println(produtos);
+
 	}
 
 }

@@ -13,11 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(schema = "Pousada", name = "tb_categoria")
 public class Categoria extends BaseEntity implements Serializable {
@@ -30,7 +29,7 @@ public class Categoria extends BaseEntity implements Serializable {
 	@Column(nullable = true, length = 30)
 	private String nome;
 
-	@JsonManagedReference(value = "produto")
+	@JsonBackReference(value = "categoria")
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
 			CascadeType.DETACH }, mappedBy = "categoria", fetch = FetchType.LAZY)
 	private List<Produto> produtos;

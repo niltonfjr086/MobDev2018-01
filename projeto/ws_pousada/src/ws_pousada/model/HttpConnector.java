@@ -28,11 +28,11 @@ public class HttpConnector {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-type", "application/json");
-			
+
 			connection.setDoOutput(true);
 
 			PrintStream printStream = new PrintStream(connection.getOutputStream());
-			
+
 			printStream.println(json);
 
 			connection.connect(); // ENVIA AO SERVIDOR
@@ -55,47 +55,46 @@ public class HttpConnector {
 
 		return null;
 	}
-	
-	
+
 	/***
 	 * @author https://www.mkyong.com/webservices/jax-rs/restfull-java-client-with-java-net-url/
 	 * @param urlS
 	 * @return
 	 */
-	public static void getConnect(String urlS) {
-		
-		  try {
+	public static String getConnect(String urlS) {
 
-				URL url = new URL(urlS);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setRequestMethod("GET");
-				conn.setRequestProperty("Accept", "application/json");
+		try {
 
-				if (conn.getResponseCode() != 200) {
-					throw new RuntimeException("Failed : HTTP error code : "
-							+ conn.getResponseCode());
-				}
+			URL url = new URL(urlS);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
 
-				BufferedReader br = new BufferedReader(new InputStreamReader(
-					(conn.getInputStream())));
+			if (conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+			}
 
-				String output;
-				System.out.println("Output from Server .... \n");
-				while ((output = br.readLine()) != null) {
-					System.out.println(output);
-				}
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
-				conn.disconnect();
+			String output;
+//			System.out.println("Output from Server .... \n");
+			while ((output = br.readLine()) != null) {
+//				System.out.println(output);
+				return output;
+			}
 
-			  } catch (MalformedURLException e) {
+			conn.disconnect();
 
-				e.printStackTrace();
+		} catch (MalformedURLException e) {
 
-			  } catch (IOException e) {
+			e.printStackTrace();
 
-				e.printStackTrace();
+		} catch (IOException e) {
 
-			  }
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 
 }

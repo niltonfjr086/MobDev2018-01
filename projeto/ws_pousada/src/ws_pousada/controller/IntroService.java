@@ -10,23 +10,21 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ws_pousada.model.FactoryDAO;
 import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.entity.Endereco;
 import ws_pousada.model.entity.Produto;
 
 @Path("/intro")
 public class IntroService {
-
-	public static Gson gson = new GsonBuilder().create();
+	
+	public static ObjectMapper mapper = new ObjectMapper();
 
 	private EnderecoDAO enderecoDAO = new EnderecoDAO();
 
@@ -55,18 +53,11 @@ public class IntroService {
 	@Path("/fromJson")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String giveMeGSON(@Context HttpServletRequest request) {
-
-		// try {
-		// return new ObjectMapper().writeValueAsString(new Pessoa("Maria"));
-		// } catch (JsonProcessingException e) {
-		// e.printStackTrace();
-		// return "";
-		// }
-
-		Produto p = gson.fromJson("{\"nome\":\"Água Mineral Sem Gás\"}", Produto.class);
+				
+		Produto p = mapper.convertValue("{\"nome\":\"Água Mineral Sem Gás\"}", Produto.class);
 		System.out.println(p);
 
-		return "GSON";
+		return "JACKSON";
 	}
 
 	@GET
@@ -74,7 +65,7 @@ public class IntroService {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String giveMeJsonArrayGSON(@Context HttpServletRequest request) {
 
-		List<String> list = new ArrayList<>();
+//		List<String> list = new ArrayList<>();
 
 		// try {
 		// list.add(new ObjectMapper().writeValueAsString(new Pessoa("Maria")));
@@ -120,7 +111,7 @@ public class IntroService {
 								filteredList.add(e);
 							}
 						}
-						return this.gson.toJson(filteredList);
+						return mapper.writeValueAsString(filteredList);
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -128,14 +119,22 @@ public class IntroService {
 					}
 
 				} else {
-					return this.gson.toJson(list);
+					try {
+						return mapper.writeValueAsString(list);
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+					}
 				}
 
 			}
 		} else {
 			list = enderecoDAO.findAll();
 
-			return this.gson.toJson(list);
+			try {
+				return mapper.writeValueAsString(list);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return "ARRAY";
@@ -150,10 +149,6 @@ public class IntroService {
 		try {
 			EnderecoDAO enderecoDAO = new EnderecoDAO();
 			enderecoDAO.save(e);
-			
-//			FactoryDAO.sessionInstance().save((Endereco)e);
-
-			// String ee = gson.toJson(e);
 
 			return Response.status(200).entity(e).build();
 		} catch (Exception ex) {

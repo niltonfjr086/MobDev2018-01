@@ -4,8 +4,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.Query;
 
-import ws_pousada.model.entity.BaseEntity;
-
 import static ws_pousada.model.FactoryDAO.sessionInstance;
 
 public class GenericDAO<T, PK> {
@@ -37,6 +35,7 @@ public class GenericDAO<T, PK> {
 
 		} catch (Exception e) {
 			sessionInstance().getTransaction().rollback();
+			e.printStackTrace();
 			throw e;
 		} finally {
 			// sessionInstance().close();
@@ -52,6 +51,7 @@ public class GenericDAO<T, PK> {
 
 		} catch (Exception e) {
 			sessionInstance().getTransaction().rollback();
+			e.printStackTrace();
 			throw e;
 		} finally {
 			// sessionInstance().close();
@@ -69,6 +69,7 @@ public class GenericDAO<T, PK> {
 
 		} catch (Exception e) {
 			sessionInstance().getTransaction().rollback();
+			e.printStackTrace();
 			throw e;
 
 		} finally {

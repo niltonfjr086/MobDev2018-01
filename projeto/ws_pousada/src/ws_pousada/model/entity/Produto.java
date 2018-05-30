@@ -2,7 +2,7 @@ package ws_pousada.model.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,11 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(schema = "Pousada", name = "tb_produto")
 public class Produto extends BaseEntity implements Serializable {
@@ -31,22 +30,10 @@ public class Produto extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String nome;
 
-	@JsonBackReference(value = "produto")
-	@ManyToOne(targetEntity = Categoria.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
-			CascadeType.DETACH }, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "categoria")
+	@ManyToOne(targetEntity = Categoria.class,  fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
-
-	// @Column(nullable = false)
-	// private Long categoria_id;
-
-	// cascade=
-	// { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
-	// CascadeType.DETACH }
-	//
-	// @OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = {
-	// CascadeType.ALL })
-	// private List<ItemProduto> itens = new ArrayList<>();
 
 	public Produto() {
 		super();
@@ -80,19 +67,5 @@ public class Produto extends BaseEntity implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-
-	// public Long getCategoria_id() {
-	// return categoria_id;
-	// }
-	//
-	// public void setCategoria_id(Long categoria_id) {
-	// this.categoria_id = categoria_id;
-	// }
-
-	/*
-	 * public List<ItemProduto> getItens() { return itens; }
-	 * 
-	 * public void setItens(List<ItemProduto> itens) { this.itens = itens; }
-	 */
 
 }
