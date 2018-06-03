@@ -7,7 +7,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema Pousada
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `Pousada` ;
 
 -- -----------------------------------------------------
 -- Schema Pousada
@@ -183,11 +182,12 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Cliente` (
   `sobrenome` VARCHAR(150) NULL,
   `sexo` INT NULL,
   `cpf` VARCHAR(14) NULL,
+  `identidade` VARCHAR(14) NULL,
   `telefone` VARCHAR(15) NULL,
   `celular` VARCHAR(15) NULL,
   `dt_nascimento` DATE NULL,
+  `profissao` VARCHAR(150) NULL,
   `observacoes` VARCHAR(10000) NULL,
-  `nivel_acesso` INT NULL,
   `email` VARCHAR(100) NULL,
   `isEnable` TINYINT(1) NULL,
   `isHospedado` TINYINT(1) NULL,
@@ -375,4 +375,3 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`tb_produto` (
 ENGINE = InnoDB;
 
 SELECT * FROM Pousada.tb_produto;
-

@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -35,7 +36,7 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 
 		try {
 
-//			new GenericDAO<>() {}.save(t);
+			// new GenericDAO<>() {}.save(t);
 			dao.save(t);
 
 			return Response.status(200).entity(t).build();
@@ -56,7 +57,7 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 
 		try {
 
-//			new GenericDAO<>() {}.update(t);
+			// new GenericDAO<>() {}.update(t);
 			dao.update(t);
 
 			return Response.status(200).entity(t).build();
@@ -78,16 +79,15 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 		try {
 
 			List<T> list = dao.findAll();
-						
+
 			String jsonInString = "";
 			try {
 				jsonInString = this.mapper.writeValueAsString(list);
-				System.out.println(jsonInString);
+				// System.out.println(jsonInString);
 
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
-			
 
 			return Response.status(200).entity(jsonInString).build();
 		} catch (Exception ex) {
@@ -97,6 +97,51 @@ public abstract class GenericServiceController<T, D extends GenericDAO<T, Long>>
 			return Response.status(404).build();
 		}
 
+	}
+
+	@GET
+	@Path("/getById")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getById(@QueryParam("id") String id) {
+
+		if (id != null && id.length() > 0) {
+
+			boolean onlyDigits = true;
+			char[] chars = id.toCharArray();
+			for (char c : chars) {
+				if (!Character.isDigit(c)) {
+					onlyDigits = false;
+					break;
+				}
+			}
+
+			if (onlyDigits) {
+				Long i = Long.valueOf(id);
+				try {
+
+					T t = dao.findById(i);
+
+					String jsonInString = "";
+					try {
+						jsonInString = this.mapper.writeValueAsString(t);
+						// System.out.println(jsonInString);
+
+					} catch (JsonProcessingException e) {
+						e.printStackTrace();
+					}
+
+					return Response.status(200).entity(jsonInString).build();
+				} catch (Exception ex) {
+
+					ex.printStackTrace();
+
+					return Response.status(404).build();
+				}
+			}
+
+		}
+		return Response.status(404).build();
 	}
 
 	// @GET

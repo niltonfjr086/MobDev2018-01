@@ -31,16 +31,17 @@ public class ConsoleTest {
 		FactoryDAO.sessionInstance();
 
 		// this.postEnderecoTest();
-		// this.postSaveCategoria();
-		// this.postUpdateCategoria();
+//		 this.postSaveCategoria();
+//		 this.postUpdateCategoria();
 		// this.listAllCategorias();
 
-		// this.postSaveProduto();
-		// this.saveProduto();
-		// this.postUpdateProduto();
+//		 this.postSaveProduto();
+//		 this.saveProduto();
+		 this.postUpdateProduto();
 
-		this.getListAllProdutos();
-
+//		this.getListAllProdutos();
+//		this.getProduto();
+		
 		FactoryDAO.closeInstance();
 
 		assertEquals(0, 0);
@@ -78,7 +79,7 @@ public class ConsoleTest {
 	public void postSaveCategoria() {
 
 		Categoria c = new Categoria();
-		c.setNome("Pizzas");
+		c.setNome("Lanches");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = "";
@@ -103,8 +104,8 @@ public class ConsoleTest {
 
 		// c = categoriaDAO.findById(6L);
 		// c.setNome("Pratos Quentes");
-		c = categoriaDAO.findById(2L);
-		c.setNome("Sobremesas");
+		c = categoriaDAO.findById(1L);
+		c.setNome("Pizzas Doces ou Salgadas");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = "";
@@ -159,12 +160,12 @@ public class ConsoleTest {
 
 		Categoria c = new Categoria();
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(2L);
+		c = categoriaDAO.findById(3L);
 
 		Produto p = new Produto();
 
 		p.setCategoria(c);
-		p.setNome("Sorvete Chocolate");
+		p.setNome("Batata Frita");
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
 		produtoDAO.save(p);
@@ -173,13 +174,13 @@ public class ConsoleTest {
 	public void postUpdateProduto() {
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
-		Produto p = produtoDAO.findById(1L);
+		Produto p = produtoDAO.findById(2L);
 
-		p.setNome("Sorvete Morango");
+		p.setNome("Cheese Frango");
 
 		Categoria c = new Categoria();
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(2L);
+		c = categoriaDAO.findById(6L);
 
 		p.setCategoria(c);
 
@@ -232,6 +233,22 @@ public class ConsoleTest {
 		// ProdutoDAO produtoDAO = new ProdutoDAO();
 		// List<Produto> produtos = produtoDAO.findAll();
 		// System.out.println(produtos);
+
+	}
+	
+	private void getProduto() {
+		String retorno = HttpConnector.getConnect("http://localhost:8080/ws_pousada/produto/getById", "2");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Produto produto = null;
+		try {
+			produto = mapper.readValue(retorno, Produto.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println(produto);
+		System.out.println("LALA");
 
 	}
 

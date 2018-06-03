@@ -77,9 +77,47 @@ public class HttpConnector {
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 			String output;
-//			System.out.println("Output from Server .... \n");
 			while ((output = br.readLine()) != null) {
-//				System.out.println(output);
+				return output;
+			}
+
+			conn.disconnect();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	/**
+	 * @author modified by us
+	 * @param urlS
+	 * @return
+	 */
+	public static String getConnect(String urlS, String id) {
+
+		try {
+
+			urlS += "?id="+id;
+			URL url = new URL(urlS);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
+
+			if (conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+			}
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+			String output;
+			while ((output = br.readLine()) != null) {
 				return output;
 			}
 
