@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class MainActivity extends Activity {
             Toast.makeText(this, entityResponse, Toast.LENGTH_LONG).show();
 */
 
-            AsyncHttpClient client = new AsyncHttpClient();
+            final AsyncHttpClient client = new AsyncHttpClient();
             client.addHeader("user-agent", "Mozilla Chrome");
 
             client.get("http://192.168.0.5:8080/ws_pousada/categoria/getById?id=1", new AsyncHttpResponseHandler() {
@@ -141,6 +142,7 @@ public class MainActivity extends Activity {
                 }
             });
 */
+
             client.get("http://192.168.0.5:8080/ws_pousada/produto/listAll", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -153,10 +155,11 @@ public class MainActivity extends Activity {
                         Produto p = gson.fromJson(gson.toJson(o), Produto.class);
                         produtos.add(p);
                     }
-
+/*
                     AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
                     a.setMessage(produtos.toString());
                     a.show();
+                    */
                 }
 
                 @Override
@@ -164,6 +167,51 @@ public class MainActivity extends Activity {
                     Toast.makeText(MainActivity.this, "Ocorreu um erro: " + responseBody, Toast.LENGTH_LONG);
                 }
             });
+
+
+            RequestParams params = new RequestParams();
+            params.put("categoria", new Categoria("Variados"));
+            params.setUseJsonStreamer(true);
+/*
+            ScaanRestClient restClient = new ScaanRestClient(getApplicationContext());
+*/
+
+            client.post("http://192.168.0.5:8080/ws_pousada/categoria/save", params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
+                    a.setMessage("SUCESSO");
+                    a.show();
+
+                    // TODO: VERIFICAR POST COM JSON USANDO UMA CLASSE NÃO ANOTADA PELO ORMLITE
+/*
+                    client.get("http://192.168.0.5:8080/ws_pousada/categoria/getById?id=3", new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            String s = new String(responseBody);
+
+                            Categoria c = gson.fromJson(s, Categoria.class);
+                            AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
+                            a.setMessage(s);
+                            a.show();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Toast.makeText(MainActivity.this, "Ocorreu um erro: " + responseBody, Toast.LENGTH_LONG);
+                        }
+                    });
+ */
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
+                    a.setMessage("FALHA");
+                    a.show();
+                }
+            });
+
 /*
             String json = gson.toJson(t);
             Toast.makeText(this,json,Toast.LENGTH_LONG).show();

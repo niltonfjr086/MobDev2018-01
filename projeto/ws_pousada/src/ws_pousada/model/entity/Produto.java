@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 //import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(schema = "Pousada", name = "tb_produto")
 public class Produto extends BaseEntity implements Serializable {
@@ -32,9 +32,12 @@ public class Produto extends BaseEntity implements Serializable {
 	private String nome;
 
 	@JsonManagedReference(value = "categoria")
-	@ManyToOne(targetEntity = Categoria.class,  fetch = FetchType.EAGER)
+	@ManyToOne(targetEntity = Categoria.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
+
+	@Column(nullable = false, length = 50)
+	private Double valor;
 
 	public Produto() {
 		super();
@@ -67,6 +70,14 @@ public class Produto extends BaseEntity implements Serializable {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 }

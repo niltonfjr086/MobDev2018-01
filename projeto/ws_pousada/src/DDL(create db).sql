@@ -357,6 +357,7 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`tb_categoria` (
 ENGINE = InnoDB;
 
 SELECT * FROM Pousada.tb_categoria;
+DESCRIBE Pousada.tb_categoria;
 
 
 -- -----------------------------------------------------
@@ -364,8 +365,9 @@ SELECT * FROM Pousada.tb_categoria;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Pousada`.`tb_produto` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(30) NULL,
-    `categoria_id` BIGINT NULL,
+  `nome` VARCHAR(30) NOT NULL,
+    `categoria_id` BIGINT NOT NULL,
+	`valor` DOUBLE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fkApartamento_idx` (`categoria_id` ASC),
   CONSTRAINT `fk_categoria`
@@ -375,3 +377,4 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`tb_produto` (
 ENGINE = InnoDB;
 
 SELECT * FROM Pousada.tb_produto;
+DESCRIBE Pousada.tb_produto;

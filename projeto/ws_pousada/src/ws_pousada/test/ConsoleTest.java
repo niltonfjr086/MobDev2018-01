@@ -131,12 +131,13 @@ public class ConsoleTest {
 
 		Categoria c = new Categoria();
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(2L);
+		c = categoriaDAO.findById(1L);
 
 		Produto p = new Produto();
 
 		p.setCategoria(c);
-		p.setNome("Batata Frita");
+		p.setNome("Cheese Burger");
+		p.setValor(13.8);
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -173,13 +174,13 @@ public class ConsoleTest {
 	public void postUpdateProduto() {
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
-		Produto p = produtoDAO.findById(2L);
+		Produto p = produtoDAO.findById(1L);
 
-		p.setNome("Cheese Frango");
+		p.setNome("Batata Frita Média");
 
 		Categoria c = new Categoria();
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(6L);
+		c = categoriaDAO.findById(2L);
 
 		p.setCategoria(c);
 
@@ -249,6 +250,12 @@ public class ConsoleTest {
 		}
 		System.out.println(produto);
 		System.out.println("LALA");
+		
+		try {
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
