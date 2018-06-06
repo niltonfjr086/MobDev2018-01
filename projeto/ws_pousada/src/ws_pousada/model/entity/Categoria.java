@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,11 +30,11 @@ public class Categoria extends BaseEntity implements Serializable {
 
 	@Column(nullable = true, length = 30)
 	private String nome;
-
-//	@JsonBackReference(value = "produtos")
+/*
 	@JsonIgnore
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH,
-			CascadeType.DETACH }, mappedBy = "categoria", fetch = FetchType.LAZY)
+*/
+	@JsonBackReference(value = "categoria")
+	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
 	private List<Produto> produtos;
 
 	public Categoria() {

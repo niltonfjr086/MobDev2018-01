@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 //import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -30,8 +31,8 @@ public class Produto extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String nome;
 
-//	@JsonManagedReference(value = "produtos")
-	@ManyToOne(targetEntity = Categoria.class,  fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "categoria")
+	@ManyToOne(targetEntity = Categoria.class,  fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
 

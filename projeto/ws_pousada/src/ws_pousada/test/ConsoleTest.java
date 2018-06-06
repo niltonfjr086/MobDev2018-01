@@ -31,17 +31,17 @@ public class ConsoleTest {
 		FactoryDAO.sessionInstance();
 
 		// this.postEnderecoTest();
-//		 this.postSaveCategoria();
-//		 this.postUpdateCategoria();
+		// this.postSaveCategoria();
+		// this.postUpdateCategoria();
 		// this.listAllCategorias();
 
-//		 this.postSaveProduto();
-//		 this.saveProduto();
-		 this.postUpdateProduto();
+		 this.postSaveProduto();
+		// this.saveProduto();
+//		this.postUpdateProduto();
 
-//		this.getListAllProdutos();
-//		this.getProduto();
-		
+		// this.getListAllProdutos();
+		// this.getProduto();
+
 		FactoryDAO.closeInstance();
 
 		assertEquals(0, 0);
@@ -79,7 +79,7 @@ public class ConsoleTest {
 	public void postSaveCategoria() {
 
 		Categoria c = new Categoria();
-		c.setNome("Lanches");
+		c.setNome("Porções");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = "";
@@ -131,12 +131,12 @@ public class ConsoleTest {
 
 		Categoria c = new Categoria();
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(5L);
+		c = categoriaDAO.findById(2L);
 
 		Produto p = new Produto();
 
 		p.setCategoria(c);
-		p.setNome("Cheese Salada");
+		p.setNome("Batata Frita");
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -146,7 +146,6 @@ public class ConsoleTest {
 			System.out.println(jsonInString);
 
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -204,12 +203,13 @@ public class ConsoleTest {
 	private void getListAllProdutos() {
 		String retorno = HttpConnector.getConnect("http://localhost:8080/ws_pousada/produto/listAll");
 
-//		System.out.println(retorno);
-		
+		// System.out.println(retorno);
+
 		ObjectMapper mapper = new ObjectMapper();
-//		List<Produto> produtos = mapper.convertValue(retorno, new TypeReference<List<Produto>>() {});
-//		List<Produto> produtos = mapper.convertValue(retorno, List.class);
-		
+		// List<Produto> produtos = mapper.convertValue(retorno, new
+		// TypeReference<List<Produto>>() {});
+		// List<Produto> produtos = mapper.convertValue(retorno, List.class);
+
 		List<Produto> produtos = null;
 		try {
 			produtos = mapper.readValue(retorno, List.class);
@@ -218,29 +218,29 @@ public class ConsoleTest {
 		}
 		System.out.println(produtos.get(0).getNome());
 		System.out.println("LALA");
-//		System.out.println(produtos.get(0).getNome());
-//		try {
-//			JsonNode node = mapper.readTree(retorno);
-//			List<Produto> produtos = mapper.convertValue(node.findValues("produto"),
-//					new TypeReference<List<Produto>>() {});
-//
-//			System.out.println(produtos);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		// System.out.println(produtos.get(0).getNome());
+		// try {
+		// JsonNode node = mapper.readTree(retorno);
+		// List<Produto> produtos = mapper.convertValue(node.findValues("produto"),
+		// new TypeReference<List<Produto>>() {});
+		//
+		// System.out.println(produtos);
+		//
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
 
 		// ProdutoDAO produtoDAO = new ProdutoDAO();
 		// List<Produto> produtos = produtoDAO.findAll();
 		// System.out.println(produtos);
 
 	}
-	
+
 	private void getProduto() {
 		String retorno = HttpConnector.getConnect("http://localhost:8080/ws_pousada/produto/getById", "2");
-		
+
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		Produto produto = null;
 		try {
 			produto = mapper.readValue(retorno, Produto.class);
