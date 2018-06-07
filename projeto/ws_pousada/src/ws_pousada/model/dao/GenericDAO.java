@@ -79,13 +79,13 @@ public class GenericDAO<T, PK> {
 	}
 
 	public Object executeQuery(String query, Object... params) {
-		Query createQuery = sessionInstance().createQuery(query);
+		Query q = sessionInstance().createQuery(query);
 
 		for (int i = 0; i < params.length; i++) {
-			createQuery.setParameter(i, params[i]);
+			q.setParameter(i, params[i]);
 		}
 
-		return createQuery.getResultList();
+		return q.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

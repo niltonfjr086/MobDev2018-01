@@ -31,7 +31,7 @@ public class ConsoleTest {
 		FactoryDAO.sessionInstance();
 
 		// this.postEnderecoTest();
-		// this.postSaveCategoria();
+//		 this.postSaveCategoria();
 		// this.postUpdateCategoria();
 		// this.listAllCategorias();
 
@@ -79,7 +79,7 @@ public class ConsoleTest {
 	public void postSaveCategoria() {
 
 		Categoria c = new Categoria();
-		c.setNome("Porções");
+		c.setNome("Sobremesas");
 
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString = "";
@@ -136,8 +136,8 @@ public class ConsoleTest {
 		Produto p = new Produto();
 
 		p.setCategoria(c);
-		p.setNome("Cheese Burger");
-		p.setValor(13.8);
+		p.setNome("Cheese Salada");
+		p.setValor(17.0);
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -150,8 +150,7 @@ public class ConsoleTest {
 			e.printStackTrace();
 		}
 
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save",
-				jsonInString);
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save", jsonInString);
 		System.out.println(entityResponse);
 
 	}
