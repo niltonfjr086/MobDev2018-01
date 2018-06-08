@@ -30,11 +30,10 @@ public class Categoria extends BaseEntity implements Serializable {
 
 	@Column(nullable = true, length = 30)
 	private String nome;
-/*
+
+//	@JsonBackReference(value = "categoria")
 	@JsonIgnore
-*/
-	@JsonBackReference(value = "categoria")
-	@OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
 	private List<Produto> produtos;
 
 	public Categoria() {

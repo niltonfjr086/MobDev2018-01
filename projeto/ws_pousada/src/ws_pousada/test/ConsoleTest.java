@@ -3,6 +3,7 @@ package ws_pousada.test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -35,11 +36,11 @@ public class ConsoleTest {
 		// this.postUpdateCategoria();
 		// this.listAllCategorias();
 
-		 this.postSaveProduto();
+//		 this.postSaveProduto();
 		// this.saveProduto();
 //		this.postUpdateProduto();
 
-		// this.getListAllProdutos();
+		 this.getListAllProdutos();
 		// this.getProduto();
 
 		FactoryDAO.closeInstance();
@@ -203,36 +204,35 @@ public class ConsoleTest {
 	private void getListAllProdutos() {
 		String retorno = HttpConnector.getConnect("http://localhost:8080/ws_pousada/produto/listAll");
 
-		// System.out.println(retorno);
-
 		ObjectMapper mapper = new ObjectMapper();
-		// List<Produto> produtos = mapper.convertValue(retorno, new
-		// TypeReference<List<Produto>>() {});
-		// List<Produto> produtos = mapper.convertValue(retorno, List.class);
 
-		List<Produto> produtos = null;
+		List<Produto> produtos = new ArrayList<>();
+		
 		try {
-			produtos = mapper.readValue(retorno, List.class);
-		} catch (IOException e) {
+        List<Object> voidList = mapper.readValue(retorno, List.class);
+        for (Object o : voidList) {
+            Produto p = mapper.readValue(mapper.writeValueAsString(o), Produto.class);
+            produtos.add(p);
+        }
+        
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(produtos.get(0).getNome());
+		System.out.println(produtos);
 		System.out.println("LALA");
-		// System.out.println(produtos.get(0).getNome());
-		// try {
-		// JsonNode node = mapper.readTree(retorno);
-		// List<Produto> produtos = mapper.convertValue(node.findValues("produto"),
-		// new TypeReference<List<Produto>>() {});
-		//
-		// System.out.println(produtos);
-		//
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
+		
+//		try {
+//			produtos = mapper.readValue(retorno, List.class);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println(produtos.get(0).getNome());
+//		System.out.println("LALA");
+		
+		
+        
 
-		// ProdutoDAO produtoDAO = new ProdutoDAO();
-		// List<Produto> produtos = produtoDAO.findAll();
-		// System.out.println(produtos);
+
 
 	}
 

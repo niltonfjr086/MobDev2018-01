@@ -31,7 +31,7 @@ public class Produto extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private String nome;
 
-	@JsonManagedReference(value = "categoria")
+//	@JsonManagedReference(value = "categoria")
 	@ManyToOne(targetEntity = Categoria.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", nullable = false)
 	private Categoria categoria;
