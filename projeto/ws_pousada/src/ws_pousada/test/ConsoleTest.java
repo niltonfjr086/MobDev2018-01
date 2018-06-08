@@ -32,15 +32,15 @@ public class ConsoleTest {
 		FactoryDAO.sessionInstance();
 
 		// this.postEnderecoTest();
-//		 this.postSaveCategoria();
+		// this.postSaveCategoria();
 		// this.postUpdateCategoria();
 		// this.listAllCategorias();
 
-//		 this.postSaveProduto();
+		// this.postSaveProduto();
 		// this.saveProduto();
-//		this.postUpdateProduto();
+		// this.postUpdateProduto();
 
-		 this.getListAllProdutos();
+		this.getListAllProdutos();
 		// this.getProduto();
 
 		FactoryDAO.closeInstance();
@@ -151,7 +151,8 @@ public class ConsoleTest {
 			e.printStackTrace();
 		}
 
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save", jsonInString);
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save",
+				jsonInString);
 		System.out.println(entityResponse);
 
 	}
@@ -207,32 +208,18 @@ public class ConsoleTest {
 		ObjectMapper mapper = new ObjectMapper();
 
 		List<Produto> produtos = new ArrayList<>();
-		
+
 		try {
-        List<Object> voidList = mapper.readValue(retorno, List.class);
-        for (Object o : voidList) {
-            Produto p = mapper.readValue(mapper.writeValueAsString(o), Produto.class);
-            produtos.add(p);
-        }
-        
-		}catch (Exception e) {
+			List<Object> voidList = mapper.readValue(retorno, List.class);
+			for (Object o : voidList) {
+				Produto p = mapper.readValue(mapper.writeValueAsString(o), Produto.class);
+				produtos.add(p);
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(produtos);
-		System.out.println("LALA");
-		
-//		try {
-//			produtos = mapper.readValue(retorno, List.class);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println(produtos.get(0).getNome());
-//		System.out.println("LALA");
-		
-		
-        
-
-
 
 	}
 
@@ -249,11 +236,11 @@ public class ConsoleTest {
 		}
 		System.out.println(produto);
 		System.out.println("LALA");
-		
+
 		try {
-			
-		}catch (Exception e) {
-			// TODO: handle exception
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}

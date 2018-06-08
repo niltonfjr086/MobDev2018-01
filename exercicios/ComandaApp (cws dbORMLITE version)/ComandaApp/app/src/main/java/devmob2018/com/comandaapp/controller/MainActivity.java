@@ -143,7 +143,10 @@ public class MainActivity extends Activity {
             });
 */
 
+/*
             client.get("http://192.168.0.5:8080/ws_pousada/produto/listAll", new AsyncHttpResponseHandler() {
+*/
+            client.get("http://172.28.5.31:8080/ws_pousada/produto/listAll", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     String s = new String(responseBody);
