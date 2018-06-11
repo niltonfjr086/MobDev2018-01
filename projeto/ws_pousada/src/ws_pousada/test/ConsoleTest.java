@@ -20,6 +20,7 @@ import ws_pousada.model.dao.ProdutoDAO;
 import ws_pousada.model.entity.Categoria;
 import ws_pousada.model.entity.Endereco;
 import ws_pousada.model.entity.Produto;
+import ws_pousada.model.entity.Usuario;
 
 public class ConsoleTest {
 
@@ -40,8 +41,11 @@ public class ConsoleTest {
 		// this.saveProduto();
 		// this.postUpdateProduto();
 
-		this.getListAllProdutos();
+		// this.getListAllProdutos();
 		// this.getProduto();
+
+		// this.postSaveUsuario();
+		this.validateConnection();
 
 		FactoryDAO.closeInstance();
 
@@ -242,6 +246,50 @@ public class ConsoleTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void postSaveUsuario() {
+
+		Usuario u = new Usuario();
+		u.setLogin("user01");
+		u.setSenha("1234");
+		u.setEmail("user@lala.com");
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(u);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/usuario/save",
+				jsonInString);
+		System.out.println(entityResponse);
+
+	}
+
+	public void validateConnection() {
+
+		String login = "user01";
+		String senha = "1234";
+
+		// ObjectMapper mapper = new ObjectMapper();
+		// String jsonInString = "";
+		// try {
+		// jsonInString = mapper.writeValueAsString(u);
+		// System.out.println(jsonInString);
+		// } catch (JsonProcessingException e) {
+		// e.printStackTrace();
+		// }
+
+		String entityResponse = HttpConnector.validateConnect("http://localhost:8080/ws_pousada/usuario/login", login,
+				senha);
+		System.out.println(entityResponse);
 
 	}
 

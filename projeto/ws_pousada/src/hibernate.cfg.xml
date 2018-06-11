@@ -16,20 +16,19 @@
 		<property name="connection.pool_size">2</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
-		
+
 		<!-- <property name="current_session_context_class">thread</property> -->
 
 		<!-- create | update | validate | create-drop -->
 		<property name="hibernate.hbm2ddl.auto">update</property>
-		
+
+		<mapping class="ws_pousada.model.entity.Usuario" />
+
 		<mapping class="ws_pousada.model.entity.Produto" />
 		<mapping class="ws_pousada.model.entity.Categoria" />
 		<mapping class="ws_pousada.model.entity.Endereco" />
 
-<!-- 		
-
-<mapping class="ws_pousada.model.entity.ItemProduto" />
--->
+		<!-- <mapping class="ws_pousada.model.entity.ItemProduto" /> -->
 
 
 	</session-factory>

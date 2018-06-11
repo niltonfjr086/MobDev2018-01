@@ -329,14 +329,26 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Data_ReservaAp` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `Pousada`.`Usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Pousada`.`Usuario` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `login` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(40) NULL,
+  `senha` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+SELECT * FROM Pousada.Usuario;
+DESCRIBE Pousada.Usuario;
+DROP TABLE IF EXISTS `Pousada`.`Usuario`;
+
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-
-
-
 
 
 

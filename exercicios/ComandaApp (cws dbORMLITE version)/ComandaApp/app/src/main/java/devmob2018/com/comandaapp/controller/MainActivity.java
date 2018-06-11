@@ -62,6 +62,11 @@ public class MainActivity extends Activity {
     final int REQUEST_QR_CODE = 10;
     final int REQUEST_BAR_CODE = 11;
 
+    private String basePath = "http://192.168.0.6:8080/ws_pousada";
+/*
+    private String basePath = "http://172.28.5.31:8080/ws_pousada";
+*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,14 +96,14 @@ public class MainActivity extends Activity {
             Teste t = new Teste("Primeiro Att", 5);
 
 /*
-            String entityResponse = HttpConnector.getConnect("http://192.168.0.5:8080/ws_pousada/categoria/listAll");
+            String entityResponse = HttpConnector.getConnect(basePath+"/categoria/listAll");
             Toast.makeText(this, entityResponse, Toast.LENGTH_LONG).show();
 */
 
             final AsyncHttpClient client = new AsyncHttpClient();
             client.addHeader("user-agent", "Mozilla Chrome");
 
-            client.get("http://192.168.0.5:8080/ws_pousada/categoria/getById?id=1", new AsyncHttpResponseHandler() {
+            client.get(basePath + "/categoria/getById?id=1", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     String s = new String(responseBody);
@@ -118,7 +123,7 @@ public class MainActivity extends Activity {
                 }
             });
 /*
-            client.get("http://192.168.0.5:8080/ws_pousada/categoria/listAll", new AsyncHttpResponseHandler() {
+            client.get(basePath+"/categoria/listAll", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     String s = new String(responseBody);
@@ -143,10 +148,7 @@ public class MainActivity extends Activity {
             });
 */
 
-/*
-            client.get("http://192.168.0.5:8080/ws_pousada/produto/listAll", new AsyncHttpResponseHandler() {
-*/
-            client.get("http://172.28.5.31:8080/ws_pousada/produto/listAll", new AsyncHttpResponseHandler() {
+            client.get(basePath + "/produto/listAll", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     String s = new String(responseBody);
@@ -172,23 +174,26 @@ public class MainActivity extends Activity {
             });
 
 
+
+/*
             RequestParams params = new RequestParams();
             params.put("categoria", new Categoria("Variados"));
             params.setUseJsonStreamer(true);
+*/
 /*
             ScaanRestClient restClient = new ScaanRestClient(getApplicationContext());
 */
-
-            client.post("http://192.168.0.5:8080/ws_pousada/categoria/save", params, new AsyncHttpResponseHandler() {
+/*
+            client.post(basePath + "/categoria/save", params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
                     a.setMessage("SUCESSO");
                     a.show();
-
+*/
                     // TODO: VERIFICAR POST COM JSON USANDO UMA CLASSE NÃO ANOTADA PELO ORMLITE
 /*
-                    client.get("http://192.168.0.5:8080/ws_pousada/categoria/getById?id=3", new AsyncHttpResponseHandler() {
+                    client.get(basePath+"/categoria/getById?id=3", new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String s = new String(responseBody);
@@ -205,7 +210,9 @@ public class MainActivity extends Activity {
                         }
                     });
  */
+/*
                 }
+
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
@@ -214,7 +221,7 @@ public class MainActivity extends Activity {
                     a.show();
                 }
             });
-
+*/
 /*
             String json = gson.toJson(t);
             Toast.makeText(this,json,Toast.LENGTH_LONG).show();

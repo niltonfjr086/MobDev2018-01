@@ -2,7 +2,10 @@ package ws_pousada.model.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Query;
+import javax.persistence.Table;
 
 import static ws_pousada.model.FactoryDAO.sessionInstance;
 
@@ -29,7 +32,7 @@ public class GenericDAO<T, PK> {
 	public T save(T entity) {
 		try {
 			sessionInstance().beginTransaction();
-//			sessionInstance().load(entity, ((BaseEntity)entity).getId());
+			// sessionInstance().load(entity, ((BaseEntity)entity).getId());
 			sessionInstance().persist(entity);
 			sessionInstance().getTransaction().commit();
 
@@ -78,12 +81,44 @@ public class GenericDAO<T, PK> {
 
 	}
 
-	public Object executeQuery(String query, Object... params) {
+	public List<T> executeQuery(String query, Object... params) {
 		Query q = sessionInstance().createQuery(query);
 
 		for (int i = 0; i < params.length; i++) {
 			q.setParameter(i, params[i]);
 		}
+
+		return q.getResultList();
+	}
+
+	public List<T> executeQuery(Map<String, Object> params) {
+		
+		StringBuilder sql = null;
+		Table table = this.manipulada.getAnnotation(Table.class);
+		
+		if(table != null && table.name() != null && !table.name().trim().equals("")) {
+			sql = new StringBuilder("SELECT t FROM " + table.name() + " t");
+			
+		} else {
+			sql = new StringBuilder(" FROM " + this.manipulada.getSimpleName() + " ");
+			
+		}
+
+		boolean frst = true;
+		for (Map.Entry<String, Object> entry : params.entrySet()) {
+
+			if (!frst) {
+				sql.append(" AND ");
+			} else {
+				sql.append(" WHERE ");
+				frst = false;
+			}
+
+			sql.append(entry.getKey() + " = " + "'" + entry.getValue() + "'");
+
+		}
+
+		Query q = sessionInstance().createQuery(sql.toString());
 
 		return q.getResultList();
 	}
