@@ -6,9 +6,15 @@ import android.content.Context;
 
 public class ReservaController {
 
+    private Activity main;
+
     private String teste;
 
-    public void l(Activity c){
+    public ReservaController(Activity a){
+        this.main = a;
+    }
+
+    public void lala(Activity a){
         Context c;
     }
 }

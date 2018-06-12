@@ -18,7 +18,7 @@ import devmob2018.com.myapplicationtest1.controller.ReservaController;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ReservaController res;
+    private ReservaController reserva = new ReservaController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+
+            this.reserva.lala(this);
+
 
         } else if (id == R.id.nav_slideshow) {
 

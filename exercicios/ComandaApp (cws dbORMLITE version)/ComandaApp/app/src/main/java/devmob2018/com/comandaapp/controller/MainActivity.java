@@ -31,6 +31,9 @@ import java.util.Date;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.message.BasicHeader;
+import cz.msebera.android.httpclient.protocol.HTTP;
 import devmob2018.com.comandaapp.R;
 import devmob2018.com.comandaapp.component.ItemComandaAdapter;
 import devmob2018.com.comandaapp.model.HttpConnector;
@@ -39,6 +42,7 @@ import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
 import devmob2018.com.comandaapp.model.entity.ItemComanda;
 import devmob2018.com.comandaapp.model.entity.Produto;
+import devmob2018.com.comandaapp.model.entity.Usuario;
 
 public class MainActivity extends Activity {
 
@@ -189,7 +193,7 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
                     a.setMessage("SUCESSO");
                     a.show();
 */
-                    // TODO: VERIFICAR POST COM JSON USANDO UMA CLASSE NÃO ANOTADA PELO ORMLITE
+            // TODO: VERIFICAR POST COM JSON USANDO UMA CLASSE NÃO ANOTADA PELO ORMLITE
 /*
                     client.get(basePath+"/categoria/getById?id=3", new AsyncHttpResponseHandler() {
                         @Override
@@ -264,6 +268,26 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
                 Toast.makeText(this,entityResponse,Toast.LENGTH_LONG).show();
                 System.out.println(entityResponse);
             }*/
+
+
+            Usuario u = new Usuario();
+            u.setEmail("abc@def.com");
+            u.setSenha("1234");
+            String json = gson.toJson(u);
+            Toast.makeText(this,json,Toast.LENGTH_LONG).show();
+            StringEntity entity = new StringEntity(json);
+            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            client.post(this, basePath + "/usuario/save", entity, "application/json", new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                }
+            });
 
             this.produtoDAO = this.db.getDao(Produto.class);
             if (produtoDAO.queryForAll().size() <= 0) {

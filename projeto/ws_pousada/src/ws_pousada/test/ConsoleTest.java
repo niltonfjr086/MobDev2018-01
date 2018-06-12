@@ -297,9 +297,7 @@ public class ConsoleTest {
 		try {
 			u = mapper.readValue(entityResponse, Usuario.class);
 //			u = mapper.convertValue(entityResponse, Usuario.class);
-//			 u =
-//			 mapper.convertValue("{\"email\":\"a@b.com\",\"id\":1,\"senha\":\"1234\"}",
-//			 Usuario.class);
+//			 u = mapper.convertValue("{\"email\":\"a@b.com\",\"id\":1,\"senha\":\"1234\"}", Usuario.class);
 
 			System.out.println(u);
 
