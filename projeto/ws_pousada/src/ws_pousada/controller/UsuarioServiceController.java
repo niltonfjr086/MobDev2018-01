@@ -28,7 +28,7 @@ public class UsuarioServiceController extends GenericServiceController<Usuario, 
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response validateLogin(@QueryParam("login") String login, @QueryParam("senha") String senha) {
+	public Response validateLogin(@QueryParam("email") String email, @QueryParam("senha") String senha) {
 
 		try {
 // 			List<Usuario> usuarios = sessionInstance().createQuery("FROM " + "Usuario" + " WHERE " + "login='" + login + "' AND " + "senha='" + senha+"'").getResultList();
@@ -36,7 +36,7 @@ public class UsuarioServiceController extends GenericServiceController<Usuario, 
 //			List<Usuario> usuarios = dao.executeQuery("FROM Usuario WHERE login=? AND senha=?", login, senha);
 
 			Map<String, Object> params = new HashMap<>();
-			params.put("login", login);
+			params.put("email", email);
 			params.put("senha", senha);
 			List<Usuario> usuarios = dao.executeQuery(params);
 			

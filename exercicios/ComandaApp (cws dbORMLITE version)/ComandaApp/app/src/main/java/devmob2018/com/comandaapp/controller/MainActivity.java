@@ -62,9 +62,9 @@ public class MainActivity extends Activity {
     final int REQUEST_QR_CODE = 10;
     final int REQUEST_BAR_CODE = 11;
 
-    private String basePath = "http://192.168.0.6:8080/ws_pousada";
-/*
     private String basePath = "http://172.28.5.31:8080/ws_pousada";
+/*
+private String basePath = "http://192.168.0.6:8080/ws_pousada";
 */
 
     @Override
@@ -160,11 +160,9 @@ public class MainActivity extends Activity {
                         Produto p = gson.fromJson(gson.toJson(o), Produto.class);
                         produtos.add(p);
                     }
-/*
                     AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
                     a.setMessage(produtos.toString());
                     a.show();
-                    */
                 }
 
                 @Override

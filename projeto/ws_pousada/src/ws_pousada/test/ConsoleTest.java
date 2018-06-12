@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -252,9 +253,8 @@ public class ConsoleTest {
 	public void postSaveUsuario() {
 
 		Usuario u = new Usuario();
-		u.setLogin("user01");
 		u.setSenha("1234");
-		u.setEmail("user@lala.com");
+		u.setEmail("a@b.com");
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -275,7 +275,7 @@ public class ConsoleTest {
 
 	public void validateConnection() {
 
-		String login = "user01";
+		String email = "a@b.com";
 		String senha = "1234";
 
 		// ObjectMapper mapper = new ObjectMapper();
@@ -287,9 +287,28 @@ public class ConsoleTest {
 		// e.printStackTrace();
 		// }
 
-		String entityResponse = HttpConnector.validateConnect("http://localhost:8080/ws_pousada/usuario/login", login,
+		String entityResponse = HttpConnector.validateConnect("http://localhost:8080/ws_pousada/usuario/login", email,
 				senha);
-		System.out.println(entityResponse);
+
+		ObjectMapper mapper = new ObjectMapper();
+//		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+
+		Usuario u = null;
+		try {
+			u = mapper.readValue(entityResponse, Usuario.class);
+//			u = mapper.convertValue(entityResponse, Usuario.class);
+//			 u =
+//			 mapper.convertValue("{\"email\":\"a@b.com\",\"id\":1,\"senha\":\"1234\"}",
+//			 Usuario.class);
+
+			System.out.println(u);
+
+		} catch (Exception e) {
+			u = new Usuario();
+			e.printStackTrace();
+		}
+
+		// System.out.println(entityResponse);
 
 	}
 

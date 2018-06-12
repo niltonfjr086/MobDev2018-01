@@ -38,13 +38,15 @@ public class HttpConnector {
 			connection.connect(); // ENVIA AO SERVIDOR
 
 			Scanner scan = new Scanner(connection.getInputStream());
+			
+//			connection.disconnect();
+			
 			String jsonDeResposta = "";
 			while (scan.hasNext()) {
 				jsonDeResposta += scan.next() + " ";
 			}
 			scan.close();
 
-			connection.disconnect();
 
 			return jsonDeResposta;
 
@@ -76,12 +78,12 @@ public class HttpConnector {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
+//			conn.disconnect();
 			String output;
 			while ((output = br.readLine()) != null) {
 				return output;
 			}
 
-			conn.disconnect();
 
 		} catch (MalformedURLException e) {
 
@@ -94,7 +96,7 @@ public class HttpConnector {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @author modified by us
 	 * @param urlS
@@ -104,7 +106,7 @@ public class HttpConnector {
 
 		try {
 
-			urlS += "?id="+id;
+			urlS += "?id=" + id;
 			URL url = new URL(urlS);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
@@ -116,12 +118,12 @@ public class HttpConnector {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
+//			conn.disconnect();
 			String output;
 			while ((output = br.readLine()) != null) {
 				return output;
 			}
 
-			conn.disconnect();
 
 		} catch (MalformedURLException e) {
 
@@ -134,18 +136,18 @@ public class HttpConnector {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @author modified by us
 	 * @param urlS
 	 * @return
 	 */
-	public static String validateConnect(String urlS, String login, String senha) {
+	public static String validateConnect(String urlS, String email, String senha) {
 
 		try {
 
-			urlS += "?login="+login;
-			urlS += "&senha="+senha;
+			urlS += "?email=" + email;
+			urlS += "&senha=" + senha;
 
 			URL url = new URL(urlS);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -158,12 +160,12 @@ public class HttpConnector {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
+//			conn.disconnect();
 			String output;
 			while ((output = br.readLine()) != null) {
 				return output;
 			}
 
-			conn.disconnect();
 
 		} catch (MalformedURLException e) {
 

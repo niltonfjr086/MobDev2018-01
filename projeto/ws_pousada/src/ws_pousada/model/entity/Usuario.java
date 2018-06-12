@@ -22,8 +22,8 @@ public class Usuario extends BaseEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, length = 15)
-	private String login;
+//	@Column(nullable = false, length = 15)
+//	private String login;
 
 	@Column(nullable = true, length = 40)
 	private String email;
@@ -39,13 +39,13 @@ public class Usuario extends BaseEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
+//	public String getLogin() {
+//		return login;
+//	}
+//
+//	public void setLogin(String login) {
+//		this.login = login;
+//	}
 
 	public String getEmail() {
 		return email;

@@ -114,13 +114,25 @@ public class GenericDAO<T, PK> {
 				frst = false;
 			}
 
-			sql.append(entry.getKey() + " = " + "'" + entry.getValue() + "'");
+			if(entry.getValue().getClass().getSimpleName().equals("Date")) {
+				
+				// EX.: initDataNascimento
+				if(entry.getKey().contains("init")){
+					sql.append(entry.getKey() + " >= " + "'" + entry.getValue() + "'");
+				} else {
+					sql.append(entry.getKey() + " <= " + "'" + entry.getValue() + "'");
+				}
+				
+			} else {
+				sql.append(entry.getKey() + " = " + "'" + entry.getValue() + "'");
+			}
+			
 
 		}
 
-		Query q = sessionInstance().createQuery(sql.toString());
+//		Query q = sessionInstance().createQuery(sql.toString());
 
-		return q.getResultList();
+		return sessionInstance().createQuery(sql.toString()).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

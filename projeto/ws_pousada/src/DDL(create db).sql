@@ -334,8 +334,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Pousada`.`Usuario` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(15) NOT NULL,
-  `email` VARCHAR(40) NULL,
+  `email` VARCHAR(40) NOT NULL UNIQUE,
   `senha` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
