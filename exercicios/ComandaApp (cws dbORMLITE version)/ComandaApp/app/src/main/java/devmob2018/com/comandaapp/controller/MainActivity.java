@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,18 +15,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -36,7 +32,7 @@ import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 import devmob2018.com.comandaapp.R;
 import devmob2018.com.comandaapp.component.ItemComandaAdapter;
-import devmob2018.com.comandaapp.model.HttpConnector;
+import devmob2018.com.comandaapp.component.ResponseHandler;
 import devmob2018.com.comandaapp.model.database.MyOrmLiteOpenHelper;
 import devmob2018.com.comandaapp.model.entity.Categoria;
 import devmob2018.com.comandaapp.model.entity.Comanda;
@@ -152,7 +148,8 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
             });
 */
 
-            client.get(basePath + "/produto/listAll", new AsyncHttpResponseHandler() {
+            client.get(basePath + "/produto/listAll", new ResponseHandler<Produto>(this, new Produto())
+/*                    new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     String s = new String(responseBody);
@@ -164,16 +161,18 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
                         Produto p = gson.fromJson(gson.toJson(o), Produto.class);
                         produtos.add(p);
                     }
-/*                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
+*//*                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
                     a.setMessage(produtos.toString());
-                    a.show();*/
+                    a.show();*//*
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                     Toast.makeText(MainActivity.this, "Ocorreu um erro: " + responseBody, Toast.LENGTH_LONG);
                 }
-            });
+            }*/
+
+            );
 
 
 

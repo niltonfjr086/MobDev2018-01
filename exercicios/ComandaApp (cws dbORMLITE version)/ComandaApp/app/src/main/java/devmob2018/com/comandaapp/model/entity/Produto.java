@@ -84,8 +84,18 @@ public class Produto implements Serializable {
         return result;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return nome + " | " + categoria.getNome() + " | " + valor;
+    }*/
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", categoria=" + categoria +
+                ", valor=" + valor +
+                '}';
     }
 }

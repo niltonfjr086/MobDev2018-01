@@ -46,7 +46,7 @@ public class UsuarioServiceController extends GenericServiceController<Usuario, 
 				
 			} else {
 				
-				return Response.status(200).entity("Usuário Inexistente: ").build();
+				return Response.status(200).entity("Usuário Inexistente").build();
 			}
 
 		} catch (Exception ex) {
