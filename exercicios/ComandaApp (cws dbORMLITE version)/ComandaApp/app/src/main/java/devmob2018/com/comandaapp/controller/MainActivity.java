@@ -164,9 +164,9 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
                         Produto p = gson.fromJson(gson.toJson(o), Produto.class);
                         produtos.add(p);
                     }
-                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
+/*                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
                     a.setMessage(produtos.toString());
-                    a.show();
+                    a.show();*/
                 }
 
                 @Override
@@ -271,23 +271,32 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
 
 
             Usuario u = new Usuario();
-            u.setEmail("abc@def.com");
+            u.setEmail("boramaisum@def.com");
             u.setSenha("1234");
             String json = gson.toJson(u);
-            Toast.makeText(this,json,Toast.LENGTH_LONG).show();
+            /*Toast.makeText(this, json, Toast.LENGTH_LONG).show();*/
             StringEntity entity = new StringEntity(json);
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             client.post(this, basePath + "/usuario/save", entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-
+                    String result = new String(responseBody);
+                    Usuario u = gson.fromJson(result, Usuario.class);
+/*
+                    Toast.makeText(MainActivity.this, u.toString(), Toast.LENGTH_LONG).show();
+*/
+                    AlertDialog.Builder a = new AlertDialog.Builder(MainActivity.this);
+                    a.setMessage(u.toString());
+                    a.show();
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
                 }
             });
+
 
             this.produtoDAO = this.db.getDao(Produto.class);
             if (produtoDAO.queryForAll().size() <= 0) {
