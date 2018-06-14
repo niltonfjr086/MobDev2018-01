@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -148,7 +149,10 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
             });
 */
 
+
+/*
             client.get(basePath + "/produto/listAll", new ResponseHandler<Produto>(this, new Produto())
+*/
 /*                    new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -172,8 +176,16 @@ private String basePath = "http://192.168.0.6:8080/ws_pousada";
                 }
             }*/
 
+/*
             );
+*/
 
+            RequestHandle rh = client.get(basePath + "/produto/listAll", new ResponseHandler<Produto>(this, new Produto()));
+/*rh.setTag("LALALA");*/
+            while (rh.getTag() == null) {
+
+            }
+            Toast.makeText(this, rh.getTag().toString(), Toast.LENGTH_LONG).show();
 
 
 /*

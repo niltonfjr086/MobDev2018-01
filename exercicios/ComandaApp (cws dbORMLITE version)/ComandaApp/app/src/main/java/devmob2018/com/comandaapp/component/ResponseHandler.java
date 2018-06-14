@@ -17,17 +17,30 @@ import devmob2018.com.comandaapp.model.entity.Produto;
 public class ResponseHandler<T> extends AsyncHttpResponseHandler {
 
     private Gson gson = new Gson();
-private Activity a;
-private T t = null;
+    private Activity a;
+    private T t = null;
+    private Boolean isList;
 
     public ResponseHandler(Activity a, T t) {
         this.a = a;
         this.t = t;
     }
 
+    public ResponseHandler(Activity a, T t, Boolean isList) {
+        this.a = a;
+        this.t = t;
+        this.isList = isList;
+    }
+
     @Override
     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
         String s = new String(responseBody);
+
+        this.setTag(s);
+
+/*
+        Toast.makeText(a, s, Toast.LENGTH_LONG).show();
+*/
 
         List<T> list = new ArrayList<>();
 
@@ -36,9 +49,11 @@ private T t = null;
             T ot = (T) gson.fromJson(gson.toJson(o), t.getClass());
             list.add(ot);
         }
+/*
         AlertDialog.Builder a = new AlertDialog.Builder(this.a);
         a.setMessage(list.toString());
         a.show();
+*/
     }
 
     @Override
