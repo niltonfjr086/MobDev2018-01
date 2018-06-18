@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(schema = "Pousada", name = "tb_produto")
-public class Produto extends BaseEntity implements Serializable {
+public class OLDProduto extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 4615510397426763665L;
 
@@ -39,11 +39,11 @@ public class Produto extends BaseEntity implements Serializable {
 	@Column(nullable = false, length = 50)
 	private Double valor;
 
-	public Produto() {
+	public OLDProduto() {
 		super();
 	}
 
-	public Produto(String nome) {
+	public OLDProduto(String nome) {
 		super();
 		this.nome = nome;
 	}

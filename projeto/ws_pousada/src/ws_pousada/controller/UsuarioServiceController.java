@@ -32,7 +32,6 @@ public class UsuarioServiceController extends GenericServiceController<Usuario, 
 
 		try {
 // 			List<Usuario> usuarios = sessionInstance().createQuery("FROM " + "Usuario" + " WHERE " + "login='" + login + "' AND " + "senha='" + senha+"'").getResultList();
-
 //			List<Usuario> usuarios = dao.executeQuery("FROM Usuario WHERE login=? AND senha=?", login, senha);
 
 			Map<String, Object> params = new HashMap<>();
@@ -45,7 +44,7 @@ public class UsuarioServiceController extends GenericServiceController<Usuario, 
 				return Response.status(200).entity(usuarios.get(0)).build();
 				
 			} else {
-				
+//				return Response.status(200).entity(null).build();
 				return Response.status(200).entity("Usuário Inexistente").build();
 			}
 

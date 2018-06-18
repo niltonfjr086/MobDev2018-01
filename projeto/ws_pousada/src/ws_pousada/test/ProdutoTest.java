@@ -10,12 +10,12 @@ import org.junit.Test;
 
 import ws_pousada.model.FactoryDAO;
 import ws_pousada.model.dao.ProdutoDAO;
-import ws_pousada.model.entity.Produto;
+import ws_pousada.model.entity.OLDProduto;
 
 public class ProdutoTest {
 
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
-	private Produto produto = new Produto();
+	private OLDProduto produto = new OLDProduto();
 
 //	private ItemProdutoDAO itemDAO = new ItemProdutoDAO();
 //	private ItemProduto item;
@@ -35,7 +35,7 @@ public class ProdutoTest {
 	private void testFindAll() {
 		System.out.println("TESTE!");
 		
-		List<Produto> produtos = produtoDAO.findAll();
+		List<OLDProduto> produtos = produtoDAO.findAll();
 //		if (produtos != null && produtos.size() <= 0) {
 //			adicionarProdutos();
 //			System.out.println("Adicionou Produtos");
@@ -70,20 +70,20 @@ public class ProdutoTest {
 
 	private void adicionarProdutos() {
 
-		produto = new Produto("Milho");
+		produto = new OLDProduto("Milho");
 		produtoDAO.save(produto);
 
-		produto = new Produto("Tapete");
+		produto = new OLDProduto("Tapete");
 		produtoDAO.save(produto);
 
-		produto = new Produto("Televisor");
+		produto = new OLDProduto("Televisor");
 		produtoDAO.save(produto);
 
 	}
 
 	private void testUpdateProduto() {
 
-		Produto p = produtoDAO.findById(1L);
+		OLDProduto p = produtoDAO.findById(1L);
 		p.setNome("Milho Verde");
 		produtoDAO.update(p);
 		assertEquals("Milho Verde", produtoDAO.findById(1L).getNome());

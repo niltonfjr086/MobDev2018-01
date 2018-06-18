@@ -34,7 +34,7 @@ public class Categoria extends BaseEntity implements Serializable {
 //	@JsonBackReference(value = "categoria")
 	@JsonIgnore
 	@OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
-	private List<Produto> produtos;
+	private List<OLDProduto> produtos;
 
 	public Categoria() {
 	}
@@ -59,12 +59,12 @@ public class Categoria extends BaseEntity implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Produto> getProdutos() {
+	public List<OLDProduto> getProdutos() {
 
 		return this.produtos;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
+	public void setProdutos(List<OLDProduto> produtos) {
 
 		this.produtos = produtos;
 	}

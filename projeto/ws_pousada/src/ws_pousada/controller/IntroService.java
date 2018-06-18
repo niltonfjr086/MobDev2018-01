@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.entity.Endereco;
-import ws_pousada.model.entity.Produto;
+import ws_pousada.model.entity.OLDProduto;
 
 @Path("/intro")
 public class IntroService {
@@ -54,7 +54,7 @@ public class IntroService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String giveMeGSON(@Context HttpServletRequest request) {
 				
-		Produto p = mapper.convertValue("{\"nome\":\"Água Mineral Sem Gás\"}", Produto.class);
+		OLDProduto p = mapper.convertValue("{\"nome\":\"Água Mineral Sem Gás\"}", OLDProduto.class);
 		System.out.println(p);
 
 		return "JACKSON";

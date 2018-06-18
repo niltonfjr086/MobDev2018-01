@@ -7,6 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema Pousada
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `Pousada` ;
 
 -- -----------------------------------------------------
 -- Schema Pousada
@@ -74,9 +75,12 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Apartamento` (
   `capacidade` INT NULL,
   `categoria` INT NULL,
   `observacoes` VARCHAR(10000) NULL,
-  `valor_diaria` DECIMAL(9,2) NULL,
   `isReservado` TINYINT(1) NULL,
   `isEnable` TINYINT(1) NULL,
+  `valor_economico` DECIMAL(9,2) NULL,
+  `valor_basico` DECIMAL(9,2) NULL,
+  `valor_completo` DECIMAL(9,2) NULL,
+  `valor_premium` DECIMAL(9,2) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -100,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Estadia` (
   `data_entrada` DATETIME NULL,
   `data_saida` DATETIME NULL,
   `isAtivo` TINYINT(1) NULL,
+  `multiplicadorConta` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fkApartamento_idx` (`idApartamento` ASC),
   CONSTRAINT `fkApartamentoEstadia`
@@ -167,8 +172,7 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Endereco` (
   `uf` VARCHAR(2) NULL,
   `pais` VARCHAR(255) NULL,
   `complemento` VARCHAR(500) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `cep_UNIQUE` (`cep` ASC))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -209,6 +213,9 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Cliente_Estadia` (
   `idCliente` BIGINT NOT NULL,
   `idEstadia` BIGINT NOT NULL,
   `isResponsavel` TINYINT(1) NULL,
+  `tipo_valor` INT NULL,
+  `tipo_cliente` INT NULL,
+  `peso_cliente` DECIMAL(9,2) NULL,
   PRIMARY KEY (`id`),
   INDEX `fkCliente_idx` (`idCliente` ASC),
   INDEX `fkEstadia_idx` (`idEstadia` ASC),
@@ -330,6 +337,51 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Pousada`.`Configuracao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Pousada`.`Configuracao` (
+  `idUnico` INT NOT NULL AUTO_INCREMENT,
+  `isCriancaAtivo` TINYINT(1) NULL,
+  `isAdolescenteAtivo` TINYINT(1) NULL,
+  `isAdultoAtivo` TINYINT(1) NULL,
+  `isIdosoAtivo` TINYINT(1) NULL,
+  `faixaIdadeCrianca` INT NULL,
+  `faixaIdadeAdolescente` INT NULL,
+  `faixaIdadeAdulto` INT NULL,
+  `faixaIdadeIdoso` INT NULL,
+  `pesoCrianca` DECIMAL(9,2) NULL,
+  `pesoAdolescente` DECIMAL(9,2) NULL,
+  `pesoAdulto` DECIMAL(9,2) NULL,
+  `pesoIdoso` DECIMAL(9,2) NULL,
+  `isEconomicoAtivo` TINYINT(1) NULL,
+  `isBasicoAtivo` TINYINT(1) NULL,
+  `isCompletoAtivo` TINYINT(1) NULL,
+  `isPremiumAtivo` TINYINT(1) NULL,
+  `descricaoEconomico` VARCHAR(2500) NULL,
+  `descricaoBasico` VARCHAR(2500) NULL,
+  `descricaoCompleto` VARCHAR(2500) NULL,
+  `descricaoPremium` VARCHAR(2500) NULL,
+  `horarioCheckOut` TIME NULL,
+  `horarioCheckIn` TIME NULL,
+  PRIMARY KEY (`idUnico`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Pousada`.`Usuario`
+-- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `Pousada`.`Usuario` (
+--   `id` INT NOT NULL,
+--   `nome` VARCHAR(45) NULL,
+--   `sobrenome` VARCHAR(45) NULL,
+--   `cpf` VARCHAR(45) NULL,
+--   `dt_nascimento` VARCHAR(45) NULL,
+--   `login` VARCHAR(45) NULL,
+--   `senha` VARCHAR(45) NULL,
+--   PRIMARY KEY (`id`))
+-- ENGINE = InnoDB;
+DROP TABLE IF EXISTS `Pousada`.`Usuario`;
+-- -----------------------------------------------------
 -- Table `Pousada`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Pousada`.`Usuario` (
@@ -339,15 +391,15 @@ CREATE TABLE IF NOT EXISTS `Pousada`.`Usuario` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-SELECT * FROM Pousada.Usuario;
-DESCRIBE Pousada.Usuario;
-DROP TABLE IF EXISTS `Pousada`.`Usuario`;
-
+-- SELECT * FROM Pousada.Usuario;
+-- DESCRIBE Pousada.Usuario;
+-- DROP TABLE IF EXISTS `Pousada`.`Usuario`;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 
 

@@ -9,28 +9,29 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(schema = "Pousada", name = "Servico")
-public class Servico extends BaseEntity{
+public class Servico extends BaseEntity {
 
 	private static final long serialVersionUID = 2152210084154776603L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column
+
+	@Column(length = 150)
 	private String descricao;
-	
-	@Column(name="tipo_servico")
+
+	@Column(name = "tipo_servico", length = 150)
 	private String tipoServico;
-	
-	@Column(name="cod_barras")
+
+	@Column(name = "cod_barras", length = 20)
 	private String codBarras;
-	
-	@Column(name="valor_unitario")
+
+	@Column(name = "valor_unitario") // DECIMAL(9,2)
 	private Double valorUnitario;
+
 
 	public Long getId() {
 		return id;
@@ -71,7 +72,5 @@ public class Servico extends BaseEntity{
 	public void setValorUnitario(Double valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
-	
-	
-	
+
 }

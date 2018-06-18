@@ -17,10 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ws_pousada.model.FactoryDAO;
 import ws_pousada.model.HttpConnector;
 import ws_pousada.model.dao.CategoriaDAO;
+import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.dao.ProdutoDAO;
 import ws_pousada.model.entity.Categoria;
 import ws_pousada.model.entity.Endereco;
-import ws_pousada.model.entity.Produto;
+import ws_pousada.model.entity.OLDProduto;
 import ws_pousada.model.entity.Usuario;
 
 public class ConsoleTest {
@@ -33,7 +34,9 @@ public class ConsoleTest {
 
 		FactoryDAO.sessionInstance();
 
-		// this.postEnderecoTest();
+		// this.postSaveEndereco();
+		 this.postUpdateEndereco();
+
 		// this.postSaveCategoria();
 		// this.postUpdateCategoria();
 		// this.listAllCategorias();
@@ -46,21 +49,21 @@ public class ConsoleTest {
 		// this.getProduto();
 
 		// this.postSaveUsuario();
-		this.validateConnection();
+		// this.validateConnection();
 
 		FactoryDAO.closeInstance();
 
 		assertEquals(0, 0);
 	}
 
-	public void postEnderecoTest() {
+	public void postSaveEndereco() {
 
 		this.endereco = new Endereco();
 		this.endereco.setBairro("Santa Mônica");
 		this.endereco.setCep("1221928");
 		this.endereco.setCidade("Florianópolis");
 		this.endereco.setComplemento("Casa");
-		this.endereco.setNumero(9090);
+		this.endereco.setNumero("9090");
 		this.endereco.setPais("Brasil");
 		this.endereco.setRua("Testes Street");
 		this.endereco.setUf("SC");
@@ -75,10 +78,47 @@ public class ConsoleTest {
 			e.printStackTrace();
 		}
 
-		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/intro/saveAddress",
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/endereco/save",
 				jsonInString);
 
 		System.out.println(entityResponse);
+
+	}
+
+	public void postUpdateEndereco() {
+
+		EnderecoDAO enderecoDAO = new EnderecoDAO();
+		enderecoDAO.findById(1L);
+
+		this.endereco = enderecoDAO.findById(1L);
+		this.endereco.setCep("84020200");
+		this.endereco.setNumero("7878");
+		this.endereco.setRua("Testes Full Street");
+
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		
+		String jsonInString = "";
+		try {
+			jsonInString = mapper.writeValueAsString(this.endereco);
+			System.out.println(jsonInString);
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/endereco/update",
+				jsonInString);
+
+		System.out.println(entityResponse);
+
+		try {
+			Endereco e = mapper.readValue(entityResponse, Endereco.class);
+			System.out.println(e.toString());
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
@@ -139,7 +179,7 @@ public class ConsoleTest {
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
 		c = categoriaDAO.findById(1L);
 
-		Produto p = new Produto();
+		OLDProduto p = new OLDProduto();
 
 		p.setCategoria(c);
 		p.setNome("Cheese Salada");
@@ -168,7 +208,7 @@ public class ConsoleTest {
 		CategoriaDAO categoriaDAO = new CategoriaDAO();
 		c = categoriaDAO.findById(3L);
 
-		Produto p = new Produto();
+		OLDProduto p = new OLDProduto();
 
 		p.setCategoria(c);
 		p.setNome("Batata Frita");
@@ -180,7 +220,7 @@ public class ConsoleTest {
 	public void postUpdateProduto() {
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
-		Produto p = produtoDAO.findById(1L);
+		OLDProduto p = produtoDAO.findById(1L);
 
 		p.setNome("Batata Frita Média");
 
@@ -212,12 +252,12 @@ public class ConsoleTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<Produto> produtos = new ArrayList<>();
+		List<OLDProduto> produtos = new ArrayList<>();
 
 		try {
 			List<Object> voidList = mapper.readValue(retorno, List.class);
 			for (Object o : voidList) {
-				Produto p = mapper.readValue(mapper.writeValueAsString(o), Produto.class);
+				OLDProduto p = mapper.readValue(mapper.writeValueAsString(o), OLDProduto.class);
 				produtos.add(p);
 			}
 
@@ -233,9 +273,9 @@ public class ConsoleTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		Produto produto = null;
+		OLDProduto produto = null;
 		try {
-			produto = mapper.readValue(retorno, Produto.class);
+			produto = mapper.readValue(retorno, OLDProduto.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -291,13 +331,15 @@ public class ConsoleTest {
 				senha);
 
 		ObjectMapper mapper = new ObjectMapper();
-//		mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+		// mapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 
 		Usuario u = null;
 		try {
 			u = mapper.readValue(entityResponse, Usuario.class);
-//			u = mapper.convertValue(entityResponse, Usuario.class);
-//			 u = mapper.convertValue("{\"email\":\"a@b.com\",\"id\":1,\"senha\":\"1234\"}", Usuario.class);
+			// u = mapper.convertValue(entityResponse, Usuario.class);
+			// u =
+			// mapper.convertValue("{\"email\":\"a@b.com\",\"id\":1,\"senha\":\"1234\"}",
+			// Usuario.class);
 
 			System.out.println(u);
 

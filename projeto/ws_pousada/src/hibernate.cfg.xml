@@ -23,11 +23,13 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 
 		<mapping class="ws_pousada.model.entity.Usuario" />
-
-		<mapping class="ws_pousada.model.entity.Produto" />
-		<mapping class="ws_pousada.model.entity.Categoria" />
 		<mapping class="ws_pousada.model.entity.Endereco" />
+<!-- 		<mapping class="ws_pousada.model.entity.Produto" /> -->
 
+
+
+
+		<!-- <mapping class="ws_pousada.model.entity.Categoria" /> -->
 		<!-- <mapping class="ws_pousada.model.entity.ItemProduto" /> -->
 
 

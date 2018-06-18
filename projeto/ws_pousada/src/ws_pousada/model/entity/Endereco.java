@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws_pousada.model.entity;
 
 import javax.persistence.Column;
@@ -12,15 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- *
- * @author augusto.lima
- */
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(schema = "Pousada", name = "Endereco")
 public class Endereco extends BaseEntity {
 
-	private static final long serialVersionUID = -3991053271167425475L;
+	private static final long serialVersionUID = 5761383212156986332L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +28,7 @@ public class Endereco extends BaseEntity {
 	private String rua;
 
 	@Column(nullable = false, length = 45)
-	private Integer numero;
+	private String numero;
 
 	@Column(nullable = false, length = 255)
 	private String bairro;
@@ -74,11 +69,11 @@ public class Endereco extends BaseEntity {
 		this.rua = rua;
 	}
 
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
