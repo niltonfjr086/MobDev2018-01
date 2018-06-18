@@ -1,7 +1,7 @@
 package ws_pousada.model.dao;
 
-import ws_pousada.model.entity.OLDProduto;
+import ws_pousada.model.entity.Produto;
 
-public class ProdutoDAO extends GenericDAO<OLDProduto, Long>{
+public class ProdutoDAO extends GenericDAO<Produto, Long>{
 
 }

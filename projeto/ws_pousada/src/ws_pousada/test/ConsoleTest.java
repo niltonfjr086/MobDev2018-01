@@ -35,7 +35,7 @@ public class ConsoleTest {
 		FactoryDAO.sessionInstance();
 
 		// this.postSaveEndereco();
-		 this.postUpdateEndereco();
+		// this.postUpdateEndereco();
 
 		// this.postSaveCategoria();
 		// this.postUpdateCategoria();
@@ -97,7 +97,7 @@ public class ConsoleTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		
+
 		String jsonInString = "";
 		try {
 			jsonInString = mapper.writeValueAsString(this.endereco);

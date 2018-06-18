@@ -2,122 +2,164 @@ package ws_pousada.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
 
-import org.hibernate.Session;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ws_pousada.model.FactoryDAO;
+import ws_pousada.model.HttpConnector;
 import ws_pousada.model.dao.ProdutoDAO;
-import ws_pousada.model.entity.OLDProduto;
+import ws_pousada.model.entity.Produto;
 
 public class ProdutoTest {
 
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
-	private OLDProduto produto = new OLDProduto();
+	private Produto produto = new Produto();
 
-//	private ItemProdutoDAO itemDAO = new ItemProdutoDAO();
-//	private ItemProduto item;
+	ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+	@Before
+	public void before() {
+		FactoryDAO.sessionInstance();
+	}
+
+	@After
+	public void after() {
+		FactoryDAO.closeInstance();
+	}
 
 	@Test
-	public void test() {
-		
-//		Session s = FactoryDAO.sessionInstance();
-		this.adicionarProdutos();
+	public void populaAtualizaEndereco() {
 
-		this.testFindAll();
+		try {
+			List<Produto> list = produtoDAO.findAll();
 
-		FactoryDAO.closeInstance();
-		
-	}
+			assertNotNull("Tabela não criada ou falta mapeamento no hibernate.cfg", list);
+			if (list != null && list.size() <= 0) {
+				assertTrue("Tabela não deve possuir registros", list.size() <= 0);
 
-	private void testFindAll() {
-		System.out.println("TESTE!");
-		
-		List<OLDProduto> produtos = produtoDAO.findAll();
-//		if (produtos != null && produtos.size() <= 0) {
-//			adicionarProdutos();
-//			System.out.println("Adicionou Produtos");
-//			produtos = produtoDAO.findAll();
-//		}
-//		assertNotNull(produtos);
-//		
-//		this.testUpdateProduto();
-//		this.testUpdateItem();
-//
-//		System.out.println("Todos os produto cadastrados: \n" + produtos);
-//
-//		System.out.println("--------------------------------------------");
-//		System.out.println("--------------------------------------------");
-//
-//		List<ItemProduto> itens = itemDAO.findAll();
-//		if (itens != null && itens.size() <= 0) {
-//			adicionarItens();
-//			System.out.println("Adicionou Itens");
-//			itens = itemDAO.findAll();
-//		}
-//		assertNotNull(itens);
-//		
-//		this.testDeleteItem();
-//
-//		System.out.println("Todos os itens cadastrados: \n" + itens);
-//
-//		System.out.println("--------------------------------------------");
-//		System.out.println("--------------------------------------------");
+				this.postSave();
+				this.postUpdate();
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			throw (e);
+		} finally {
+
+		}
+
+		System.out.println("-----------------------------");
+		System.out.println("-----------------------------");
+		System.out.println("-----------------------------");
+		List<Produto> list = produtoDAO.findAll();
+		assertTrue(list.size() > 0);
+		System.out.println(list);
 
 	}
 
-	private void adicionarProdutos() {
+	private void postSave() {
 
-		produto = new OLDProduto("Milho");
-		produtoDAO.save(produto);
+		this.produto = new Produto();
+		this.produto.setCodBarras("8080");
+		this.produto.setDescricao("Garrafa de Vinho");
+		this.produto.setValorUnitario(60.45);
+		this.produto.setTipoProduto("Bebida");
+		this.produto.setEstoqueMaximo(50);
+		this.produto.setEstoqueMinimo(5);
+		try {
+			String jsonInString = mapper.writeValueAsString(this.produto);
+			String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save",
+					jsonInString);
 
-		produto = new OLDProduto("Tapete");
-		produtoDAO.save(produto);
+			Produto pp = mapper.readValue(entityResponse, Produto.class);
+			assertNotNull("ID não pode ser nulo", pp.getId());
+			assertEquals("Nome retornado incorreto", "Garrafa de Vinho", pp.getDescricao());
+			assertTrue("Salvo incompleto", this.salvoCompleto(pp));
+			System.out.println(pp.toString());
 
-		produto = new OLDProduto("Televisor");
-		produtoDAO.save(produto);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			this.produto = new Produto();
+		}
+
+		this.produto = new Produto();
+		this.produto.setCodBarras("7878");
+		this.produto.setDescricao("Creme Dental");
+		this.produto.setTipoProduto("Higiene Pessoal");
+		this.produto.setValorUnitario(6.50);
+		this.produto.setEstoqueMaximo(250);
+		this.produto.setEstoqueMinimo(10);
+		try {
+			String jsonInString = mapper.writeValueAsString(this.produto);
+			String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/produto/save",
+					jsonInString);
+
+			Produto item = mapper.readValue(entityResponse, Produto.class);
+			assertNotNull("ID não pode ser nulo", item.getId());
+			assertEquals("Nome retornado incorreto", "Creme Dental", item.getDescricao());
+			assertTrue("Salvo incompleto", this.salvoCompleto(item));
+			System.out.println(item.toString());
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			this.produto = new Produto();
+		}
 
 	}
 
-	private void testUpdateProduto() {
+	private void postUpdate() {
 
-		OLDProduto p = produtoDAO.findById(1L);
-		p.setNome("Milho Verde");
-		produtoDAO.update(p);
-		assertEquals("Milho Verde", produtoDAO.findById(1L).getNome());
+		try {
+			this.produto = new Produto();
+			this.produto = this.produtoDAO.findById(1L);
+			this.produto.setDescricao("Garrafa Vinho Seco");
+
+			String jsonInString = this.mapper.writeValueAsString(this.produto);
+			String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/servico/update",
+					jsonInString);
+
+			Produto item = this.mapper.readValue(entityResponse, Produto.class);
+			System.out.println("Atualizado completo: " + this.salvoCompleto(item) + "\n" + item.toString());
+
+			this.produto = new Produto();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.produto = new Produto();
+		}
+
 	}
 
-//	private void adicionarItens() {
-//
-//		item = new ItemProduto(produtoDAO.findById(1L), 30.00f, 500.00f, 3);
-//		itemDAO.save(item);
-//
-//		item = new ItemProduto(produtoDAO.findById(3L), 20.00f, 350.00f, 5);
-//		itemDAO.save(item);
-//
-//		item = new ItemProduto(produtoDAO.findById(2L), 10.00f, 188.99f, 2);
-//		itemDAO.save(item);
-//
-//		item = new ItemProduto();
-//
-//	}
-//
-//	private void testUpdateItem() {
-//
-//		ItemProduto item = itemDAO.findById(1L);
-//		item.setQuantidadeProdutos(8888);
-//		itemDAO.update(item);
-//
-//		assertEquals(String.valueOf(8888), itemDAO.findById(1L).getQuantidadeProdutos().toString());
-//	}
-//
-//	private void testDeleteItem() {
-//		
-//		itemDAO.delete(2L);
-//		System.out.println(itemDAO.findById(2L).toString());;
-//
-//	}
+	private boolean salvoCompleto(Produto s) {
+		Field[] fields = s.getClass().getDeclaredFields();
+
+		if (fields != null && fields.length > 0) {
+			for (Field field : fields) {
+				if (field == null) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
 }

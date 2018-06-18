@@ -24,8 +24,8 @@
 
 		<mapping class="ws_pousada.model.entity.Usuario" />
 		<mapping class="ws_pousada.model.entity.Endereco" />
-<!-- 		<mapping class="ws_pousada.model.entity.Produto" /> -->
-
+		<mapping class="ws_pousada.model.entity.Servico" />
+		<mapping class="ws_pousada.model.entity.Produto" />
 
 
 

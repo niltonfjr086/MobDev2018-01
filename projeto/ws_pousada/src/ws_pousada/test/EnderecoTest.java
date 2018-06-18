@@ -27,13 +27,11 @@ public class EnderecoTest {
 
 	@Before
 	public void before() {
-		// System.out.println("BEFORE");
 		FactoryDAO.sessionInstance();
 	}
 
 	@After
 	public void after() {
-		// System.out.println("AFTER");
 		FactoryDAO.closeInstance();
 	}
 
