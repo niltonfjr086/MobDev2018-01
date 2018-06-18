@@ -9,9 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ws_pousada.model.FactoryDAO;
@@ -21,7 +19,7 @@ import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.dao.ProdutoDAO;
 import ws_pousada.model.entity.Categoria;
 import ws_pousada.model.entity.Endereco;
-import ws_pousada.model.entity.OLDProduto;
+import ws_pousada.model.entity.Produto;
 import ws_pousada.model.entity.Usuario;
 
 public class ConsoleTest {
@@ -175,15 +173,15 @@ public class ConsoleTest {
 
 	public void postSaveProduto() {
 
-		Categoria c = new Categoria();
-		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(1L);
+//		Categoria c = new Categoria();
+//		CategoriaDAO categoriaDAO = new CategoriaDAO();
+//		c = categoriaDAO.findById(1L);
 
-		OLDProduto p = new OLDProduto();
+		Produto p = new Produto();
 
-		p.setCategoria(c);
-		p.setNome("Cheese Salada");
-		p.setValor(17.0);
+//		p.setCategoria(c);
+//		p.setNome("Cheese Salada");
+//		p.setValor(17.0);
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -204,14 +202,14 @@ public class ConsoleTest {
 
 	public void saveProduto() {
 
-		Categoria c = new Categoria();
-		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(3L);
+//		Categoria c = new Categoria();
+//		CategoriaDAO categoriaDAO = new CategoriaDAO();
+//		c = categoriaDAO.findById(3L);
 
-		OLDProduto p = new OLDProduto();
+		Produto p = new Produto();
 
-		p.setCategoria(c);
-		p.setNome("Batata Frita");
+//		p.setCategoria(c);
+//		p.setNome("Batata Frita");
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
 		produtoDAO.save(p);
@@ -220,15 +218,15 @@ public class ConsoleTest {
 	public void postUpdateProduto() {
 
 		ProdutoDAO produtoDAO = new ProdutoDAO();
-		OLDProduto p = produtoDAO.findById(1L);
+		Produto p = produtoDAO.findById(1L);
 
-		p.setNome("Batata Frita Média");
+//		p.setNome("Batata Frita Média");
 
-		Categoria c = new Categoria();
-		CategoriaDAO categoriaDAO = new CategoriaDAO();
-		c = categoriaDAO.findById(2L);
-
-		p.setCategoria(c);
+//		Categoria c = new Categoria();
+//		CategoriaDAO categoriaDAO = new CategoriaDAO();
+//		c = categoriaDAO.findById(2L);
+//
+//		p.setCategoria(c);
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -252,12 +250,12 @@ public class ConsoleTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		List<OLDProduto> produtos = new ArrayList<>();
+		List<Produto> produtos = new ArrayList<>();
 
 		try {
 			List<Object> voidList = mapper.readValue(retorno, List.class);
 			for (Object o : voidList) {
-				OLDProduto p = mapper.readValue(mapper.writeValueAsString(o), OLDProduto.class);
+				Produto p = mapper.readValue(mapper.writeValueAsString(o), Produto.class);
 				produtos.add(p);
 			}
 
@@ -273,9 +271,9 @@ public class ConsoleTest {
 
 		ObjectMapper mapper = new ObjectMapper();
 
-		OLDProduto produto = null;
+		Produto produto = null;
 		try {
-			produto = mapper.readValue(retorno, OLDProduto.class);
+			produto = mapper.readValue(retorno, Produto.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

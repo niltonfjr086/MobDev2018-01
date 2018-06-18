@@ -1,7 +1,5 @@
 package ws_pousada.model.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Entity
 @Table(schema = "Pousada", name = "Usuario")
-public class Usuario extends BaseEntity implements Serializable {
+public class Usuario extends BaseEntity {
 
 	private static final long serialVersionUID = -6626081822875777370L;
 

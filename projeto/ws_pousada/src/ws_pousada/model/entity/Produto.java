@@ -1,14 +1,18 @@
 package ws_pousada.model.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
@@ -39,6 +43,10 @@ public class Produto extends BaseEntity implements Serializable {
 
 	@Column(nullable = true, name = "estoque_maximo")
 	private Integer estoqueMaximo;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+	List<ProdutoEntrada> produtosEntrada;
 
 	public Long getId() {
 		return id;
@@ -94,6 +102,14 @@ public class Produto extends BaseEntity implements Serializable {
 
 	public void setEstoqueMaximo(Integer estoqueMaximo) {
 		this.estoqueMaximo = estoqueMaximo;
+	}
+
+	public List<ProdutoEntrada> getProdutosEntrada() {
+		return produtosEntrada;
+	}
+
+	public void setProdutosEntrada(List<ProdutoEntrada> produtosEntrada) {
+		this.produtosEntrada = produtosEntrada;
 	}
 
 }
