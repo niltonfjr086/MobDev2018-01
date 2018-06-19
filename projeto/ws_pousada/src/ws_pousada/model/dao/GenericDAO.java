@@ -81,6 +81,7 @@ public class GenericDAO<T, PK> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> executeQuery(String query, Object... params) {
 		Query q = sessionInstance().createQuery(query);
 
@@ -91,13 +92,15 @@ public class GenericDAO<T, PK> {
 		return q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> executeQuery(Map<String, Object> params) {
 		
 		StringBuilder sql = null;
 		Table table = this.manipulada.getAnnotation(Table.class);
 		
 		if(table != null && table.name() != null && !table.name().trim().equals("")) {
-			sql = new StringBuilder("SELECT t FROM " + table.name() + " t");
+//			sql = new StringBuilder("SELECT t FROM " + table.name() + " t");
+			sql = new StringBuilder("SELECT * FROM " + table.name());
 			
 		} else {
 			sql = new StringBuilder(" FROM " + this.manipulada.getSimpleName() + " ");
@@ -114,17 +117,21 @@ public class GenericDAO<T, PK> {
 				frst = false;
 			}
 
-			if(entry.getValue().getClass().getSimpleName().equals("Date")) {
+			if(entry.getValue().getClass().getSimpleName().equals("Date") || entry.getValue().getClass().getSimpleName().equals("LocalDate")) {
 				
 				// EX.: initDataNascimento
 				if(entry.getKey().contains("init")){
-					sql.append(entry.getKey() + " >= " + "'" + entry.getValue() + "'");
+					String full = entry.getKey();
+					String partial = full.substring(3);
+					
+					sql.append(partial + " >= " + "'" + entry.getValue() + "'");
+					
 				} else {
 					sql.append(entry.getKey() + " <= " + "'" + entry.getValue() + "'");
 				}
 				
 			} else {
-				sql.append(entry.getKey() + " = " + "'" + entry.getValue() + "'");
+				sql.append(entry.getKey() + " LIKE " + "'" + entry.getValue() + "'");
 			}
 			
 

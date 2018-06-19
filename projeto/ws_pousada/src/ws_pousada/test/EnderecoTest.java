@@ -1,161 +1,58 @@
 package ws_pousada.test;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ws_pousada.model.FactoryDAO;
-import ws_pousada.model.HttpConnector;
 import ws_pousada.model.dao.EnderecoDAO;
 import ws_pousada.model.entity.Endereco;
 
-public class EnderecoTest {
+public class EnderecoTest extends GenericTest<Endereco, EnderecoDAO> {
 
-	EnderecoDAO enderecoDAO = new EnderecoDAO();
-	Endereco endereco;
-
-	ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-	@Before
-	public void before() {
-		FactoryDAO.sessionInstance();
+	public EnderecoTest() {
+		super(new Endereco(), new EnderecoDAO());
 	}
 
-	@After
-	public void after() {
-		FactoryDAO.closeInstance();
+	@Override
+	protected void buildNew() {
+		this.t = new Endereco();
 	}
 
-	@Test
-	public void populaAtualizaEndereco() {
+	@Override
+	protected List<Endereco> toNewInsert() {
 
-		try {
-			List<Endereco> enderecos = enderecoDAO.findAll();
+		List<Endereco> list = new ArrayList<>();
+		Endereco tt = new Endereco();
 
-			assertNotNull("Tabela endereço não criada ou falta mapeamento no hibernate.cfg", enderecos);
-			if (enderecos != null && enderecos.size() <= 0) {
-				assertTrue("Tabela não deve possuir registros", enderecos.size() <= 0);
+		tt = new Endereco();
+		tt.setBairro("Santa Mônica");
+		tt.setCep("1221928");
+		tt.setCidade("Florianópolis");
+		tt.setComplemento("Casa");
+		tt.setNumero("9090");
+		tt.setPais("Brasil");
+		tt.setRua("Testes Street");
+		tt.setUf("SC");
+		list.add(tt);
 
-				this.postSaveEndereco();
-				this.postUpdateEndereco();
-			}
+		tt = new Endereco();
+		tt.setBairro("Prainha");
+		tt.setCep("3434");
+		tt.setCidade("Florianópolis");
+		tt.setComplemento("Apto 304");
+		tt.setNumero("2020");
+		tt.setPais("Brasil");
+		tt.setRua("Laranjeiras");
+		tt.setUf("SC");
+		list.add(tt);
 
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			throw (e);
-		} finally {
-
-		}
-
-		System.out.println("-----------------------------");
-		System.out.println("-----------------------------");
-		System.out.println("-----------------------------");
-		System.out.println(enderecoDAO.findAll());
-
+		return list;
 	}
 
-	private void postSaveEndereco() {
-
-		this.endereco = new Endereco();
-		this.endereco.setBairro("Santa Mônica");
-		this.endereco.setCep("1221928");
-		this.endereco.setCidade("Florianópolis");
-		this.endereco.setComplemento("Casa");
-		this.endereco.setNumero("9090");
-		this.endereco.setPais("Brasil");
-		this.endereco.setRua("Testes Street");
-		this.endereco.setUf("SC");
-		try {
-			String jsonInString = mapper.writeValueAsString(this.endereco);
-			String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/endereco/save",
-					jsonInString);
-
-			Endereco e = mapper.readValue(entityResponse, Endereco.class);
-			assertNotNull("ID não pode ser nulo", e.getId());
-			assertEquals("Nome bairro retornado incorreto", "Santa Mônica", e.getBairro());
-			assertTrue("Salvo incompleto", this.salvoCompleto(e));
-			System.out.println(e.toString());
-
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		this.endereco = new Endereco();
-		this.endereco.setBairro("Prainha");
-		this.endereco.setCep("3434");
-		this.endereco.setCidade("Florianópolis");
-		this.endereco.setComplemento("Apto 304");
-		this.endereco.setNumero("2020");
-		this.endereco.setPais("Brasil");
-		this.endereco.setRua("Laranjeiras");
-		this.endereco.setUf("SC");
-		try {
-			String jsonInString = this.mapper.writeValueAsString(this.endereco);
-			String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/endereco/save",
-					jsonInString);
-
-			Endereco e = this.mapper.readValue(entityResponse, Endereco.class);
-			assertNotNull("ID não pode ser nulo", e.getId());
-			assertEquals("Nome bairro retornado incorreto", "Prainha", e.getBairro());
-			assertTrue("Salvo incompleto", this.salvoCompleto(e));
-			System.out.println(e.toString());
-
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		this.endereco = new Endereco();
-
+	@Override
+	protected void toNewUpdate() {
+		this.t = new Endereco();
+		this.t = this.dao.findById(1L);
+		this.t.setPais("Canadá");
 	}
 
-	private void postUpdateEndereco() {
-
-		try {
-			this.endereco = new Endereco();
-			this.endereco = this.enderecoDAO.findById(1L);
-			this.endereco.setPais("Canadá");
-
-			String jsonInString = this.mapper.writeValueAsString(this.endereco);
-			String entityResponse = HttpConnector.savePostConnect("http://localhost:8080/ws_pousada/endereco/update",
-					jsonInString);
-
-			Endereco e = this.mapper.readValue(entityResponse, Endereco.class);
-			System.out.println("Atualizado completo: " + this.salvoCompleto(e) + "\n" + e.toString());
-
-			this.endereco = new Endereco();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			this.endereco = new Endereco();
-		}
-
-	}
-
-	private boolean salvoCompleto(Endereco e) {
-		Field[] fields = e.getClass().getDeclaredFields();
-
-		if (fields != null && fields.length > 0) {
-			for (Field field : fields) {
-				if (field == null) {
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
 }

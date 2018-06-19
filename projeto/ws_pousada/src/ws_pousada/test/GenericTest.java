@@ -20,14 +20,13 @@ import ws_pousada.model.dao.GenericDAO;
 
 public abstract class GenericTest<T, DAO extends GenericDAO<T, Long>> {
 
-	protected ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-			false);
+	protected ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 	protected T t;
 	protected DAO dao;
 	protected String serverPath;
 
-	public GenericTest(T t, DAO dao) {
+	protected GenericTest(T t, DAO dao) {
 		super();
 		this.t = t;
 		this.dao = dao;
@@ -76,6 +75,7 @@ public abstract class GenericTest<T, DAO extends GenericDAO<T, Long>> {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void postSave() {
 
 		List<T> dataLoad = this.toNewInsert();
@@ -90,9 +90,6 @@ public abstract class GenericTest<T, DAO extends GenericDAO<T, Long>> {
 				String entityResponse = HttpConnector.savePostConnect(serverPath + "/save", jsonInString);
 
 				T responseItem = (T) mapper.readValue(entityResponse, t.getClass());
-				// assertNotNull("ID não pode ser nulo", responseItem.getId());
-				// assertEquals("Nome retornado incorreto", "Garrafa de Vinho",
-				// responseItem.getDescricao());
 				assertTrue("Salvo incompleto", this.isComplete());
 				System.out.println(responseItem.toString());
 
@@ -104,82 +101,15 @@ public abstract class GenericTest<T, DAO extends GenericDAO<T, Long>> {
 				this.buildNew();
 
 			}
-
 		}
-
-		// this.produto = new Produto();
-		// this.produto.setCodBarras("8080");
-		// this.produto.setDescricao("Garrafa de Vinho");
-		// this.produto.setValorUnitario(60.45);
-		// this.produto.setTipoProduto("Bebida");
-		// this.produto.setEstoqueMaximo(50);
-		// this.produto.setEstoqueMinimo(5);
-		// this.buildNew();
-		// this.toNewInsert();
-		// try {
-		// String jsonInString = mapper.writeValueAsString(this.t);
-		// String entityResponse = HttpConnector.savePostConnect(serverPath + "/save",
-		// jsonInString);
-		//
-		// Produto item = mapper.readValue(entityResponse, Produto.class);
-		// assertNotNull("ID não pode ser nulo", item.getId());
-		// assertEquals("Nome retornado incorreto", "Garrafa de Vinho",
-		// item.getDescricao());
-		// assertTrue("Salvo incompleto", this.isComplete());
-		// System.out.println(item.toString());
-		//
-		// } catch (JsonProcessingException e) {
-		// e.printStackTrace();
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// } finally {
-		// // this.produto = new Produto();
-		// this.buildNew();
-		//
-		// }
-
-		// this.produto = new Produto();
-		// this.produto.setCodBarras("7878");
-		// this.produto.setDescricao("Creme Dental");
-		// this.produto.setTipoProduto("Higiene Pessoal");
-		// this.produto.setValorUnitario(6.50);
-		// this.produto.setEstoqueMaximo(250);
-		// this.produto.setEstoqueMinimo(10);
-		// this.buildNew();
-		// this.toNewInsert();
-		//
-		// try {
-		// String jsonInString = mapper.writeValueAsString(this.t);
-		// String entityResponse = HttpConnector.savePostConnect(serverPath + "/save",
-		// jsonInString);
-		//
-		// Produto item = mapper.readValue(entityResponse, Produto.class);
-		// assertNotNull("ID não pode ser nulo", item.getId());
-		// assertEquals("Nome retornado incorreto", "Creme Dental",
-		// item.getDescricao());
-		// assertTrue("Salvo incompleto", this.isComplete());
-		// System.out.println(item.toString());
-		//
-		// } catch (JsonProcessingException e) {
-		// e.printStackTrace();
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// } finally {
-		// // this.produto = new Produto();
-		// this.buildNew();
-		//
-		// }
-
 	}
 
+	@SuppressWarnings("unchecked")
 	private void postUpdate() {
 
 		try {
-			// this.produto = new Produto();
 			this.buildNew();
 
-			// this.produto = this.produtoDAO.findById(1L);
-			// this.produto.setDescricao("Garrafa Vinho Seco");
 			this.toNewUpdate();
 
 			String jsonInString = this.mapper.writeValueAsString(this.t);
@@ -188,12 +118,10 @@ public abstract class GenericTest<T, DAO extends GenericDAO<T, Long>> {
 			T resItem = (T) this.mapper.readValue(entityResponse, t.getClass());
 			System.out.println("Atualizado completo: " + this.isComplete() + "\n" + resItem.toString());
 
-			// this.produto = new Produto();
 			this.buildNew();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// this.produto = new Produto();
 			this.buildNew();
 		}
 
