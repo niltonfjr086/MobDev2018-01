@@ -1,5 +1,7 @@
 package ws_pousada.model.entity;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -34,6 +36,12 @@ public class ProdutoEntrada extends BaseEntity {
 
 	@Column(nullable = true, name = "data_entrada")
 	private Date dataEntrada;
+
+	// @Column(nullable = true, name = "data_entrada")
+	// private Calendar dataEntrada;
+
+	// @Column(nullable = true, name = "data_entrada")
+	// private LocalDateTime dataEntrada;
 
 	@Column(nullable = true, name = "valor_custoUnitario") // DECIMAL(9,2)
 	private Double valorCustoUnitario;
@@ -72,6 +80,22 @@ public class ProdutoEntrada extends BaseEntity {
 	public void setDataEntrada(Date dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
+
+	// public Calendar getDataEntrada() {
+	// return dataEntrada;
+	// }
+	//
+	// public void setDataEntrada(Calendar dataEntrada) {
+	// this.dataEntrada = dataEntrada;
+	// }
+
+	// public LocalDateTime getDataEntrada() {
+	// return dataEntrada;
+	// }
+	//
+	// public void setDataEntrada(LocalDateTime dataEntrada) {
+	// this.dataEntrada = dataEntrada;
+	// }
 
 	public Double getValorCustoUnitario() {
 		return valorCustoUnitario;

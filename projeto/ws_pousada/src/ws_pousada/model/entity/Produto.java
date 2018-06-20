@@ -45,7 +45,7 @@ public class Produto extends BaseEntity implements Serializable {
 	private Integer estoqueMaximo;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY)
 	List<ProdutoEntrada> produtosEntrada;
 
 	public Long getId() {
