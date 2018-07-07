@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- DATABASES: Pousada | mysql -->
+
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Pousada?useSSL=false&amp;serverTimezone=GMT-03:00</property>
+
+		<property name="hibernate.connection.username">root</property>
+		<property name="connection.password">mysql</property>
+
+		<property name="show_sql">true</property>
+
+		<property name="connection.pool_size">2</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		
+		<!-- <property name="current_session_context_class">thread</property> -->
+
+		<!-- create | update | validate | create-drop -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
+		<!-- <mapping class="ws_pousada.model.entity.Produto" /> -->
+		<mapping class="ws_pousada.model.entity.Endereco" />
+		<!-- <mapping class="ws_pousada.model.entity.Categoria" /> -->
+		<mapping class="ws_pousada.model.entity.Estadia" />
+		<mapping class="ws_pousada.model.entity.Apartamento" />
+		<mapping class="ws_pousada.model.entity.Usuario" />
+<!-- 		o
+
+<mapping class="ws_pousada.model.entity.ItemProduto" />
+-->
+
+
+	</session-factory>
+</hibernate-configuration>

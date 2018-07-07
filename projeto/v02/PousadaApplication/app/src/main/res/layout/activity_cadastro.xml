@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.adilsoalves.pousadaapp.CadastroActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/layoutCabecalho"
+        android:layout_marginBottom="16dp"></LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:textSize="20sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Digite seu nome completo"
+        android:id="@+id/editNome"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="20sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Digite seu email"
+        android:id="@+id/editEmail"
+        android:layout_marginBottom="16dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Senha"
+        android:textSize="20sp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Defina uma senha"
+        android:inputType="textPassword"
+        android:id="@+id/editSenha"
+        android:layout_marginBottom="16dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="35dp">
+
+        <Button
+            android:id="@+id/btCancelar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:onClick="cancelar"
+            android:text="Cancelar" />
+
+        <Button
+            android:id="@+id/btConfirmar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:onClick="cadastrar"
+            android:text="Confirmar" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
