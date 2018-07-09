@@ -15,7 +15,9 @@ public class NavigationActivity extends Activity {
     public static List<Object> transientList = new ArrayList<>();
     public static Object transientObject = new Object();
     public static Usuario loggedUser = null;
-    public static String wsAddress = "192.168.0.5:8080";
+//    public static String wsAddress = "192.168.0.5:8080";
+    public static String wsAddress = "172.28.5.31:8080";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
